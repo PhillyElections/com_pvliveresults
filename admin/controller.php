@@ -10,15 +10,13 @@
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-jimport('joomla.application.component.controller');
-
 /**
  * Pvliveresults Component Controller
  *
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PvliveresultssController extends JController
+class PvliveresultsController extends JController
 {
 	/**
 	 * Method to display the view
