@@ -32,7 +32,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
      * display the edit form.
      */
     public function edit()
-    {dd('edit method');
+    {d('edit method');
         $array = JRequest::getVar('cid', 0, '', 'array');
         $id = ((int) $array[0]);
 
@@ -42,6 +42,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
             JRequest::setVar('year_id', $id);
         } else {
             JRequest::setVar('layout', 'form');
+            dd('set layout to form');
         }
 
         JRequest::setVar('hidemainmenu', 1);
