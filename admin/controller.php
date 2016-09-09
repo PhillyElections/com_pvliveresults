@@ -24,11 +24,9 @@ class PvliveresultsController extends JController
 	 * @access	public
 	 */
 	function display()
-	{
+	{	
+		JRequest::setVar('view', 'liveresults');
+
 		parent::display();
-	}
-	function step_next(){
-		parent::display();
-		die("nono babrrr");
 	}
 }
