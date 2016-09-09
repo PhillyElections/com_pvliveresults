@@ -32,7 +32,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
      * display the edit form.
      */
     public function edit()
-    {d('edit method');
+    {dd('edit method');
         $array = JRequest::getVar('cid', 0, '', 'array');
         $id = ((int) $array[0]);
 
