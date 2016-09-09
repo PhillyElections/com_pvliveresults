@@ -9,7 +9,7 @@
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
+jimport('kint.kint');
 // Uzer
 jimport('uzer.Uzer');
 Uzer::blok(JFactory::getUser(), 'Administrator');
