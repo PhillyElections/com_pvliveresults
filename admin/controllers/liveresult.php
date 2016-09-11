@@ -36,7 +36,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
         $array = JRequest::getVar('cid', 0, '', 'array');
         $id = ((int) $array[0]);
 
-        JRequest::setVar('view', 'liveresult');
+        //JRequest::setVar('view', 'liveresult');
         if ($id) {
             JRequest::setVar('layout', 'list');
             JRequest::setVar('year_id', $id);
