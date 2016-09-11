@@ -41,7 +41,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
             JRequest::setVar('layout', 'list');
             JRequest::setVar('year_id', $id);
         } else {
-dd('about to set layot to form');
+d('about to set layot to form');
             JRequest::setVar('layout', 'form');
         }
 
