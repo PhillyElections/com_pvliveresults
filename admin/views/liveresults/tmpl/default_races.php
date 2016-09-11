@@ -39,7 +39,6 @@
 	?>
 	</table>
 </div>
-
 <input type="hidden" name="option" value="com_pvliveresults" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />

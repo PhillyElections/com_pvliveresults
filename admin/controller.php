@@ -18,15 +18,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class PvliveresultsController extends JController
 {
-	/**
-	 * Method to display the view
-	 *
-	 * @access	public
-	 */
-	function display()
-	{	
-		JRequest::setVar('view', 'liveresults');
-
-		parent::display();
-	}
+    /**
+     * Method to display the view
+     *
+     * @access    public
+     */
+    public function display()
+    {
+        parent::display();
+    }
 }

@@ -32,12 +32,12 @@ class PvliveresultsViewLiveresults extends JView
 
 		// Get data from the model
 		$items		= & $this->get( 'Data');
-		$this->assignRef('items',		$items);
+		$this->assignRef('items', $items);
 
 		parent::display($tpl);
 	}
 
-	function step_next($tpl = null)
+	function display_races($tpl = null)
 	{
 
 		parent::display($tpl);
