@@ -46,8 +46,9 @@ d('about to set layot to form');
         }
 
         JRequest::setVar('hidemainmenu', 1);
-dd('about to display');
+d('about to display');
         parent::display();
+dd('just called display');
     }
 
     public function save_step2()
