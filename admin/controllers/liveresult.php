@@ -39,9 +39,6 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
         JRequest::setVar('view', 'liveresult');
         if ($id) {
             JRequest::setVar('year_id', $id);
-        } else {
-d('about to set layot to form');
-            JRequest::setVar('layout', 'form');
         }
 
         JRequest::setVar('hidemainmenu', 1);
