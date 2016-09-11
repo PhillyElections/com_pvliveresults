@@ -42,9 +42,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
         }
 
         JRequest::setVar('hidemainmenu', 1);
-d('about to display');
         parent::display();
-dd('just called display');
     }
 
     public function save_step2()

@@ -24,7 +24,7 @@ class PvliveresultsViewLiveresult extends JView
 	 **/
 	function display($tpl = null)
 	{
-		dd('in view');
+		d('in view');
 		//get the election
 		$election		=& $this->get('Data');
 		$isNew		= ($election[0][0]->id < 1);
