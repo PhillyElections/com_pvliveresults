@@ -29,6 +29,7 @@ class PvliveresultsViewLiveresult extends JView
 		$election		=& $this->get('Data');
 		$isNew		= ($election[0][0]->id < 1);
 
+		$tpl = $isNew ? 'add' : '';
 		$text = $isNew ? JText::_( 'New' ) : JText::_( 'Edit' );
 		JToolBarHelper::title(   JText::_( 'PVLiveresults App' ).': <small><small>[ ' . $text.' ]</small></small>' );
 
