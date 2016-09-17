@@ -73,31 +73,31 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
 
 ALTER TABLE `#__pv_live_candidates`
   ADD CONSTRAINT `fk_party_id_candidates` 
-  FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(id)
+  FOREIGN KEY (`party_id`) REFERENCES #__pv_live_parties(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_offices`
   ADD CONSTRAINT `fk_party_id_offices`
-  FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(id)
+  FOREIGN KEY (`party_id`) REFERENCES #__pv_live_parties(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_vote_type_id_votes`
-  FOREIGN KEY (`vote_type_id`) REFERENCES `#__pv_live_vote_types`(id)
+  FOREIGN KEY (`vote_type_id`) REFERENCES #__pv_live_vote_types(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_election_id_votes`
-  FOREIGN KEY (`election_id`) REFERENCES `#__pv_live_elections`(id)
+  FOREIGN KEY (`election_id`) REFERENCES #__pv_live_elections(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_office_id_votes`
-  FOREIGN KEY (`office_id`) REFERENCES `#__pv_live_offices`(id)
+  FOREIGN KEY (`office_id`) REFERENCES #__pv_live_offices(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_candidate_id_votes`
-  FOREIGN KEY (`candidate_id`) REFERENCES `#__pv_live_candidates`(id)
+  FOREIGN KEY (`candidate_id`) REFERENCES #__pv_live_candidates(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE;
