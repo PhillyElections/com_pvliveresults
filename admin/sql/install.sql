@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
 , PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `#__pv_live_election` (
+CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
 , `date` date NOT NULL DEFAULT '0000-00-00'
