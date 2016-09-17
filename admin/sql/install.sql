@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT COLLATE='utf8_general_ci';
+) ENGINE=INNODB COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
   `id` int(11) NOT NULL AUTO_INCREMENT
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT COLLATE='utf8_general_ci';
+) ENGINE=INNODB COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
   `id` int(2) NOT NULL AUTO_INCREMENT
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT COLLATE='utf8_general_ci';
+) ENGINE=INNODB COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
 , FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE
-) ENGINE=INNODB DEFAULT COLLATE='utf8_general_ci';
+) ENGINE=INNODB COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT COLLATE='utf8_general_ci';
+) ENGINE=INNODB COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
   `id` int(17) NOT NULL AUTO_INCREMENT
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT COLLATE='utf8_general_ci';
+) ENGINE=INNODB COLLATE='utf8_general_ci';
 
 ALTER TABLE #__pv_live_candidates
   ADD CONSTRAINT `fk_party_id_candidates`
