@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL;
+  `name` varchar(100) NOT NULL,
   `published` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
