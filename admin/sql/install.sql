@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-  KEY `live_office_id` (`office_id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_election` (
