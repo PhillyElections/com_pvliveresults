@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
 
  
 ALTER TABLE #__pv_live_candidates
-  ADD FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id);
+  ADD FOREIGN KEY (party_id) REFERENCES #__pv_live_parties (id);
 ALTER TABLE #__pv_live_offices
   ADD CONSTRAINT `fk_party_id_offices`
   FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
