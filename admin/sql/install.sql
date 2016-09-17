@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS `#__pv_live_candidates`;
+DROP TABLE IF EXISTS `#__pv_live_votes`;
+DROP TABLE IF EXISTS `#__pv_live_divisions`;
+DROP TABLE IF EXISTS `#__pv_live_election_years`;
+DROP TABLE IF EXISTS `#__pv_live_offices`;
+DROP TABLE IF EXISTS `#__pv_live_wards`;
+
 CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `party_id` int(11) unsigned NOT NULL,
