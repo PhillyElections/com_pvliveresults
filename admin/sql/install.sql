@@ -46,6 +46,10 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
+, CONSTRAINT `fk_party_id_candidates`
+  FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
@@ -74,6 +78,11 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+ALTER TABLE #__pv_live_candidates
+  ADD CONSTRAINT `fk_party_id_candidates`
+  FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
 ALTER TABLE #__pv_live_offices
   ADD CONSTRAINT `fk_party_id_offices`
   FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
