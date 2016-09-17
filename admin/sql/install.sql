@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `published` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
   KEY `live_office_id` (`office_id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -65,3 +65,15 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `#__pv_live_candidates`
+  ADD FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(id);
+ALTER TABLE `#__pv_live_offices`
+  ADD FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(id);
+ALTER TABLE `#__pv_live_votes`
+  ADD FOREIGN KEY (`vote_type_id`) REFERENCES `#__pv_live_vote_types`(id);
+ALTER TABLE `#__pv_live_votes`
+  ADD FOREIGN KEY (`election_id`) REFERENCES `#__pv_live_elections`(id);
+ALTER TABLE `#__pv_live_votes`
+  ADD FOREIGN KEY (`office_id`) REFERENCES `#__pv_live_offices`(id);
+ALTER TABLE `#__pv_live_votes`
+  ADD FOREIGN KEY (`candidate_id`) REFERENCES `#__pv_live_candidates`(id);
