@@ -65,14 +65,32 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `#__pv_live_candidates`
-  ADD FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(id);
+  ADD CONSTRAINT `fk_party_id_candidates` 
+  FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(id)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_offices`
-  ADD FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(id);
+  ADD CONSTRAINT `fk_party_id_offices`
+  FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(id)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_votes`
-  ADD FOREIGN KEY (`vote_type_id`) REFERENCES `#__pv_live_vote_types`(id);
+  ADD CONSTRAINT `fk_vote_type_id_votes`
+  FOREIGN KEY (`vote_type_id`) REFERENCES `#__pv_live_vote_types`(id)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_votes`
-  ADD FOREIGN KEY (`election_id`) REFERENCES `#__pv_live_elections`(id);
+  ADD CONSTRAINT `fk_election_id_votes`
+  FOREIGN KEY (`election_id`) REFERENCES `#__pv_live_elections`(id)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_votes`
-  ADD FOREIGN KEY (`office_id`) REFERENCES `#__pv_live_offices`(id);
+  ADD CONSTRAINT `fk_office_id_votes`
+  FOREIGN KEY (`office_id`) REFERENCES `#__pv_live_offices`(id)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;
 ALTER TABLE `#__pv_live_votes`
-  ADD FOREIGN KEY (`candidate_id`) REFERENCES `#__pv_live_candidates`(id);
+  ADD CONSTRAINT `fk_candidate_id_votes`
+  FOREIGN KEY (`candidate_id`) REFERENCES `#__pv_live_candidates`(id)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;
