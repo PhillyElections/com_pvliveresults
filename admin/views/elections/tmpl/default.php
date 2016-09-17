@@ -19,7 +19,7 @@
 	$k = 0;
 	for ($i=0, $n=count( $this->items ); $i < $n; $i++)	{
 		$row = &$this->items[$i];
-		$link = JRoute::_( 'index.php?option=com_pvliveresults&controller=liveresult&task=edit&cid[]='. $row->id );
+		$link = JRoute::_( 'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='. $row->id );
 		?>
 		<tr class="<?="row$k"; ?>">
 			<td>
@@ -42,5 +42,5 @@
 <input type="hidden" name="option" value="com_pvliveresults" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />
-<input type="hidden" name="controller" value="liveresults" />
+<input type="hidden" name="controller" value="elections" />
 </form>

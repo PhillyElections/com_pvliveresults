@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Liveresult Controller for Liveresult Component.
+ * Elections Controller for PVLiveresult Component.
  *
  * @package    Philadelphia.Votes
  * @subpackage Components
@@ -11,17 +11,16 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.archive');
 /**
  * Pvliveresults Liveresult Controller.
  */
-class PvliveresultsControllerLiveresults extends PvliveresultsController
+class PvliveresultsControllerElections extends PvliveresultsController
 {
     public function display()
     {
         // if 'raw' isn't explicit, set to 'html'
-        $view = $this->getView('liveresults', JRequest::getWord('format', 'html'));
-        $view->setModel($this->getModel('liveresults'), true);
+        $view = $this->getView('elections', JRequest::getWord('format', 'html'));
+        $view->setModel($this->getModel('elections'), true);
 
         $view->display();
     }
@@ -30,12 +29,12 @@ class PvliveresultsControllerLiveresults extends PvliveresultsController
     {
         $mainframe = JFactory::getApplication();
         $cid       = JRequest::getVar('cid');
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=liveresult&task=edit&cid=' . $cid[0]);
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid=' . $cid[0]);
     }
 
     public function add()
     {
         $mainframe = JFactory::getApplication();
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=liveresult&task=add&&cid=' . $cid[0]);
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=add&&cid=' . $cid[0]);
     }
 }

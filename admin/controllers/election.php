@@ -11,11 +11,10 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.archive');
 /**
  * Pvliveresults Liveresult Controller.
  */
-class PvliveresultsControllerLiveresult extends PvliveresultsController
+class PvliveresultsControllerElection extends PvliveresultsController
 {
     /**
      * constructor (registers additional tasks to methods).
@@ -116,6 +115,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
         $moveResult = move_uploaded_file($fileTmpLoc, $pathAndName);
         // Evaluate the value returned from the function if needed
         if ($moveResult) {
+            jimport('joomla.filesystem.archive');
             $path_parts = pathinfo($pathAndName);
             // if this is one of the extensions JArchive handles, lets extract it
             if (in_array($path_parts['extension'], array('zip','tar','tgz','gz','gzip','bz2','bzip2','tbz2'))) {
@@ -199,7 +199,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
             echo $str;die; */
             @unlink($pathAndName);
             $msg .= JText::_('Data Saved');
-            $link = 'index.php?option=com_pvliveresults&controller=liveresult&task=edit&cid[]='.$year_id;
+            $link = 'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$year_id;
         } else {
             //echo "ERROR: File not moved correctly";
             $link = 'index.php?option=com_pvliveresults';
@@ -216,7 +216,7 @@ class PvliveresultsControllerLiveresult extends PvliveresultsController
      */
     public function remove()
     {
-        $model = $this->getModel('Liveresult');
+        $model = $this->getModel('election');
         if (!$model->delete()) {
             $msg = JText::_('Error: One or More Greetings Could not be Deleted');
         } else {

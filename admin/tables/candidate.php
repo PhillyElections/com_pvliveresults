@@ -14,8 +14,9 @@ public class TableCandidate extends JTable
 {
 
     public $id = null;
-    public $office_id = null;
+    public $party_id = null;
     public $name = null;
+    public $order = null;
     public $published = null;
     public $created = null;
     public $updated = null;

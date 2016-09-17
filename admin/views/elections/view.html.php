@@ -1,6 +1,6 @@
 <?php
 /**
- * Liveresults View for PVLiveresults Component
+ * Elections View for PVLiveresults Component
  * 
  * @package    Philadelphia.Votes
  * @subpackage Components
@@ -11,16 +11,16 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /**
- * Pvliveresults View
+ * Elections View
  *
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PvliveresultsViewLiveresults extends JView
+class PvliveresultsViewElections extends JView
 {
 	
 	/**
-	 * Pvliveresults view display method
+	 * Elections view display method
 	 * @return void
 	 **/
 	function display($tpl = null)

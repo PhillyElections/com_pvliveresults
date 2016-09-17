@@ -10,15 +10,13 @@
 // No direct access
 defined('_JEXEC') or die( 'Restricted access' );
 
-jimport('joomla.application.component.model');
-
 /**
  * Pvliveresults Liveresult Model
  *
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PvliveresultsModelLiveresult extends JModel
+class PvliveresultsModelElection extends JModel
 {
     /**
      * Constructor that retrieves the ID from the request

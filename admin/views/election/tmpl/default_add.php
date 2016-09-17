@@ -47,6 +47,6 @@
 <input type="hidden" name="option" value="com_pvliveresults" />
 <input type="hidden" name="id" value="<?php echo $this->hello->id; ?>" />
 <input type="hidden" name="task" value="" />
-<input type="hidden" name="controller" value="liveresult" />
+<input type="hidden" name="controller" value="election" />
 <?php echo JHTML::_('form.token');?>
 </form>

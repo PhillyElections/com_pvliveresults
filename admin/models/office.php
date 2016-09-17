@@ -10,8 +10,6 @@
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-jimport('joomla.application.component.model');
-
 /**
  * Pvliveresults Office Model
  *
@@ -43,7 +41,7 @@ class PvliveresultsModelOffice extends JModel
             $row->publish($id, 1);
         }
 
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=Liveresult&task=edit&cid[]='.$currentElection);
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
     }
 
 
@@ -59,6 +57,6 @@ class PvliveresultsModelOffice extends JModel
             $row->publish($id, 0);
         }
 
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=Liveresult&task=edit&cid[]='.$currentElection);
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
     }
 }

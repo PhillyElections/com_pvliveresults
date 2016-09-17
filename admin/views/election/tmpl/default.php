@@ -49,7 +49,7 @@ jimport( 'joomla.html.html' );
 	$election_year_id = 0;
 	for ($i=0, $n=count( $this->election[0] ); $i < $n; $i++)	{
 		$row = &$this->election[0][$i];
-		$link = JRoute::_( 'index.php?option=com_pvliveresults&controller=liveresult&task=edit&cid[]=' . $row->id );
+		$link = JRoute::_( 'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=' . $row->id );
 		$election_year_id = $row->election_id;
 		?>
 		<tr class="<?="row$k"; ?>">
@@ -83,6 +83,6 @@ jimport( 'joomla.html.html' );
 <input type="hidden" name="id" value="<?=$election_year_id; ?>" />
 <input type="hidden" name="task" value="save_step2" />
 <input type="hidden" name="boxchecked" value="0" />
-<input type="hidden" name="controller" value="liveresult" />
+<input type="hidden" name="controller" value="election" />
 <?php echo JHTML::_('form.token');?>
 </form>

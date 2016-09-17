@@ -10,15 +10,13 @@
 // No direct access
 defined('_JEXEC') or die( 'Restricted access' );
 
-jimport('joomla.application.component.model');
-
 /**
  * Pvliveresults Model
  *
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PvliveresultsModelLiveresults extends JModel
+class PvliveresultsModelElections extends JModel
 {
     /**
      * Pvliveresults data array
@@ -35,7 +33,7 @@ class PvliveresultsModelLiveresults extends JModel
     public function _buildQuery()
     {
     	// added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT * ' . ' FROM #__pv_live_election_year where published=1 order by `election_date` DESC';
+        $query = 'SELECT * ' . ' FROM #__pv_live_elections where published=1 order by `election_date` DESC';
         return $query;
     }
 
