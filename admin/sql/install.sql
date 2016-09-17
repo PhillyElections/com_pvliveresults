@@ -7,10 +7,10 @@ DROP TABLE IF EXISTS `#__pv_live_wards`;
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
-, `party_id` int(11) unsigned NOT NULL
+, `party_id` int(11) unsigned NOT NULL DEFAULT 0
 , `name` varchar(100) NOT NULL
-, `order` smallint(4) unsigned NOT NULL DEFAULT '1'
-, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
+, `order` smallint(4) unsigned NOT NULL DEFAULT 1
+, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
 , `date` date NOT NULL DEFAULT '0000-00-00'
-, `order` smallint(4) unsigned NOT NULL DEFAULT '1'
-, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
+, `order` smallint(4) unsigned NOT NULL DEFAULT 1
+, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
@@ -29,10 +29,10 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
-, `party_id` int(11) unsigned NOT NULL
+, `party_id` int(11) unsigned NOT NULL DEFAULT 0
 , `name` varchar(255) NOT NULL
-, `order` smallint(4) unsigned NOT NULL DEFAULT '1'
-, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
+, `order` smallint(4) unsigned NOT NULL DEFAULT 1
+, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
 CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
   `id` int(11) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
-, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
+, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
@@ -49,21 +49,21 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
   `id` int(17) NOT NULL AUTO_INCREMENT
-, `vote_type_id` tinyint(2) NOT NULL
-, `election_id` int(11) NOT NULL
-, `office_id` int(11) NOT NULL
-, `candidate_id` int(11) NOT NULL
-, `ward` tinyint(2) NOT NULL DEFAULT '0'
-, `division` tinyint(2) NOT NULL DEFAULT '0'
-, `votes` smallint(5) unsigned NOT NULL DEFAULT '0'
-, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
+, `vote_type_id` tinyint(2) NOT NULL DEFAULT 0
+, `election_id` int(11) NOT NULL DEFAULT 0
+, `office_id` int(11) NOT NULL DEFAULT 0
+, `candidate_id` int(11) NOT NULL DEFAULT 0
+, `ward` tinyint(2) NOT NULL DEFAULT 0
+, `division` tinyint(2) NOT NULL DEFAULT 0
+, `votes` smallint(5) unsigned NOT NULL DEFAULT 0
+, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
-  `id` int(11) NOT NULL AUTO_INCREMENT
+  `id` int(2) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
 , `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
