@@ -71,6 +71,9 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
 , PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+SET FOREIGN_KEY_CHECKS = 0;
+SELECT @@FOREIGN_KEY_CHECKS;
+ 
 ALTER TABLE `#__pv_live_candidates`
   ADD CONSTRAINT `fk_party_id_candidates` 
   FOREIGN KEY (`party_id`) REFERENCES #__pv_live_parties(id)
@@ -101,3 +104,5 @@ ALTER TABLE `#__pv_live_votes`
   FOREIGN KEY (`candidate_id`) REFERENCES #__pv_live_candidates(id)
   ON UPDATE CASCADE
   ON DELETE CASCADE;
+
+SET FOREIGN_KEY_CHECKS = 1;
