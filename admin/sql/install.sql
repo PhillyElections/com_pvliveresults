@@ -77,32 +77,32 @@ SELECT @@FOREIGN_KEY_CHECKS;
 ALTER TABLE `#__pv_live_candidates`
   ADD CONSTRAINT `fk_party_id_candidates` 
   FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(`id`)
-  ON DELETE SET NULL
+  ON DELETE CASCADE
   ON UPDATE CASCADE;
 ALTER TABLE `#__pv_live_offices`
   ADD CONSTRAINT `fk_party_id_offices`
   FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties`(`id`)
-  ON DELETE SET NULL
+  ON DELETE CASCADE
   ON UPDATE CASCADE;
 ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_vote_type_id_votes`
   FOREIGN KEY (`vote_type_id`) REFERENCES `#__pv_live_vote_types`(`id`)
-  ON DELETE SET NULL
+  ON DELETE CASCADE
   ON UPDATE CASCADE;
 ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_election_id_votes`
   FOREIGN KEY (`election_id`) REFERENCES `#__pv_live_elections`(`id`)
-  ON DELETE SET NULL
+  ON DELETE CASCADE
   ON UPDATE CASCADE;
 ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_office_id_votes`
   FOREIGN KEY (`office_id`) REFERENCES `#__pv_live_offices`(`id`)
-  ON DELETE SET NULL
+  ON DELETE CASCADE
   ON UPDATE CASCADE;
 ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_candidate_id_votes`
   FOREIGN KEY (`candidate_id`) REFERENCES `#__pv_live_candidates`(`id`)
-  ON DELETE SET NULL
+  ON DELETE CASCADE
   ON UPDATE CASCADE;
 
 SET FOREIGN_KEY_CHECKS = 1;
