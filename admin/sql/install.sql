@@ -1,3 +1,6 @@
+SET FOREIGN_KEY_CHECKS = 0;
+SELECT @@FOREIGN_KEY_CHECKS;
+
 DROP TABLE IF EXISTS `#__pv_live_candidates`;
 DROP TABLE IF EXISTS `#__pv_live_votes`;
 DROP TABLE IF EXISTS `#__pv_live_divisions`;
@@ -71,8 +74,6 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
 , PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-SET FOREIGN_KEY_CHECKS = 0;
-SELECT @@FOREIGN_KEY_CHECKS;
  
 ALTER TABLE #__pv_live_candidates
   ADD FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
