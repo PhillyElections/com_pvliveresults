@@ -1,3 +1,6 @@
+SET FOREIGN_KEY_CHECKS = 0;
+SELECT @@FOREIGN_KEY_CHECKS;
+
 DROP TABLE IF EXISTS `#__pv_live_candidates`;
 DROP TABLE IF EXISTS `#__pv_live_votes`;
 DROP TABLE IF EXISTS `#__pv_live_divisions`;
@@ -5,14 +8,35 @@ DROP TABLE IF EXISTS `#__pv_live_election_years`;
 DROP TABLE IF EXISTS `#__pv_live_offices`;
 DROP TABLE IF EXISTS `#__pv_live_wards`;
 
+CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
+  `id` int(11) NOT NULL AUTO_INCREMENT
+, `name` varchar(100) NOT NULL
+, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
+, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT
+, `name` varchar(100) NOT NULL
+, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
+, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
+, `party_id` int(11) unsigned 
 , `name` varchar(100) NOT NULL
 , `order` smallint(4) unsigned NOT NULL DEFAULT '1'
 , `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, PRIMARY KEY (`id`)
+, PRIMARY KEY (`id`),
+, CONSTRAINT fk_party_id_candidates 
+  FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_election` (
@@ -35,15 +59,8 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
-  `id` int(11) NOT NULL AUTO_INCREMENT
-, `name` varchar(100) NOT NULL
-, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
-, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, PRIMARY KEY (`id`)
+, CONSTRAINT fk_party_id_offices
+  FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
@@ -59,38 +76,13 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
-  `id` int(11) NOT NULL AUTO_INCREMENT
-, `name` varchar(100) NOT NULL
-, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
-, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-SET FOREIGN_KEY_CHECKS = 0;
-SELECT @@FOREIGN_KEY_CHECKS;
-
-ALTER TABLE #__pv_live_candidates
-  ADD COLUMN `party_id` int(11) unsigned,
-  ADD CONSTRAINT fk_party_id_candidates 
-  FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id);
-ALTER TABLE #__pv_live_offices
-  ADD CONSTRAINT fk_party_id_offices
-  FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id);
-ALTER TABLE #__pv_live_votes
-  ADD CONSTRAINT fk_vote_type_id_votes
-  FOREIGN KEY (vote_type_id) REFERENCES #__pv_live_vote_types(id);
-ALTER TABLE #__pv_live_votes
-  ADD CONSTRAINT fk_election_id_votes
-  FOREIGN KEY (election_id) REFERENCES #__pv_live_elections(id);
-ALTER TABLE #__pv_live_votes
-  ADD CONSTRAINT fk_office_id_votes
-  FOREIGN KEY (office_id) REFERENCES #__pv_live_offices(id);
-ALTER TABLE #__pv_live_votes
-  ADD CONSTRAINT fk_candidate_id_votes
-  FOREIGN KEY (candidate_id) REFERENCES #__pv_live_candidates(id);
+, CONSTRAINT fk_vote_type_id_votes
+  FOREIGN KEY (vote_type_id) REFERENCES #__pv_live_vote_types(id)
+, CONSTRAINT fk_election_id_votes
+  FOREIGN KEY (election_id) REFERENCES #__pv_live_elections(id)) ENGINE=INNODB DEFAULT CHARSET=utf8;
+, CONSTRAINT fk_office_id_votes
+  FOREIGN KEY (office_id) REFERENCES #__pv_live_offices(id)
+, CONSTRAINT fk_candidate_id_votes
+  FOREIGN KEY (candidate_id) REFERENCES #__pv_live_candidates(id)
 
 SET FOREIGN_KEY_CHECKS = 1;
