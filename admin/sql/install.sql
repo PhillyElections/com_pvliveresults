@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS `#__pv_live_wards`;
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
-, `party_id` int(11) unsigned 
 , `name` varchar(100) NOT NULL
 , `order` smallint(4) unsigned NOT NULL DEFAULT '1'
 , `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
@@ -75,6 +74,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 SELECT @@FOREIGN_KEY_CHECKS;
 
 ALTER TABLE #__pv_live_candidates
+  ADD COLUMN `party_id` int(11) unsigned,
   ADD CONSTRAINT fk_party_id_candidates 
   FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id);
 ALTER TABLE #__pv_live_offices
