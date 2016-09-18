@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB COLLATE='utf8_general_ci';
+) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
   `id` int(11) NOT NULL AUTO_INCREMENT
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB COLLATE='utf8_general_ci';
+) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
   `id` int(2) NOT NULL AUTO_INCREMENT
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB COLLATE='utf8_general_ci';
+) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
@@ -46,8 +46,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-, CONSTRAINT `fk_party_id_candidates` FOREIGN KEY (`party_id`) REFERENCES `#__pv_live_parties` (`id`) ON UPDATE CASCADE
-) ENGINE=INNODB COLLATE='utf8_general_ci';
+) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
@@ -58,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB COLLATE='utf8_general_ci';
+) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
   `id` int(17) NOT NULL AUTO_INCREMENT
@@ -73,33 +72,33 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-) ENGINE=INNODB COLLATE='utf8_general_ci';
+) ENGINE=ARIA COLLATE='utf8_general_ci';
 
-ALTER TABLE #__pv_live_candidates
+ALTER TABLE `#__pv_live_candidates`
   ADD CONSTRAINT `fk_party_id_candidates`
-  FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
+  FOREIGN KEY (party_id) REFERENCES `#__pv_live_parties`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
-ALTER TABLE #__pv_live_offices
+ALTER TABLE `#__pv_live_offices`
   ADD CONSTRAINT `fk_party_id_offices`
-  FOREIGN KEY (party_id) REFERENCES #__pv_live_parties(id)
+  FOREIGN KEY (party_id) REFERENCES `#__pv_live_parties`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
-ALTER TABLE #__pv_live_votes
+ALTER TABLE `#__pv_live_votes`
   ADD CONSTRAINT `fk_vote_type_id_votes`
-  FOREIGN KEY (vote_type_id) REFERENCES #__pv_live_vote_types(id)
+  FOREIGN KEY (vote_type_id) REFERENCES `#__pv_live_vote_types`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
 , ADD CONSTRAINT `fk_election_id_votes`
-  FOREIGN KEY (election_id) REFERENCES #__pv_live_elections(id)
+  FOREIGN KEY (election_id) REFERENCES `#__pv_live_elections`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
 , ADD CONSTRAINT `fk_office_id_votes`
-  FOREIGN KEY (office_id) REFERENCES #__pv_live_offices(id)
+  FOREIGN KEY (office_id) REFERENCES `#__pv_live_offices`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
 , ADD CONSTRAINT `fk_candidate_id_votes`
-  FOREIGN KEY (candidate_id) REFERENCES #__pv_live_candidates(id`)
+  FOREIGN KEY (candidate_id) REFERENCES `#__pv_live_candidates`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
 
