@@ -35,7 +35,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $array = JRequest::getVar('cid', 0, '', 'array');
         $id = ((int) $array[0]);
 
-        JRequest::setVar('view', 'liveresult');
+        JRequest::setVar('view', 'election');
         if ($id) {
             JRequest::setVar('year_id', $id);
         }
