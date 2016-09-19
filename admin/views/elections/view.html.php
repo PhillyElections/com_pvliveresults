@@ -34,6 +34,15 @@ class PvliveresultsViewElections extends JView
 		$items		= & $this->get( 'Data');
 		$this->assignRef('items', $items);
 
+		$election = $this->getModel('election');
+		$candidate = $this->getModel('candidate');
+		$office = $this->getModel('office');
+		$party = $this->getModel('party');
+		$vote = $this->getModel('vote');
+		$votetype = $this->getModel('votetype');
+
+		dd($this, $election, $candidate, $office, $party, $vote, $votetype);
+
 		parent::display($tpl);
 	}
 
