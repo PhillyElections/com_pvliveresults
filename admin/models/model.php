@@ -8,11 +8,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PVModel extends JModel
+class PvliveresultsModel extends JModel
 {
     public $_data;
     public $_lookup;
-    public $tableName = array('s'->'','p'->'');
+    public $tableName = array('s'=>'','p'=>'');
     public $tableOrder = ' ORDER BY `order` DESC, `id` DESC ';
 
     public function _buildLookupQuery()

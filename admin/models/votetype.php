@@ -8,7 +8,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PvliveresultsModelVotetype extends PVModel
+class PvliveresultsModelVotetype extends PvliveresultsModel
 {
     //public $_data;
     //public $_lookup;
