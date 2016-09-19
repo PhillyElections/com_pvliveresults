@@ -112,7 +112,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 INSERT INTO `#__pv_live_vote_types` VALUES
 ('', 'ABSENTEE', 1, 1, NOW(), '0000-00-00 00:00:00'),
 ('', 'MACHINE', 2, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'PROVISIONAL'3, , 1, NOW(), '0000-00-00 00:00:00');
+('', 'PROVISIONAL', 3, 1, NOW(), '0000-00-00 00:00:00');
 
 INSERT INTO `#__pv_live_parties` VALUES
 ('', '', 1, 1, NOW(), '0000-00-00 00:00:00'),
