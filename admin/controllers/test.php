@@ -5,7 +5,7 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Pvliveresults Elections Controller.
  */
-class PvliveresultsControllerElections extends PvliveresultsController
+class PvliveresultsControllerTest extends PvliveresultsController
 {
     public function display()
     {
@@ -18,6 +18,6 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $view->setModel($this->getModel('vote'), true);
         $view->setModel($this->getModel('votetype'), true);
 
-        parent::display();
+        $view->display();
     }
 }
