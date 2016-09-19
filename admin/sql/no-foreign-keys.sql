@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
   `id` int(11) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
+, `order` smallint(4) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -21,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
   `id` int(2) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
+, `order` smallint(4) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'

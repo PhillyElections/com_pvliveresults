@@ -1,18 +1,11 @@
 SET FOREIGN_KEY_CHECKS = 0;
 SELECT @@FOREIGN_KEY_CHECKS;
 
-DROP TABLE IF EXISTS `#__pv_live_candidates`;
-DROP TABLE IF EXISTS `#__pv_live_votes`;
-DROP TABLE IF EXISTS `#__pv_live_divisions`;
-DROP TABLE IF EXISTS `#__pv_live_election_years`;
-DROP TABLE IF EXISTS `#__pv_live_offices`;
-DROP TABLE IF EXISTS `#__pv_live_wards`;
-
 CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
 , `date` date NOT NULL DEFAULT '0000-00-00'
-, `order` smallint(4) unsigned NOT NULL DEFAULT 1
+, `order` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -22,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
   `id` int(11) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
+, `order` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -31,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
   `id` int(2) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
+, `order` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -68,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , `ward` tinyint(2) NOT NULL DEFAULT 0
 , `division` tinyint(2) NOT NULL DEFAULT 0
 , `votes` smallint(5) unsigned NOT NULL DEFAULT 0
+, `order` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'

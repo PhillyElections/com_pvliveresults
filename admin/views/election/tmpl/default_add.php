@@ -13,7 +13,7 @@
 				</label>
 			</td>
 			<td>
-				<input class="text_area" type="text" name="e_year" id="e_year" size="32" maxlength="250" value="<?php echo $this->hello->greeting;?>" />
+				<input class="text_area" type="text" name="election" id="election" size="32" maxlength="250" value="<?php echo $this->hello->greeting;?>" />
 			</td>
 		</tr>
 		<tr>

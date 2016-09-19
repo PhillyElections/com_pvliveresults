@@ -16,7 +16,7 @@ defined('_JEXEC') or die( 'Restricted access' );
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PvliveresultsModelElections extends JModel
+class PvliveresultsModelElections extends PVModel
 {
     /**
      * Pvliveresults data array
@@ -33,7 +33,7 @@ class PvliveresultsModelElections extends JModel
     public function _buildQuery()
     {
     	// added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT * ' . ' FROM #__pv_live_elections where published=1 order by `election_date` DESC';
+        $query = 'SELECT * ' . ' FROM #__pv_live_elections where published=1 order by `date` DESC';
         return $query;
     }
 

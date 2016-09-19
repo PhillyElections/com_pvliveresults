@@ -16,7 +16,7 @@ defined('_JEXEC') or die( 'Restricted access' );
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PvliveresultsModelElection extends JModel
+class PvliveresultsModelElection extends PVModel
 {
     /**
      * Constructor that retrieves the ID from the request
@@ -53,7 +53,7 @@ class PvliveresultsModelElection extends JModel
     public function &getData()
     {
         // lets order by... order!
-        $order = " ORDER BY `name` ASC";
+        $order = " ORDER BY `order` ASC";
         // Load the data
         if (empty( $this->_data )) {
             $query = ' SELECT * FROM #__pv_live_offices WHERE election_id = ' . $this->_id . $order;

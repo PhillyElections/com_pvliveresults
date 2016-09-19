@@ -16,7 +16,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
-class PvliveresultsModelOffice extends JModel
+class PvliveresultsModelCandidates extends PVModel
 {
 	/**
 	 * Constructor that retrieves the ID from the request
@@ -29,14 +29,14 @@ class PvliveresultsModelOffice extends JModel
 		parent::__construct();
 	}
 
-    function publish_offices($currentElection)
+    function publish($currentElection)
     {
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
 
         foreach ($cid as $id)
         {
-        	$row = JTable::getInstance('Office', 'Table');
+        	$row = JTable::getInstance('Candidate', 'Table');
             $row->load($id);
             $row->publish($id, 1);
         }
@@ -45,14 +45,14 @@ class PvliveresultsModelOffice extends JModel
     }
 
 
-    function unpublish_offices($currentElection)
+    function unpublish($currentElection)
     {
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
 
         foreach ($cid as $id)
         {
-        	$row = JTable::getInstance('Office', 'Table');
+        	$row = JTable::getInstance('Candidate', 'Table');
             $row->load($id);
             $row->publish($id, 0);
         }
