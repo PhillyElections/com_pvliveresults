@@ -10,9 +10,9 @@ DROP TABLE IF EXISTS `#__pv_live_vote_types`;
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
-, `party_id` int(11) unsigned NOT NULL DEFAULT 0
+, `party_id` smallint(5) unsigned NOT NULL DEFAULT 0
 , `name` varchar(100) NOT NULL
-, `order` smallint(4) unsigned NOT NULL DEFAULT 1
+, `order` smallint(5) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -33,9 +33,9 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
-, `party_id` int(11) unsigned NOT NULL DEFAULT 0
+, `party_id` smallint(5) unsigned NOT NULL DEFAULT 0
 , `name` varchar(255) NOT NULL
-, `order` smallint(4) unsigned NOT NULL DEFAULT 1
+, `order` smallint(5) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
-  `id` int(11) NOT NULL AUTO_INCREMENT
+  `id` smallint(5) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
-, `order` int(11) unsigned NOT NULL DEFAULT 1
+, `order` smallint(5) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -54,13 +54,13 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
-  `id` int(17) NOT NULL AUTO_INCREMENT
-, `vote_type_id` tinyint(2) NOT NULL DEFAULT 0
+  `id` bigint(17) NOT NULL AUTO_INCREMENT
+, `vote_type_id` smallint(5) NOT NULL DEFAULT 0
 , `election_id` int(11) NOT NULL DEFAULT 0
 , `office_id` int(11) NOT NULL DEFAULT 0
 , `candidate_id` int(11) NOT NULL DEFAULT 0
-, `ward` tinyint(2) NOT NULL DEFAULT 0
-, `division` tinyint(2) NOT NULL DEFAULT 0
+, `ward` smallint(5) NOT NULL DEFAULT 0
+, `division` smallint(5) NOT NULL DEFAULT 0
 , `votes` smallint(5) unsigned NOT NULL DEFAULT 0
 , `order` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
@@ -76,9 +76,9 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
-  `id` tinyint(2) NOT NULL AUTO_INCREMENT
+  `id` smallint(5) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
-, `order` tinyint(2) unsigned NOT NULL DEFAULT 1
+, `order` smallint(5) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -115,15 +115,14 @@ ALTER TABLE `#__pv_live_votes`
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+INSERT INTO `#__pv_live_parties` VALUES
+('', '',            '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'DEMOCRATIC',  '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'REPUBLICAN',  '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'LIBERTARIAN', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'GREEN',       '', 1, NOW(), '0000-00-00 00:00:00');
 
 INSERT INTO `#__pv_live_vote_types` VALUES
-('', 'ABSENTEE', '', 1, NOW(), '0000-00-00 00:00:00'),
-('', 'MACHINE', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'ABSENTEE',    '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'MACHINE',     '', 1, NOW(), '0000-00-00 00:00:00'),
 ('', 'PROVISIONAL', '', 1, NOW(), '0000-00-00 00:00:00');
-
-INSERT INTO `#__pv_live_parties` VALUES
-('', '', '', 1, NOW(), '0000-00-00 00:00:00'),
-('', 'DEMOCRATIC', '', 1, NOW(), '0000-00-00 00:00:00'),
-('', 'REPUBLICAN', '', 1, NOW(), '0000-00-00 00:00:00'),
-('', 'LIBERTARIAN', '', 1, NOW(), '0000-00-00 00:00:00'),
-('', 'GREEN', '', 1, NOW(), '0000-00-00 00:00:00');
