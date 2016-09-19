@@ -31,9 +31,9 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
-  `id` int(2) NOT NULL AUTO_INCREMENT
+  `id` tinyint(2) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
-, `order` int(11) unsigned NOT NULL DEFAULT 1
+, `order` tinyint(2) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -110,13 +110,13 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 INSERT INTO `#__pv_live_vote_types` VALUES
-('', 'ABSENTEE', 1, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'MACHINE', 2, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'PROVISIONAL', 3, 1, NOW(), '0000-00-00 00:00:00');
+('', 'ABSENTEE', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'MACHINE', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'PROVISIONAL', '', 1, NOW(), '0000-00-00 00:00:00');
 
 INSERT INTO `#__pv_live_parties` VALUES
-('', '', 1, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'DEMOCRATIC', 2, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'REPUBLICAN', 3, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'LIBERTARIAN', 4, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'GREEN', 5, 1, NOW(), '0000-00-00 00:00:00');
+('', '', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'DEMOCRATIC', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'REPUBLICAN', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'LIBERTARIAN', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'GREEN', '', 1, NOW(), '0000-00-00 00:00:00');

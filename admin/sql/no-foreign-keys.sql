@@ -75,13 +75,13 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 ) ENGINE=MYISAM COLLATE='utf8_general_ci';
 
 INSERT INTO `#__pv_live_vote_types` VALUES
-('', 'ABSENTEE', 1, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'MACHINE', 2, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'PROVISIONAL'3, , 1, NOW(), '0000-00-00 00:00:00');
+('', 'ABSENTEE', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'MACHINE', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'PROVISIONAL', '', 1, NOW(), '0000-00-00 00:00:00');
 
 INSERT INTO `#__pv_live_parties` VALUES
-('', '', 1, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'DEMOCRATIC', 2, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'REPUBLICAN', 3, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'LIBERTARIAN', 4, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'GREEN', 5, 1, NOW(), '0000-00-00 00:00:00');
+('', '', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'DEMOCRATIC', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'REPUBLICAN', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'LIBERTARIAN', '', 1, NOW(), '0000-00-00 00:00:00'),
+('', 'GREEN', '', 1, NOW(), '0000-00-00 00:00:00');
