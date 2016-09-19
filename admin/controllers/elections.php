@@ -7,6 +7,12 @@ defined('_JEXEC') or die('Restricted access');
  */
 class PvliveresultsControllerElections extends PvliveresultsController
 {
+    public function __construct()
+    {
+        $this->setName('elections');   
+        parent::__construct();
+    }
+
     public function display()
     { dd($this);
         // if 'raw' isn't explicit, set to 'html'
