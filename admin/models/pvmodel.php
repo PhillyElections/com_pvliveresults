@@ -12,8 +12,8 @@ class PVModel extends JModel
 {
     public $_data;
     public $_lookup;
-    public $tableName = (object)array('s'->'','p'->'');
-    public $tableOrder = 'order';
+    public $tableName = array('s'->'','p'->'');
+    public $tableOrder = ' ORDER BY `order` DESC, `id` DESC ';
 
     public function _buildLookupQuery()
     {
@@ -50,7 +50,7 @@ class PVModel extends JModel
     public function _buildQuery()
     {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT * ' . ' FROM `#__pv_live_' . JString::strtolower($this->tableName->p) . '` where published=1 order by `' . $this->tableOrder . '` DESC';
+        $query = 'SELECT * ' . ' FROM `#__pv_live_' . $this->tableName['p'] . '` where published=1 ' . $this->tableOrder;
         return $query;
     }
 

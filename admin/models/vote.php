@@ -12,7 +12,7 @@ class PvliveresultsModelVote extends PVModel
 {
     //public $_data;
     //public $_lookup;
-    public $tableName = (object)array('s'=>'vote','p'=>'votes');
+    public $tableName = array('s'=>'vote','p'=>'votes');
     //public $tableOrder = 'order';
 
 }

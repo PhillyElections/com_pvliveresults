@@ -11,7 +11,7 @@ class PvliveresultsModelCandidate extends PVModel
 {
     //public $_data;
     //public $_lookup;
-    public $tableName = (object)array('s'=>'candidate','p'=>'candidates');
+    public $tableName = array('s'=>'candidate','p'=>'candidates');
     //public $tableOrder = 'order';
 
 }

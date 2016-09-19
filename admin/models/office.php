@@ -12,7 +12,7 @@ class PvliveresultsModelOffice extends PVModel
 {
     //public $_data;
     //public $_lookup;
-    public $tableName = (object)array('s'=>'office','p'=>'offices');
+    public $tableName = array('s'=>'office','p'=>'offices');
     //public $tableOrder = 'order';
 
 
@@ -23,7 +23,7 @@ class PvliveresultsModelOffice extends PVModel
 
         foreach ($cid as $id)
         {
-            $row = JTable::getInstance($this->tableName->s, 'Table');
+            $row = JTable::getInstance($this->tableName['s'], 'Table');
             $row->load($id);
             $row->publish($id, 1);
         }
@@ -39,7 +39,7 @@ class PvliveresultsModelOffice extends PVModel
 
         foreach ($cid as $id)
         {
-            $row = JTable::getInstance($this->tableName->s, 'Table');
+            $row = JTable::getInstance($this->tableName['s'], 'Table');
             $row->load($id);
             $row->publish($id, 0);
         }
