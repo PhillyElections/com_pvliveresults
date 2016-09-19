@@ -17,8 +17,10 @@ Uzer::blok(JFactory::getUser(), 'Administrator');
 $language = JFactory::getLanguage();
 $language->load(JRequest::getCmd('option'), JPATH_SITE);
 
-// Require the base controller
+// Require the base model
+require_once JPATH_COMPONENT . DS . 'models/model.php';
 
+// Require the base controller
 require_once JPATH_COMPONENT . DS . 'controller.php';
 
 // Require specific controller if requested
