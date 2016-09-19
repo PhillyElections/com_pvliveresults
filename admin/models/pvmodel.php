@@ -10,7 +10,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class PVModel extends JModel
 {
-
     public $_data;
     public $_lookup;
     public $tableName = (object)array('s'->'','p'->'');
