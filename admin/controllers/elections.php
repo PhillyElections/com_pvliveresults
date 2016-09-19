@@ -9,8 +9,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
 {
     public function display()
     {
-        dd($this);
-        // if 'raw' isn't explicit, set to 'html'
+        // if format isn't explicit, set to 'html'
         $view = $this->getView('elections', JRequest::getWord('format', 'html'));
         $view->setModel($this->getModel('candidate'), true);
         $view->setModel($this->getModel('election'), true);
@@ -19,7 +18,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $view->setModel($this->getModel('vote'), true);
         $view->setModel($this->getModel('votetype'), true);
 
-        parent::display();
+        $view->display();
     }
 
     public function edit()
