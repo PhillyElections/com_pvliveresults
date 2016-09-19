@@ -10,7 +10,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class PvliveresultsModelOffice extends PVModel
 {
+    //public $_data;
+    //public $_lookup;
     public $tableName = (object)array('s'=>'office','p'=>'offices');
+    //public $tableOrder = 'order';
+
 
     function publish_offices($currentElection)
     {

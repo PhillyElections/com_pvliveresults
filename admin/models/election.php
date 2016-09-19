@@ -9,7 +9,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class PvliveresultsModelElection extends PVModel
 {
+    //public $_data;
+    //public $_lookup;
     public $tableName = (object)array('s'=>'election','p'=>'elections');
+    //public $tableOrder = 'order';
 
     /**
      * Constructor that retrieves the ID from the request
