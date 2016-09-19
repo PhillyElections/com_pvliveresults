@@ -2,12 +2,23 @@ SET FOREIGN_KEY_CHECKS = 0;
 SELECT @@FOREIGN_KEY_CHECKS;
 
 DROP TABLE IF EXISTS `#__pv_live_candidates`;
-DROP TABLE IF EXISTS `#__pv_live_votes`;
-DROP TABLE IF EXISTS `#__pv_live_divisions`;
-DROP TABLE IF EXISTS `#__pv_live_election_years`;
+DROP TABLE IF EXISTS `#__pv_live_elections`;
 DROP TABLE IF EXISTS `#__pv_live_offices`;
 DROP TABLE IF EXISTS `#__pv_live_parties`;
-DROP TABLE IF EXISTS `#__pv_live_wards`;
+DROP TABLE IF EXISTS `#__pv_live_votes`;
+DROP TABLE IF EXISTS `#__pv_live_vote_types`;
+
+CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT
+, `party_id` int(11) unsigned NOT NULL DEFAULT 0
+, `name` varchar(100) NOT NULL
+, `order` smallint(4) unsigned NOT NULL DEFAULT 1
+, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
+, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, PRIMARY KEY (`id`)
+, INDEX `party_id_candidates` (`party_id`)
+) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
@@ -20,42 +31,22 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 , PRIMARY KEY (`id`)
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
-CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
-  `id` int(11) NOT NULL AUTO_INCREMENT
-, `name` varchar(100) NOT NULL
-, `order` int(11) unsigned NOT NULL DEFAULT 1
-, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
-, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, PRIMARY KEY (`id`)
-) ENGINE=ARIA COLLATE='utf8_general_ci';
-
-CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
-  `id` tinyint(2) NOT NULL AUTO_INCREMENT
-, `name` varchar(100) NOT NULL
-, `order` tinyint(2) unsigned NOT NULL DEFAULT 1
-, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
-, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, PRIMARY KEY (`id`)
-) ENGINE=ARIA COLLATE='utf8_general_ci';
-
-CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT
-, `party_id` int(11) unsigned NOT NULL DEFAULT 0
-, `name` varchar(100) NOT NULL
-, `order` smallint(4) unsigned NOT NULL DEFAULT 1
-, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
-, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-, PRIMARY KEY (`id`)
-) ENGINE=ARIA COLLATE='utf8_general_ci';
-
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `party_id` int(11) unsigned NOT NULL DEFAULT 0
 , `name` varchar(255) NOT NULL
 , `order` smallint(4) unsigned NOT NULL DEFAULT 1
+, `published` tinyint(1) unsigned NOT NULL DEFAULT 0
+, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, PRIMARY KEY (`id`)
+, INDEX `party_id_offices` (`party_id`)
+) ENGINE=ARIA COLLATE='utf8_general_ci';
+
+CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
+  `id` int(11) NOT NULL AUTO_INCREMENT
+, `name` varchar(100) NOT NULL
+, `order` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -73,6 +64,22 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , `votes` smallint(5) unsigned NOT NULL DEFAULT 0
 , `order` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
+, `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+, INDEX `vote_type_id_votes` (`vote_type_id`)
+, INDEX `election_id_votes` (`election_id`)
+, INDEX `office_id_votes` (`office_id`)
+, INDEX `candidate_id_votes` (`candidate_id`)
+, INDEX `ward_votes` (`ward`)
+, INDEX `division_votes` (`division`)
+, PRIMARY KEY (`id`)
+) ENGINE=ARIA COLLATE='utf8_general_ci';
+
+CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
+  `id` tinyint(2) NOT NULL AUTO_INCREMENT
+, `name` varchar(100) NOT NULL
+, `order` tinyint(2) unsigned NOT NULL DEFAULT 1
+, `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
