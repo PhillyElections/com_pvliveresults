@@ -13,7 +13,7 @@ class PVModel extends JModel
 
     public $_data;
     public $_lookup;
-    public $tableName;
+    public $tableName = (object)array('s'->'','p'->'');
     public $tableOrder = 'order';
 
     public function _buildLookupQuery()
@@ -28,7 +28,7 @@ class PVModel extends JModel
     {
         foreach ($ids as $id)
         {
-            $row = JTable::getInstance($this->tableName, 'Table');
+            $row = JTable::getInstance($this->tableName->s, 'Table');
             $row->load($id);
             $row->publish($id, 1);
         }
@@ -38,7 +38,7 @@ class PVModel extends JModel
     {
         foreach ($ids as $id)
         {
-            $row = JTable::getInstance($this->tableName, 'Table');
+            $row = JTable::getInstance($this->tableName->s, 'Table');
             $row->load($id);
             $row->publish($id, 0);
         }

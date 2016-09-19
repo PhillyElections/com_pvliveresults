@@ -74,7 +74,7 @@ class PvliveresultsModelElection extends PVModel
      */
     public function store()
     {
-        $row = JTable::getInstance('Electionyear', 'Table');
+        $row = JTable::getInstance($this->tableName->s, 'Table');
 
         $data = JRequest::get('post');
 
@@ -109,7 +109,7 @@ class PvliveresultsModelElection extends PVModel
     {
         $cids = JRequest::getVar('cid', array(0), 'post', 'array');
 
-        $row = JTable::getInstance('Electionyear', 'Table');
+        $row = JTable::getInstance($this->tableName->s, 'Table');
 
         if (count($cids)) {
             foreach ($cids as $cid) {
