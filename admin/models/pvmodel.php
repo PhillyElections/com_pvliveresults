@@ -1,17 +1,9 @@
 <?php
-/**
- * Office Model for Liveresult Component
- * 
- * @package    Philadelphia.Votes
- * @subpackage Components
- * @license        GNU/GPL
- */
-
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /**
- * Pvliveresults Office Model
+ * Pvliveresults PVModel (parent) Model
  *
  * @package    Joomla.Tutorials
  * @subpackage Components
@@ -59,7 +51,7 @@ class PVModel extends JModel
     public function _buildQuery()
     {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT * ' . ' FROM `#__pv_live_' . JString::strtolower($this->tableName) . 's` where published=1 order by `' . $this->tableOrder . '` DESC';
+        $query = 'SELECT * ' . ' FROM `#__pv_live_' . JString::strtolower($this->tableName->p) . '` where published=1 order by `' . $this->tableOrder . '` DESC';
         return $query;
     }
 

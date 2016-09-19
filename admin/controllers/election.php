@@ -102,7 +102,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $exclude_header = isset($_POST['header']) ? true : false;
         $move_file = strtolower(str_replace(' ', '_', $e_year));
         $move_file = preg_replace('/[^A-Za-z0-9\-]/', '_', $move_file).'.csv';
-        $model = $this->getModel('Liveresult');
+        $votes = $this->getModel('Liveresult');
         $insertStart = 'INSERT into #__pv_live_votes (`office`,`ward`,`division`,`vote_type`,`name`,`party`,`votes`,`e_year`,`date_created`) VALUES ';
 
         $path = JPATH_COMPONENT.DS.'uploads'.DS;

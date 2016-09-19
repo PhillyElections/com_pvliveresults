@@ -1,23 +1,16 @@
-.<?php
-/**
- * Liveresult Model for Liveresult Component
- *
- * @package    Philadelphia.Votes
- * @subpackage Components
- * @license        GNU/GPL
- */
-
-// No direct access
-defined('_JEXEC') or die( 'Restricted access' );
+<?php
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /**
- * Pvliveresults Liveresult Model
+ * Pvliveresults Election Model
  *
  * @package    Joomla.Tutorials
  * @subpackage Components
  */
 class PvliveresultsModelElection extends PVModel
 {
+    public $tableName = (object)array('s'=>'election','p'=>'elections');
+
     /**
      * Constructor that retrieves the ID from the request
      *
