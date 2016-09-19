@@ -8,7 +8,7 @@ defined('_JEXEC') or die('Restricted access');
 class PvliveresultsControllerElections extends PvliveresultsController
 {
     public function display()
-    {
+    { dd($this);
         // if 'raw' isn't explicit, set to 'html'
         $view = $this->getView('elections', JRequest::getWord('format', 'html'));
         $view->setModel($this->getModel('candidate'), true);
