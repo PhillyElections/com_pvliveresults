@@ -1,18 +1,9 @@
 <?php
-
-/**
- * Elections Controller for PVLiveresult Component.
- *
- * @package    Philadelphia.Votes
- * @subpackage Components
- * @license        GNU/GPL
- */
-
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Pvliveresults Liveresult Controller.
+ * Pvliveresults Elections Controller.
  */
 class PvliveresultsControllerElections extends PvliveresultsController
 {
@@ -20,7 +11,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
     {
         // if 'raw' isn't explicit, set to 'html'
         $view = $this->getView('elections', JRequest::getWord('format', 'html'));
-        $view->setModel($this->getModel('elections'), true);
+        $view->setModel($this->getModel('election'), true);
 
         $view->display();
     }

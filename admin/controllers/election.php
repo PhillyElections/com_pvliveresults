@@ -1,18 +1,9 @@
 <?php
-
-/**
- * Liveresult Controller for Liveresult Component.
- *
- * @package    Philadelphia.Votes
- * @subpackage Components
- * @license        GNU/GPL
- */
-
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Pvliveresults Liveresult Controller.
+ * Pvliveresults Election Controller.
  */
 class PvliveresultsControllerElection extends PvliveresultsController
 {
