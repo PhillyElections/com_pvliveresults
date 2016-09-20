@@ -48,7 +48,7 @@ class PvliveresultsModel extends JModel
      * @return string The query to be used to retrieve the rows from the database
      */
     public function _buildQuery()
-    {
+    { 
         // added order by -- id desc for a defacto recent date sort
         $query = 'SELECT * ' . ' FROM `#__pv_live_' . $this->tableName['p'] . '` where published=1 ' . $this->tableOrder;
         return $query;
@@ -62,6 +62,7 @@ class PvliveresultsModel extends JModel
     {
         // Lets load the data if it doesn't already exist
         if (empty( $this->_data )) {
+d($query);
             $query = $this->_buildQuery();
             $this->_data = $this->_getList($query);
         }
