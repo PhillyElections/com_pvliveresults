@@ -12,7 +12,7 @@ class PvliveresultsModelOffice extends PvliveresultsModel
 {
     //public $_data;
     //public $_lookup;
-    public $tableName = array('s'=>'office','p'=>'offices');
+    public $tableName = array('s'=>'office','p'=>'#__pv_live_offices');
     //public $tableOrder = 'order';
 
 

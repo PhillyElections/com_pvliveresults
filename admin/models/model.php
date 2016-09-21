@@ -50,8 +50,7 @@ class PvliveresultsModel extends JModel
     public function _buildQuery()
     { 
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT * ' . ' FROM `#__pv_live_' . $this->tableName['p'] . '` where published=1 ' . $this->tableOrder;
-        d($query);
+        $query = 'SELECT * ' . ' FROM `' . $this->tableName['p'] . '` where published=1 ' . $this->tableOrder;
         return $query;
     }
 

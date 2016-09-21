@@ -12,7 +12,7 @@ class PvliveresultsModelParty extends PvliveresultsModel
 {
     //public $_data;
     //public $_lookup;
-    public $tableName = array('s'=>'party','p'=>'parties');
+    public $tableName = array('s'=>'party','p'=>'#__pv_live_parties');
     //public $tableOrder = 'order';
 
 }
