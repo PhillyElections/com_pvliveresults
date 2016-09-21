@@ -29,6 +29,7 @@ class PvliveresultsViewTest extends JView
 
         // Get data from the model
         $model = $this->getModel();
+
         $election = $this->getModel('election');
         $candidate = $this->getModel('candidate');
         $office = $this->getModel('office');
@@ -36,8 +37,8 @@ class PvliveresultsViewTest extends JView
         $vote = $this->getModel('vote');
         $votetype = $this->getModel('votetype');
 
-        dd($model,$election, 
-            /*$election->getData(), */
+        dd($model,$this, $election, 
+            $election->getData(),
             $candidate, $candidate->getData(), 
             $office, $office->getData(), 
             $party, $party->getData(), 
