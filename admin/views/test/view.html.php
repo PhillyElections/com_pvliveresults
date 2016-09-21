@@ -36,7 +36,7 @@ class PvliveresultsViewTest extends JView
         $vote = $this->getModel('vote');
         $votetype = $this->getModel('votetype');
 
-        dd($model, $model->getData(),$election, $election->getData(), $candidate, $candidate->getData(), $office, $office->getData(), $party, $party->getData(), $vote, $vote->getData(), $votetype, $votetype->getData());
+        dd($model,$election, $election->getData(), $candidate, $candidate->getData(), $office, $office->getData(), $party, $party->getData(), $vote, $vote->getData(), $votetype, $votetype->getData());
 
         parent::display($tpl);
     }
