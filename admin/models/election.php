@@ -46,7 +46,7 @@ class PvliveresultsModelElection extends PvliveresultsModel
      * Method to get a Liveresult
      * @return object with data
      */
-    public function &getData()
+    public function &get1Data()
     {
         // lets order by... order!
         $order = " ORDER BY `order` ASC";

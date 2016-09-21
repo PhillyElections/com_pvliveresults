@@ -35,6 +35,24 @@ class PvliveresultsControllerElection extends PvliveresultsController
         parent::display();
     }
 
+    /**
+     * delete the election.
+     */
+    public function delete()
+    {
+        $array = JRequest::getVar('cid', 0, '', 'array');
+        $id = ((int) $array[0]);
+        d('deleting', $id);
+
+        // delete votes
+        d('hey, i\'m deleting votes');
+
+        // delete election
+        d('hey, i\'m deleting the election');
+
+        // we do not delete candidates, offices, parties, or votetypes -- all the bindings are in 'votes', so there's no reason
+    }
+
     public function save_step2()
     {
         JRequest::checkToken() or jexit('Invalid Token');

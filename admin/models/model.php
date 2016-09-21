@@ -63,11 +63,42 @@ class PvliveresultsModel extends JModel
         // Lets load the data if it doesn't already exist
         if (empty( $this->_data )) {
             $query = $this->_buildQuery();
-d($query);
-
             $this->_data = $this->_getList($query);
         }
 
         return $this->_data;
+    }
+
+    /**
+     * Method to store a record
+     *
+     * @access  public
+     * @return  boolean True on success
+     */
+    public function store()
+    {
+        $row = JTable::getInstance($this->tableName['s'], 'Table');
+
+        $data = JRequest::get('post');
+
+        // Bind the form fields to the  table
+        if (!$row->bind($data)) {
+            $this->setError($this->_db->getErrorMsg());
+            return false;
+        }
+
+        // Make sure the  record is valid
+        if (!$row->check()) {
+            $this->setError($this->_db->getErrorMsg());
+            return false;
+        }
+
+        // Store the web link table to the database
+        if (!$row->store()) {
+            $this->setError($row->getErrorMsg());
+            return false;
+        }
+
+        return true;
     }
 }

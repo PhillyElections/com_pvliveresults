@@ -28,4 +28,10 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=add&&cid=' . $cid[0]);
     }
+
+    public function delete()
+    {
+        $mainframe = JFactory::getApplication();
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=delete&&cid=' . $cid[0]);
+    }
 }
