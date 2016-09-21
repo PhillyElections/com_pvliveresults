@@ -32,6 +32,7 @@ class PvliveresultsViewElections extends JView
 
 		// Get data from the model
 		$items		= & $this->get( 'Data');
+		d($items);
 		$this->assignRef('items', $items);
 
 		parent::display($tpl);
