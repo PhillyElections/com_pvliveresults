@@ -28,7 +28,7 @@ class PvliveresultsViewElections extends JView
 		JToolBarHelper::title(   JText::_( 'PVLiveresults App Manager' ), 'generic.png' );
         JToolBarHelper::deleteList();
         JToolBarHelper::editListX();
-        JToolBarHelper::addNewX(););
+        JToolBarHelper::addNewX();
 
 		// Get data from the model
 		$items		= & $this->get( 'Data');
