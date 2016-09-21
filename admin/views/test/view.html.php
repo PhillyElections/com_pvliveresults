@@ -28,6 +28,7 @@ class PvliveresultsViewTest extends JView
         JToolBarHelper::title(   JText::_( 'PVLiveresults Test' ), 'generic.png' );
 
         // Get data from the model
+        $model = $this->getModel();
         $election = $this->getModel('election');
         $candidate = $this->getModel('candidate');
         $office = $this->getModel('office');
@@ -35,7 +36,7 @@ class PvliveresultsViewTest extends JView
         $vote = $this->getModel('vote');
         $votetype = $this->getModel('votetype');
 
-        dd($this, $election, $election->getData(), $candidate, $candidate->getData(), $office, $office->getData(), $party, $party->getData(), $vote, $vote->getData(), $votetype, $votetype->getData());
+        dd($model, $model->getData(),$election, $election->getData(), $candidate, $candidate->getData(), $office, $office->getData(), $party, $party->getData(), $vote, $vote->getData(), $votetype, $votetype->getData());
 
         parent::display($tpl);
     }
