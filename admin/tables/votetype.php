@@ -9,12 +9,12 @@ defined('_JEXEC') or die;
  * @subpackage Components
  * @license        GNU/GPL
  */
-class TableVotetype extends PVliveresultsTable
+class TableVotetype extends JTable
 {
 
     public $id = null;
     public $name = null;
-    public $order = null;
+    public $ordering = null;
     public $published = null;
     public $created = null;
     public $updated = null;

@@ -9,7 +9,7 @@ defined('_JEXEC') or die;
  * @subpackage Components
  * @license        GNU/GPL
  */
-class TableVote extends PVliveresultsTable
+class TableVote extends JTable
 {
 
     public $id = null;
@@ -20,7 +20,7 @@ class TableVote extends PVliveresultsTable
     public $ward = null;
     public $division = null;
     public $votes = null;
-    public $order = null;
+    public $ordering = null;
     public $published = null;
     public $created = null;
     public $updated = null;

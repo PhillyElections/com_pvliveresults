@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_candidates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `party_id` smallint(5) unsigned NOT NULL DEFAULT 0
 , `name` varchar(100) NOT NULL
-, `order` smallint(5) unsigned NOT NULL DEFAULT 1
+, `ordering` smallint(5) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
 , `date` date NOT NULL DEFAULT '0000-00-00'
-, `order` int(11) unsigned NOT NULL DEFAULT 1
+, `ordering` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `party_id` smallint(5) unsigned NOT NULL DEFAULT 0
 , `name` varchar(255) NOT NULL
-, `order` smallint(5) unsigned NOT NULL DEFAULT 1
+, `ordering` smallint(5) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
 CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
   `id` smallint(5) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
-, `order` smallint(5) unsigned NOT NULL DEFAULT 1
+, `ordering` smallint(5) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , `ward` smallint(5) NOT NULL DEFAULT 0
 , `division` smallint(5) NOT NULL DEFAULT 0
 , `votes` smallint(5) unsigned NOT NULL DEFAULT 0
-, `order` int(11) unsigned NOT NULL DEFAULT 1
+, `ordering` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 CREATE TABLE IF NOT EXISTS `#__pv_live_vote_types` (
   `id` smallint(5) NOT NULL AUTO_INCREMENT
 , `name` varchar(100) NOT NULL
-, `order` smallint(5) unsigned NOT NULL DEFAULT 1
+, `ordering` smallint(5) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT '0'
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'

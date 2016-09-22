@@ -9,13 +9,13 @@ defined('_JEXEC') or die;
  * @subpackage Components
  * @license        GNU/GPL
  */
-class TableOffice extends PVliveresultsTable
+class TableOffice extends JTable
 {
 
     public $id = null;
     public $party_id = null;
     public $name = null;
-    public $order = null;
+    public $ordering = null;
     public $published = null;
     public $created = null;
     public $updated = null;
