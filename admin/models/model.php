@@ -165,4 +165,16 @@ class PvliveresultsModel extends JModel
 
         return true;
     }
+
+    public function getByName($name)
+    {
+        $db = JFactory::getDBO();
+        $query = 'SELECT * FROM `' . $this->_table . '` WHERE `name` = ' . $row->_db->Quote($name);
+        $db->setQuery($query);
+
+        if ($result = $db->loadResult() && count($result)) {
+            return $result;
+        }
+        return false;
+    }
 }
