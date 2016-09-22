@@ -20,10 +20,9 @@ class PvliveresultsViewElections extends JView
         JToolBarHelper::addNewX();
 
         // Get data from the model
-        $items = &$this->get('Data');
-        d($items);
-        $this->assignRef('items', $items);
-        $this->assignRef('pagination', $pagination);
+
+        $this->assignRef('items', &$this->get('Data'));
+        $this->assignRef('pagination', &$this->get('Pagination'));
 
         parent::display($tpl);
     }
