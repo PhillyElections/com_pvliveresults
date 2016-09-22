@@ -53,13 +53,13 @@ jimport( 'joomla.html.html' );
                     <?=JHTML::_('grid.id', $i, $row->id); ?>
                 </td>
                 <td>
-                    <?=$row->order; ?>
+                    <input type="text" name="order[<?=$row->id ;?>]" value="<?=$row->order ?>" />
                 </td>
                 <td>
                     <a href="<?=$link; ?>"><?=$row->name; ?></a>
                 </td>
                 <td>
-                    <a href="<?=$link; ?>"><?=$row->date; ?></a>
+                    <?=$row->date; ?>
                 </td>
                 <td>
                     <?=JHTML::_('grid.published', $row, $i );?>
