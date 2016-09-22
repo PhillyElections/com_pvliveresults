@@ -169,7 +169,7 @@ class PvliveresultsModel extends JModel
     public function getByName($name)
     {
         $db = JFactory::getDBO();
-        $query = 'SELECT * FROM `' . $this->_table . '` WHERE `name` = ' . $row->_db->Quote($name);
+        $query = "SELECT * FROM " . $db->nameQuote($this->_table) . " WHERE `name` = " . $db->Quote($name) . " ";
         $db->setQuery($query);
 
         if ($result = $db->loadResult() && count($result)) {
