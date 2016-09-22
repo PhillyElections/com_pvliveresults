@@ -43,3 +43,4 @@ class PvliveresultsModelVotetype extends PvliveresultsModel
     //public $_where = ' WHERE `published` = 1 ';
 
 }
+

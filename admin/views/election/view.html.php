@@ -39,3 +39,4 @@ class PvliveresultsViewElection extends JView
         parent::display($tpl);
     }
 }
+

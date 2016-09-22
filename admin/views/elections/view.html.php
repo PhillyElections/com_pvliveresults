@@ -28,8 +28,9 @@ class PvliveresultsViewElections extends JView
         parent::display($tpl);
     }
 
-    public function display_races($tpl = null)
+    public function displayRaces($tpl = null)
     {
         parent::display($tpl);
     }
 }
+

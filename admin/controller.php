@@ -15,3 +15,4 @@ class PvliveresultsController extends JController
         parent::display();
     }
 }
+

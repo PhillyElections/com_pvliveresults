@@ -30,3 +30,4 @@ class TableVote extends JTable
         parent::__construct('#__pv_live_votes', 'id', $db);
     }
 }
+
