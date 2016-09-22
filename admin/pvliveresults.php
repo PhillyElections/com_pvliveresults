@@ -4,7 +4,7 @@
  *
  * @license        GNU/GPL
  */
-
+ini_set('display_errors', 1);
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 jimport('kint.kint');
