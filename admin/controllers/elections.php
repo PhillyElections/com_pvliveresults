@@ -34,4 +34,32 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=delete&&cid=' . $cid[0]);
     }
+
+    public function publish()
+    {
+        JRequest::checkToken() or jexit('Invalid Token');
+
+        $cid = JRequest::getVar('cid');
+
+        foreach ($cid as $id)
+        {
+            $row = JTable::getInstance($this->_tableRef, 'Table');
+            $row->load($id);
+            $row->publish($id, 1);
+        }
+    }
+
+    public function unpublish()
+    {
+        JRequest::checkToken() or jexit('Invalid Token');
+
+        $cid = JRequest::getVar('cid');
+
+        foreach ($cid as $id)
+        {
+            $row = JTable::getInstance($this->_tableRef, 'Table');
+            $row->load($id);
+            $row->publish($id, 0);
+        }
+    }
 }

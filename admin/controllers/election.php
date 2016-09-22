@@ -243,21 +243,4 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $msg = JText::_('Operation Cancelled');
         $this->setRedirect('index.php?option=com_pvliveresults', $msg);
     }
-
-    public function publish()
-    {
-        JRequest::checkToken() or jexit('Invalid Token');
-
-        $model = $this->getModel('office');
-        $model->publish_offices(JRequest::getVar('id'));
-    }
-
-  
-    public function unpublish()
-    {
-        JRequest::checkToken() or jexit('Invalid Token');
-
-        $model = $this->getModel('Office');
-        $model->unpublish_offices(JRequest::getVar('id'));
-    }
 }
