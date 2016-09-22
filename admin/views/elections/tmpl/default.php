@@ -15,10 +15,10 @@ jimport( 'joomla.html.html' );
                 <th width="5">
                     <?=JText::_('ID'); ?>
                 </th>
-                <th width="20">
+                <th width="5">
                     <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($items); ?>);" />
                 </th>
-                <th>
+                <th width="5">
                     <?=JText::_('ORDER'); ?>
                     <?=JHTML::_('grid.order',  $items ); ?>
                 </th>
