@@ -130,4 +130,4 @@ INSERT INTO `#__pv_live_vote_types` VALUES
 INSERT INTO `#__pv_live_elections` VALUES
 ('', '2015 Primary Election', '2015-04-28', '', 1, NOW(), '0000-00-00 00:00:00'),
 ('', '2015 General Election', '2015-11-03', '', 1, NOW(), '0000-00-00 00:00:00'),
-('', '2016 Primary Election', '2016-04-26'. '', 1, NOW(), '0000-00-00 00:00:00');
+('', '2016 Primary Election', '2016-04-26', '', 1, NOW(), '0000-00-00 00:00:00');
