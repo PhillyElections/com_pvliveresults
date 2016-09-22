@@ -35,7 +35,9 @@
     </languages>
     <administration>
         <menu link="option=com_pvliveresults">(PV) Live Election Results</menu>
-        <menu link="option=com_pvliveresults&amp;controller=test">test</menu>
+        <submenu>
+            <menu controller="test">test</menu>
+        </submenu>
         <files folder="admin">
             <filename>index.html</filename>
             <filename>app-logo.png</filename>
