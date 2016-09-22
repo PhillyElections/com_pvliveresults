@@ -40,17 +40,19 @@ class PvliveresultsControllerElection extends PvliveresultsController
      */
     public function delete()
     {
-        $array = JRequest::getVar('cid', 0, '', 'array');
-        $id = ((int) $array[0]);
-        d('deleting', $id);
+        $cids = JRequest::getVar('cid', 0, '', 'array');
+        
+        foreach ($cids as $id) {
+            d('deleting', $id);
 
-        // delete votes
-        d('hey, i\'m deleting votes');
+            // delete votes
+            d('hey, i\'m deleting votes');
 
-        // delete election
-        d('hey, i\'m deleting the election');
+            // delete election
+            d('hey, i\'m deleting the election');
 
-        // we do not delete candidates, offices, parties, or votetypes -- all the bindings are in 'votes', so there's no reason
+            // we do not delete candidates, offices, parties, or votetypes -- all the bindings are in 'votes', so there's no reason
+        }
     }
 
     public function save_step2()
