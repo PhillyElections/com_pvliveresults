@@ -63,7 +63,6 @@ class PvliveresultsControllerElections extends PvliveresultsController
 
         foreach ($cid as $id)
         {
-            dd($id);
             $election->unpublish($id);
         }
     }
