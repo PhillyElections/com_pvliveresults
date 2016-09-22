@@ -46,8 +46,12 @@ class PvliveresultsControllerElections extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         $election = $this->getModel('election');
-        dd($election);
-        $election->publish();
+        $cid = JRequest::getVar('cid');
+
+        foreach ($cid as $id)
+        {
+            $election->publish($id);
+        }
     }
 
     public function unpublish()
@@ -55,7 +59,11 @@ class PvliveresultsControllerElections extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         $election = $this->getModel('election');
-        dd($election);
-        $election->unpublish();
+        $cid = JRequest::getVar('cid');
+
+        foreach ($cid as $id)
+        {
+            $election->unpublish($id);
+        }
     }
 }
