@@ -53,35 +53,13 @@ class PvliveresultsModelElection extends PvliveresultsModel
     // default is:
     //public $_where = ' WHERE `published` = 1 ';
 
-    /**
-     * Constructor that retrieves the ID from the request
-     *
-     * @access  public
-     * @return  void
-     */
+
     public function __construct()
     {
         parent::__construct();
 
         $array = JRequest::getVar('cid', 0, '', 'array');
         $this->setId((int)$array[0]);
-    }
-
-    /**
-     * default order string
-     * @var string
-     */
-    public $queryWhere = ' WHERE `published` = ` ';
-
-    /**
-     * default order string
-     * @var string
-     */
-    public $queryOrder = ' ORDER BY `order` DESC, `id` DESC ';
-
-    public function __construct()
-    {
-        parent::__construct();
 
         $mainframe = JFactory::getApplication();
 
@@ -95,6 +73,18 @@ class PvliveresultsModelElection extends PvliveresultsModel
         $this->setState('limit', $limit);
         $this->setState('limitstart', $limitstart);
     }
+
+    /**
+     * default order string
+     * @var string
+     */
+    public $queryWhere = ' WHERE `published` = ` ';
+
+    /**
+     * default order string
+     * @var string
+     */
+    public $queryOrder = ' ORDER BY `order` DESC, `id` DESC ';
 
     /**
      * Returns the query
