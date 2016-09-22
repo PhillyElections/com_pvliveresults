@@ -101,7 +101,7 @@ class PvliveresultsModelElection extends PvliveresultsModel
      * @return string The query to be used to retrieve the rows from the database
      */
     public function _buildQuery()
-    { 
+    {
         // added order by -- id desc for a defacto recent date sort
         $query = 'SELECT * ' . ' FROM `' . $this->_table . '` ' . $this->_where . ' ' . $this->_order;
         return $query;
@@ -180,16 +180,16 @@ class PvliveresultsModelElection extends PvliveresultsModel
         }
         return true;
     }
-    
-    public function bulk_insert($insert)
+
+    public function bulkInsert($insert)
     {
         $db = &JFactory::getDBO();
         $db->setQuery($insert);
         $db->query();
         return true;
     }
-    
-    public function insert_year($year)
+
+    public function insertYear($year)
     {
         $db = &JFactory::getDBO();
         $year = htmlentities($year, ENT_QUOTES);
@@ -199,7 +199,7 @@ class PvliveresultsModelElection extends PvliveresultsModel
         return $db->insertid();
     }
 
-    public function insert_office($e_year, $year_id)
+    public function insertOffice($e_year, $year_id)
     {
         $db = &JFactory::getDBO();
         $year = htmlentities($year, ENT_QUOTES);
@@ -218,14 +218,13 @@ class PvliveresultsModelElection extends PvliveresultsModel
                 if ($counter < $len) {
                     $query .= " , ";
                 }
-                
             }
             $db->setQuery($query);
             $db->query();
         }
     }
-    
-    public function delete_related($ids)
+
+    public function deleteRelated($ids)
     {
         if ($ids) {
             $db = &JFactory::getDBO();
@@ -236,11 +235,10 @@ class PvliveresultsModelElection extends PvliveresultsModel
                 $db->setQuery($del_query);
                 $db->query();
             }
-            
         }
     }
-    
-    public function update_office($order, $id)
+
+    public function updateOffice($order, $id)
     {
         $db = &JFactory::getDBO();
         $query = "UPDATE #__pv_live_offices set publish_order = '" . $order . "' , date_modified=NOW() where published=1 and id='" . $id . "'";
@@ -248,19 +246,19 @@ class PvliveresultsModelElection extends PvliveresultsModel
         $db->query();
     }
 
-    public function insert_office_ward($office_id, $office_name, $year_id)
+    public function insertOfficeWard($office_id, $office_name, $year_id)
     {
         $office_name2 = htmlspecialchars($office_name, ENT_QUOTES, 'UTF-8');
         $db = &JFactory::getDBO();
-        $query = "SELECT e_year from #__pv_live_election_year WHERE id ='" . $year_id . "' and published=1 LIMIT 0,1";
+        $query = "SELECT e_year from #__pv_live_election_year WHERE id ='" . $year_id . "' and published=1 LIMIT 0, 1";
         $db->setQuery($query);
         $row = $db->loadObject();
-        
+
         if ($row->e_year) {
             $query = "SELECT distinct ward from #__pv_live_votes WHERE e_year ='" . $row->e_year . "' and published=1 and  office='" . $office_name2 . "'";
             $db->setQuery($query);
             $wards = $db->loadObjectList();
-            
+
             $len = count($wards);
             if ($len > 0) {
                 //Not doing bulk insert due to factor
@@ -285,7 +283,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
                             }
                         }
                     }
-                     
                 }
                 if (count($div_insert) > 0) {
                     $str = implode(" , ", $div_insert);
@@ -295,7 +292,7 @@ class PvliveresultsModelElection extends PvliveresultsModel
                     $db->query();
                 }
             }//end of wards stuff
-            
+
             //Candidate stuff start
             $query = "SELECT distinct name from #__pv_live_votes WHERE e_year ='" . $row->e_year . "' and published=1 and  office='" . $office_name . "'";
             $db->setQuery($query);
@@ -314,17 +311,16 @@ class PvliveresultsModelElection extends PvliveresultsModel
                 }
             }
         }
-        
     }
-    
-    public function delete_election($id)
+
+    public function deleteElection($id)
     {
         $db = &JFactory::getDBO();
-        
-        $query = "SELECT e_year from #__pv_live_election_year WHERE  published=1 and id =  '" . $id . "' limit 0,1" ;
+
+        $query = "SELECT e_year from #__pv_live_election_year WHERE  published=1 and id =  '" . $id . "' limit 0, 1" ;
         $db->setQuery($query);
         $e_year = $db->loadObjectList();
-        
+
         if ($e_year[0]->e_year) {
             $query = "Update #__pv_live_votes set published=0 WHERE e_year ='" . $e_year[0]->e_year . "' and published=1 ";
             $db->setQuery($query);
@@ -335,28 +331,26 @@ class PvliveresultsModelElection extends PvliveresultsModel
         $db->setQuery($del_query);
         $db->query();
     }
-    
-    public function update_election_name($name, $id, $election_date)
+
+    public function updateElectionName($name, $id, $election_date)
     {
         $db = &JFactory::getDBO();
-        $query = "SELECT e_year from #__pv_live_election_year WHERE  published=1 and id =  '" . $id . "' limit 0,1" ;
+        $query = "SELECT e_year from #__pv_live_election_year WHERE  published=1 and id =  '" . $id . "' limit 0, 1" ;
         $db->setQuery($query);
         $e_year = $db->loadObjectList();
-        
+
         if ($e_year[0]->e_year) {
             $query = "Update #__pv_live_votes set e_year='" . $name . "'  WHERE e_year ='" . $e_year[0]->e_year . "' and published=1 ";
             $db->setQuery($query);
             $db->query();
             $path = JPATH_ROOT.DS.'files'.DS.'raw-data';
-            $old_file = str_replace(' ','_',JString::strtolower($e_year[0]->e_year.'.csv'));
-            $new_file = str_replace(' ','_',JString::strtolower($name.'.csv'));
+            $old_file = str_replace(' ', '_', JString::strtolower($e_year[0]->e_year.'.csv'));
+            $new_file = str_replace(' ', '_', JString::strtolower($name.'.csv'));
 //            if (JFile::exists($path.DS.$old_file)) {
-                JFile::move($old_file,$new_file, $path);
+                JFile::move($old_file, $new_file, $path);
 //            }
         }
         $query = "Update   #__pv_live_election_year set e_year='" . $name . "' , election_date = '" . $election_date . "' WHERE  published=1 and id =  '" . $id . "'" ;
-        
-        
         $db->setQuery($query);
         $db->query();
     }

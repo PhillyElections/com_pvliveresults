@@ -43,7 +43,7 @@ class PvliveresultsModelOffice extends PvliveresultsModel
     // default is:
     //public $_where = ' WHERE `published` = 1 ';
 
-    public function publish_offices($currentElection)
+    public function publishOffices($currentElection)
     {
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
@@ -57,7 +57,7 @@ class PvliveresultsModelOffice extends PvliveresultsModel
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
     }
 
-    public function unpublish_offices($currentElection)
+    public function unpublishOffices($currentElection)
     {
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');

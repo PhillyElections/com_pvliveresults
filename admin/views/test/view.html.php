@@ -1,31 +1,20 @@
 <?php
-/**
- * Elections View for PVLiveresults Component
- * 
- * @package    Philadelphia.Votes
- * @subpackage Components
- * @license        GNU/GPL
- */
-
 // No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
- * Elections View
+ * Elections View for PVLiveresults Component.
  *
- * @package    Joomla.Tutorials
- * @subpackage Components
+ * @license        GNU/GPL
  */
 class PvliveresultsViewTest extends JView
 {
-    
     /**
-     * Elections view display method
-     * @return void
+     * Elections view display method.
      **/
-    function display($tpl = null)
+    public function display($tpl = null)
     {
-        JToolBarHelper::title(   JText::_( 'PVLiveresults Test' ), 'generic.png' );
+        JToolBarHelper::title(JText::_('PVLiveresults Test'), 'generic.png');
 
         // Get data from the model
         $model = $this->getModel();
@@ -37,11 +26,11 @@ class PvliveresultsViewTest extends JView
         $vote = $this->getModel('vote');
         $votetype = $this->getModel('votetype');
 
-        dd($model,$this, $election, 
+        dd($model, $this, $election,
             $election->getData(),
-            $candidate, $candidate->getData(), 
-            $office, $office->getData(), 
-            $party, $party->getData(), 
+            $candidate, $candidate->getData(),
+            $office, $office->getData(),
+            $party, $party->getData(),
             $vote, $vote->getData(),
             $votetype, $votetype->getData());
 

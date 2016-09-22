@@ -9,7 +9,7 @@ defined('_JEXEC') or die;
  * @subpackage Components
  * @license        GNU/GPL
  */
-public class TableOffice extends JTable
+class TableOffice extends JTable
 {
 
     public $id = null;

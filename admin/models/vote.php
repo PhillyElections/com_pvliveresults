@@ -41,4 +41,5 @@ class PvliveresultsModelVote extends PvliveresultsModel
      */
     // default is:
     //public $_where = ' WHERE `published` = 1 ';
+
 }

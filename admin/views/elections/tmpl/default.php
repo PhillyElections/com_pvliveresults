@@ -1,4 +1,5 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+defined('_JEXEC') or die('Restricted access');
 
 $pagination = &$this->pagination;
 $items = $this->items;
@@ -10,44 +11,43 @@ $items = $this->items;
         <thead>
             <tr>
                 <th width="5">
-                    <?=JText::_( 'ID' ); ?>
+                    <?=JText::_('ID'); ?>
                 </th>
                 <th width="20">
-                    <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count( $items ); ?>);" />
+                    <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($items); ?>);" />
                 </th>
                 <th>
-                    <?=JText::_( 'NAME' ); ?>
+                    <?=JText::_('NAME'); ?>
                 </th>
                 <th>
-                    <?=JText::_( 'DATE' ); ?>
+                    <?=JText::_('DATE'); ?>
                 </th>
                 <th>
-                    <?=JText::_( 'ORDER' ); ?>
+                    <?=JText::_('ORDER'); ?>
                 </th>
                 <th>
-                    <?=JText::_( 'PUBLISHED' ); ?>
+                    <?=JText::_('PUBLISHED'); ?>
                 </th>
                 <th>
-                    <?=JText::_( 'CREATED' ); ?>
+                    <?=JText::_('CREATED'); ?>
                 </th>
                 <th>
-                    <?=JText::_( 'MODIFIED' ); ?>
+                    <?=JText::_('MODIFIED'); ?>
                 </th>
             </tr>
         </thead>
         <tbody>
     <?php
     $k = 0;
-    for ($i=0, $n=count( $items ); $i < $n; $i++)    {
+    for ($i = 0, $n = count($items); $i < $n; ++$i) {
         $row = &$items[$i];
-        $link = JRoute::_( 'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='. $row->id );
-        ?>
+        $link = JRoute::_('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$row->id); ?>
             <tr class="<?="row$k"; ?>">
                 <td>
                     <?=$row->id; ?>
                 </td>
                 <td>
-                    <?=JHTML::_('grid.id',   $i, $row->id ); ?>
+                    <?=JHTML::_('grid.id', $i, $row->id); ?>
                 </td>
                 <td>
                     <a href="<?=$link; ?>"><?=$row->name; ?></a>
@@ -81,7 +81,6 @@ $items = $this->items;
 
     </table>
 </div>
-
 <input type="hidden" name="option" value="com_pvliveresults" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />
