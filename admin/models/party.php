@@ -10,9 +10,37 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class PvliveresultsModelParty extends PvliveresultsModel
 {
+    /**
+     * data array
+     * @var array
+     */
     //public $_data;
-    //public $_lookup;
-    public $tableName = array('s'=>'party','p'=>'#__pv_live_parties');
-    //public $tableOrder = 'order';
+
+    /**
+     * default sort order
+     * @var string
+     */
+    // default is:
+    //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
+
+    /**
+     * actual table name
+     * @var string
+     */
+    public $_table = '#__pv_live_parties';
+
+    /**
+     * table class name ref
+     * @var string
+     */
+    public $_tableRef = 'party';
+
+    /**
+     * default sort order
+     * @var string
+     */
+    // default is:
+    //public $_where = ' WHERE `published` = 1 ';
+
 
 }

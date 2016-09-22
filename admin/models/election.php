@@ -9,10 +9,49 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class PvliveresultsModelElection extends PvliveresultsModel
 {
+    /**
+     * data array
+     * @var array
+     */
     //public $_data;
-    //public $_lookup;
-    public $tableName = array('s'=>'election','p'=>'#__pv_live_elections');
-    //public $tableOrder = 'order';
+
+    /**
+     * default sort order
+     * @var string
+     */
+    // default is:
+    //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
+
+    /**
+     * Pagination object
+     * @var object
+     */
+    public $_pagination;
+
+    /**
+     * actual table name
+     * @var string
+     */
+    public $_table = '#__pv_live_elections';
+
+    /**
+     * table class name ref
+     * @var string
+     */
+    public $_tableRef = 'election';
+
+    /**
+     * Items total
+     * @var integer
+     */
+    public $_total;
+
+    /**
+     * default sort order
+     * @var string
+     */
+    // default is:
+    //public $_where = ' WHERE `published` = 1 ';
 
     /**
      * Constructor that retrieves the ID from the request
@@ -29,6 +68,83 @@ class PvliveresultsModelElection extends PvliveresultsModel
     }
 
     /**
+     * default order string
+     * @var string
+     */
+    public $queryWhere = ' WHERE `published` = ` ';
+
+    /**
+     * default order string
+     * @var string
+     */
+    public $queryOrder = ' ORDER BY `order` DESC, `id` DESC ';
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $mainframe = JFactory::getApplication();
+
+        // Get pagination request variables
+        $limit      = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
+        $limitstart = JRequest::getVar('limitstart', 0, '', 'int');
+
+        // In case limit has been changed, adjust it
+        $limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
+
+        $this->setState('limit', $limit);
+        $this->setState('limitstart', $limitstart);
+    }
+
+    /**
+     * Returns the query
+     * @return string The query to be used to retrieve the rows from the database
+     */
+    public function _buildQuery()
+    { 
+        // added order by -- id desc for a defacto recent date sort
+        $query = 'SELECT * ' . ' FROM `' . $this->_table . '` ' . $this->_where . ' ' . $this->_order;
+        return $query;
+    }
+
+    /**
+     * Retrieves the Pvnews data
+     * @return array Array of objects containing the data from the database
+     */
+    public function getData()
+    {
+        // if data hasn't already been obtained, load it
+        if (empty($this->_data)) {
+            $query       = $this->_buildQuery();
+            $this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
+        }
+
+        return $this->_data;
+    }
+
+    public function getTotal()
+    {
+        // Load the content if it doesn't already exist
+        if (empty($this->_total)) {
+            $query        = $this->_buildQuery();
+            $this->_total = $this->_getListCount($query);
+        }
+
+        return $this->_total;
+    }
+
+    public function getPagination()
+    {
+        // Load the content if it doesn't already exist
+        if (empty($this->_pagination)) {
+            jimport('joomla.html.pagination');
+            $this->_pagination = new JPagination($this->getTotal(), $this->getState('limitstart'), $this->getState('limit'));
+        }
+
+        return $this->_pagination;
+    }
+
+    /**
      * Method to set the Liveresult identifier
      *
      * @access  public
@@ -40,66 +156,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
         // Set id and wipe data
         $this->_id      = $id;
         $this->_data    = null;
-    }
-
-    /**
-     * Method to get a Liveresult
-     * @return object with data
-     */
-    public function &get1Data()
-    {
-        // lets order by... order!
-        $order = " ORDER BY `order` ASC";
-        // Load the data
-        if (empty( $this->_data )) {
-            $query = ' SELECT * FROM #__pv_live_offices WHERE election_id = ' . $this->_id . $order;
-            $this->_db->setQuery($query);
-            $this->_data[0] = $this->_db->loadObjectList();
-            $query = ' SELECT * FROM #__pv_live_election_year WHERE id = ' . $this->_id . " limit 0,1";
-            
-            $this->_db->setQuery($query);
-            $this->_data[1] = $this->_db->loadObjectList();
-        }
-        if (!$this->_data) {
-            $this->_data[0] = new stdClass();
-            $this->_data[0]->id = 0;
-            $this->_data[0]->greeting = null;
-        }
-        
-        return $this->_data;
-    }
-
-    /**
-     * Method to store a record
-     *
-     * @access  public
-     * @return  boolean True on success
-     */
-    public function store()
-    {
-        $row = JTable::getInstance($this->tableName['s'], 'Table');
-
-        $data = JRequest::get('post');
-
-        // Bind the form fields to the  table
-        if (!$row->bind($data)) {
-            $this->setError($this->_db->getErrorMsg());
-            return false;
-        }
-
-        // Make sure the  record is valid
-        if (!$row->check()) {
-            $this->setError($this->_db->getErrorMsg());
-            return false;
-        }
-
-        // Store the web link table to the database
-        if (!$row->store()) {
-            $this->setError($row->getErrorMsg());
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -133,7 +189,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
         return true;
     }
     
-
     public function insert_year($year)
     {
         $db = &JFactory::getDBO();

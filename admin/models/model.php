@@ -10,19 +10,73 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class PvliveresultsModel extends JModel
 {
+    /**
+     * data array
+     * @var array
+     */
     public $_data;
-    public $_lookup;
-    public $tableName = array('s'=>'','p'=>'');
-    public $tableOrder = ' ORDER BY `order` DESC, `id` DESC ';
 
-    public function _buildLookupQuery()
+    /**
+     * default sort order
+     * @var string
+     */
+    public $_order = ' ORDER BY `order` DESC, `id` DESC ';
+
+    /**
+     * actual table name
+     * @var string
+     */
+    public $_table;
+
+    /**
+     * table class name ref
+     * @var string
+     */
+    public $_tableRef;
+
+    /**
+     * default sort order
+     * @var string
+     */
+    public $_where = ' WHERE `published` = 1 ';
+
+
+    /**
+     * Method to set the Liveresult identifier
+     *
+     * @access  public
+     * @param   int Liveresult identifier
+     * @return  void
+     */
+    public function setId($id)
     {
+        // Set id and wipe data
+        $this->_id      = $id;
+        $this->_data    = null;
     }
 
-    public function _buildNameLookupQuery()
+    /**
+     * Method to delete record(s)
+     *
+     * @access  public
+     * @return  boolean True on success
+     */
+    public function delete()
     {
-    }
+        $cids = JRequest::getVar('cid', array(0), 'post', 'array');
 
+        $row = JTable::getInstance($this->tableName['s'], 'Table');
+
+        if (count($cids)) {
+            foreach ($cids as $cid) {
+                if (!$row->delete($cid)) {
+                    $this->setError($row->getErrorMsg());
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public function publish($ids)
     {
         foreach ($ids as $id)
@@ -48,9 +102,9 @@ class PvliveresultsModel extends JModel
      * @return string The query to be used to retrieve the rows from the database
      */
     public function _buildQuery()
-    { 
+    {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT * ' . ' FROM `' . $this->tableName['p'] . '` where published=1 ' . $this->tableOrder;
+        $query = 'SELECT * ' . ' FROM `' . $this->_table . '` ' . $this->_table . ' ' . $this->_order;
         return $query;
     }
 

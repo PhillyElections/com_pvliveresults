@@ -9,9 +9,36 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class PvliveresultsModelCandidate extends PvliveresultsModel
 {
+    /**
+     * data array
+     * @var array
+     */
     //public $_data;
-    //public $_lookup;
-    public $tableName = array('s'=>'candidate','p'=>'#__pv_live_candidates');
-    //public $tableOrder = 'order';
+
+    /**
+     * default sort order
+     * @var string
+     */
+    // default is:
+    //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
+
+    /**
+     * actual table name
+     * @var string
+     */
+    public $_table = '#__pv_live_candidates';
+
+    /**
+     * table class name ref
+     * @var string
+     */
+    public $_tableRef = 'candidate';
+
+    /**
+     * default sort order
+     * @var string
+     */
+    // default is:
+    //public $_where = ' WHERE `published` = 1 ';
 
 }
