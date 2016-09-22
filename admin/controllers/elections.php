@@ -18,6 +18,8 @@ class PvliveresultsControllerElections extends PvliveresultsController
 
     public function edit()
     {
+        JRequest::checkToken() or jexit('Invalid Token');
+
         $mainframe = JFactory::getApplication();
         $cid       = JRequest::getVar('cid');
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid=' . $cid[0]);
@@ -25,12 +27,16 @@ class PvliveresultsControllerElections extends PvliveresultsController
 
     public function add()
     {
+        JRequest::checkToken() or jexit('Invalid Token');
+
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=add&&cid=' . $cid[0]);
     }
 
     public function delete()
     {
+        JRequest::checkToken() or jexit('Invalid Token');
+
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=delete&&cid=' . $cid[0]);
     }
