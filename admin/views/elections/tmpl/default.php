@@ -17,13 +17,14 @@ $items = $this->items;
                     <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($items); ?>);" />
                 </th>
                 <th>
+                    <?=JText::_('ORDER'); ?>
+                    <?=JHTML::_('grid.order',  $items ); ?>
+                </th>
+                <th>
                     <?=JText::_('NAME'); ?>
                 </th>
                 <th>
                     <?=JText::_('DATE'); ?>
-                </th>
-                <th>
-                    <?=JText::_('ORDER'); ?>
                 </th>
                 <th>
                     <?=JText::_('PUBLISHED'); ?>
@@ -50,16 +51,16 @@ $items = $this->items;
                     <?=JHTML::_('grid.id', $i, $row->id); ?>
                 </td>
                 <td>
+                    <?=$row->order; ?>
+                </td>
+                <td>
                     <a href="<?=$link; ?>"><?=$row->name; ?></a>
                 </td>
                 <td>
                     <a href="<?=$link; ?>"><?=$row->date; ?></a>
                 </td>
                 <td>
-                    <?=$row->order; ?>
-                </td>
-                <td>
-                    <?=$row->published; ?>
+                    <?=JHTML::_('grid.published', $row, $i );?>
                 </td>
                 <td>
                     <?=$row->created; ?>
