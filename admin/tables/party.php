@@ -9,7 +9,7 @@ defined('_JEXEC') or die;
  * @subpackage Components
  * @license        GNU/GPL
  */
-class TableParty extends JTable
+class TableParty extends PVliveresultsTable
 {
 
     public $id = null;

@@ -3,16 +3,17 @@
 defined('_JEXEC') or die;
 
 /**
- * Votetype table for PVLiveResults
+ * Candidate table for PVLiveResults
  * 
  * @package    Philadelphia.Votes
  * @subpackage Components
  * @license        GNU/GPL
  */
-class TableVotetype extends PVliveresultsTable
+class TableCandidate extends JTable
 {
 
     public $id = null;
+    public $party_id = null;
     public $name = null;
     public $order = null;
     public $published = null;
@@ -21,7 +22,7 @@ class TableVotetype extends PVliveresultsTable
 
     public function __construct(&$db)
     {
-        parent::__construct('#__pv_live_vote_types', 'id', $db);
+        parent::__construct('#__pv_live_candidates', 'id', $db);
     }
 }
 
