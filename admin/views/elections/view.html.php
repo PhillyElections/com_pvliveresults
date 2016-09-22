@@ -23,8 +23,8 @@ class PvliveresultsViewElections extends JView
         $items = &$this->get('Data');
         $pagination = &$this->get('Pagination');
 
-        $this->assignRef('items', $this->get('Data'));
-        $this->assignRef('pagination', $this->get('Pagination'));
+        $this->assignRef('items', $items);
+        $this->assignRef('pagination', $pagination));
 
         parent::display($tpl);
     }
