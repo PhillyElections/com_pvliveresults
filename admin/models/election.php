@@ -305,7 +305,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
                 $cand = array();
                 for ($i=0; $i < $len; $i++) {
                     $cand[] = "('".$office_id."' , '".$candidates[$i]->name."')";
-                    
                 }
                 if (count($cand) > 0) {
                     $str = implode(" , ", $cand);
@@ -314,7 +313,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
                     $db->query();
                 }
             }
-            
         }
         
     }

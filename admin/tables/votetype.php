@@ -1,4 +1,7 @@
 <?php
+// no direct access
+defined('_JEXEC') or die;
+
 /**
  * Votetype table for PVLiveResults
  * 
@@ -6,15 +9,12 @@
  * @subpackage Components
  * @license        GNU/GPL
  */
-
-// no direct access
-defined('_JEXEC') or die;
-
 public class TableVotetype extends JTable
 {
 
     public $id = null;
     public $name = null;
+    public $order = null;
     public $published = null;
     public $created = null;
     public $updated = null;

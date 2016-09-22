@@ -1,46 +1,44 @@
 <?php
-// No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
- * Pvliveresults Party Model
- *
- * @package    Joomla.Tutorials
- * @subpackage Components
+ * Pvliveresults Party Model.
  */
 class PvliveresultsModelParty extends PvliveresultsModel
 {
     /**
-     * data array
+     * data array.
+     *
      * @var array
      */
     //public $_data;
 
     /**
-     * default sort order
+     * default sort order.
+     *
      * @var string
      */
     // default is:
     //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
 
     /**
-     * actual table name
+     * actual table name.
+     *
      * @var string
      */
     public $_table = '#__pv_live_parties';
 
     /**
-     * table class name ref
+     * table class name ref.
+     *
      * @var string
      */
     public $_tableRef = 'party';
 
-    /**
+    /*
      * default sort order
      * @var string
      */
     // default is:
     //public $_where = ' WHERE `published` = 1 ';
-
-
 }

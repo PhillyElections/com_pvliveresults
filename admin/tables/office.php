@@ -1,4 +1,7 @@
 <?php
+// no direct access
+defined('_JEXEC') or die;
+
 /**
  * Office table for PVLiveResults
  * 
@@ -6,15 +9,11 @@
  * @subpackage Components
  * @license        GNU/GPL
  */
-
-// no direct access
-defined('_JEXEC') or die;
-
 public class TableOffice extends JTable
 {
 
     public $id = null;
-    public $election_id = null;
+    public $party_id = null;
     public $name = null;
     public $order = null;
     public $published = null;

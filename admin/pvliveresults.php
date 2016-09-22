@@ -1,9 +1,7 @@
 <?php
 /**
- * Bootstrap file for PVLiveResults
- * 
- * @package    Philadelphia.Votes
- * @subpackage Components
+ * Bootstrap file for PVLiveResults.
+ *
  * @license        GNU/GPL
  */
 
@@ -18,14 +16,14 @@ $language = JFactory::getLanguage();
 $language->load(JRequest::getCmd('option'), JPATH_SITE);
 
 // Require the base model
-require_once JPATH_COMPONENT . DS . 'models/model.php';
+require_once JPATH_COMPONENT.DS.'models/model.php';
 
 // Require the base controller
-require_once JPATH_COMPONENT . DS . 'controller.php';
+require_once JPATH_COMPONENT.DS.'controller.php';
 
 // Require specific controller if requested
 if ($controller = JRequest::getWord('controller', 'elections')) {
-    $path = JPATH_COMPONENT . DS . 'controllers' . DS . $controller . '.php';
+    $path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
     if (file_exists($path)) {
         require_once $path;
     } else {
@@ -34,7 +32,7 @@ if ($controller = JRequest::getWord('controller', 'elections')) {
 }
 
 // Create the controller
-$classname  = 'PvliveresultsController' . ucfirst($controller);
+$classname = 'PvliveresultsController'.ucfirst($controller);
 $controller = new $classname();
 
 // Perform the Request task

@@ -1,27 +1,14 @@
 <?php
-/**
- * Pvliveresults default controller
- * 
- * @package    Philadelphia.Votes
- * @subpackage Components
- * @license        GNU/GPL
- */
-
 // No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
- * Pvliveresults Component Controller
- *
- * @package    Joomla.Tutorials
- * @subpackage Components
+ * Pvliveresults default Controller.
  */
 class PvliveresultsController extends JController
 {
     /**
-     * Method to display the view
-     *
-     * @access    public
+     * Method to display the view.
      */
     public function display()
     {

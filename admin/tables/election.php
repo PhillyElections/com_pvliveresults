@@ -1,4 +1,7 @@
 <?php
+// no direct access
+defined('_JEXEC') or die;
+
 /**
  * Election table for PVLiveResults
  * 
@@ -6,10 +9,6 @@
  * @subpackage Components
  * @license        GNU/GPL
  */
-
-// no direct access
-defined('_JEXEC') or die;
-
 public class TableElection extends JTable
 {
 
