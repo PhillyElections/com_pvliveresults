@@ -9,9 +9,24 @@
 			</th>
 			<th width="20">
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count( $this->items ); ?>);" />
-			</th>			
+			</th>
 			<th>
-				<?=JText::_( 'Years' ); ?>
+				<?=JText::_( 'NAME' ); ?>
+			</th>
+			<th>
+				<?=JText::_( 'DATE' ); ?>
+			</th>
+			<th>
+				<?=JText::_( 'ORDER' ); ?>
+			</th>
+			<th>
+				<?=JText::_( 'PUBLISHED' ); ?>
+			</th>
+			<th>
+				<?=JText::_( 'CREATED' ); ?>
+			</th>
+			<th>
+				<?=JText::_( 'MODIFIED' ); ?>
 			</th>
 		</tr>
 	</thead>
@@ -29,7 +44,22 @@
 				<?=JHTML::_('grid.id',   $i, $row->id ); ?>
 			</td>
 			<td>
-				<a href="<?=$link; ?>"><?=$row->e_year; ?></a>
+				<a href="<?=$link; ?>"><?=$row->name; ?></a>
+			</td>
+			<td>
+				<a href="<?=$link; ?>"><?=$row->date; ?></a>
+			</td>
+			<td>
+				<a href="<?=$link; ?>"><?=$row->order; ?></a>
+			</td>
+			<td>
+				<a href="<?=$link; ?>"><?=$row->published; ?></a>
+			</td>
+			<td>
+				<a href="<?=$link; ?>"><?=$row->created; ?></a>
+			</td>
+			<td>
+				<a href="<?=$link; ?>"><?=$row->modified; ?></a>
 			</td>
 		</tr>
 		<?php
