@@ -60,7 +60,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
 
         $election = $this->getModel('election');
         $cid = JRequest::getVar('cid');
-
+dd($cid, JRequest::get());
         foreach ($cid as $id)
         {
             $election->unpublish($id);
