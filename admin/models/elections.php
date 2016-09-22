@@ -55,7 +55,7 @@ class PvliveresultsModelElection extends PvliveresultsModel
 
 
     public function __construct()
-    {   
+    {
         // parent will setId(), which we don't need... so...
         //parent::__construct();
 
