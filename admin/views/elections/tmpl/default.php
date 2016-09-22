@@ -2,7 +2,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 $pagination = &$this->pagination;
-$items = $this->items;
+$items = &$this->items;
+
+jimport( 'joomla.html.html' );
 
 ?>
 <form action="index.php" method="post" name="adminForm">
