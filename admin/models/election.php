@@ -53,13 +53,9 @@ class PvliveresultsModelElection extends PvliveresultsModel
     // default is:
     //public $_where = '';
 
-
     public function __construct()
     {
         parent::__construct();
-
-        $array = JRequest::getVar('cid', 0, '', 'array');
-        $this->setId((int)$array[0]);
 
         $mainframe = JFactory::getApplication();
 
@@ -73,18 +69,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
         $this->setState('limit', $limit);
         $this->setState('limitstart', $limitstart);
     }
-
-    /**
-     * default order string
-     * @var string
-     */
-    public $queryWhere = ' WHERE `published` = ` ';
-
-    /**
-     * default order string
-     * @var string
-     */
-    public $queryOrder = ' ORDER BY `order` DESC, `id` DESC ';
 
     /**
      * Returns the query
@@ -132,43 +116,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
         }
 
         return $this->_pagination;
-    }
-
-    /**
-     * Method to set the Liveresult identifier
-     *
-     * @access  public
-     * @param   int Liveresult identifier
-     * @return  void
-     */
-    public function setId($id)
-    {
-        // Set id and wipe data
-        $this->_id      = $id;
-        $this->_data    = null;
-    }
-
-    /**
-     * Method to delete record(s)
-     *
-     * @access  public
-     * @return  boolean True on success
-     */
-    public function delete()
-    {
-        $cids = JRequest::getVar('cid', array(0), 'post', 'array');
-
-        $row = JTable::getInstance($this->tableName['s'], 'Table');
-
-        if (count($cids)) {
-            foreach ($cids as $cid) {
-                if (!$row->delete($cid)) {
-                    $this->setError($row->getErrorMsg());
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     public function bulkInsert($insert)

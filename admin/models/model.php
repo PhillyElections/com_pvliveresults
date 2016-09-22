@@ -1,4 +1,5 @@
 <?php
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
@@ -40,6 +41,12 @@ class PvliveresultsModel extends JModel
      * @var string
      */
     public $_where = '';
+
+    public function __construct() 
+    {
+        $array = JRequest::getVar('cid', 0, '', 'array');
+        $this->setId((int) $array[0]);
+    }
 
     /**
      * Method to set the Liveresult identifier.
