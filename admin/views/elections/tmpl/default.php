@@ -25,16 +25,16 @@ jimport( 'joomla.html.html' );
                 <th>
                     <?=JText::_('NAME'); ?>
                 </th>
-                <th>
+                <th width="30">
                     <?=JText::_('DATE'); ?>
                 </th>
-                <th>
+                <th width="20">
                     <?=JText::_('PUBLISHED'); ?>
                 </th>
-                <th>
+                <th width="20">
                     <?=JText::_('CREATED'); ?>
                 </th>
-                <th>
+                <th width="20">
                     <?=JText::_('MODIFIED'); ?>
                 </th>
             </tr>
