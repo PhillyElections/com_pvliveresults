@@ -49,6 +49,9 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $cid = JRequest::getVar('cid');
 
         $election->publish($cid);
+
+        $mainframe = JFactory::getApplication();
+        $mainframe->redirect('index.php?option=com_pvliveresults');
     }
 
     public function unpublish()
@@ -58,6 +61,9 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $election = $this->getModel('election');
         $cid = JRequest::getVar('cid');
 
-        $election->unpublish($cid);
+        $election->unpublish($cid, '');
+
+        $mainframe = JFactory::getApplication();
+        $mainframe->redirect('index.php?option=com_pvliveresults');
     }
 }
