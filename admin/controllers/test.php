@@ -11,8 +11,8 @@ class PvliveresultsControllerTest extends PvliveresultsController
     {
         // if 'raw' isn't explicit, set to 'html'
         $view = $this->getView('test', 'html');
-/*        $view->setModel($this->getModel('candidate'), true);
-        $view->setModel($this->getModel('election'), true);
+        $view->setModel($this->getModel('candidate'), true);
+/*        $view->setModel($this->getModel('election'), true);
         $view->setModel($this->getModel('office'), true);
         $view->setModel($this->getModel('party'), true);
         $view->setModel($this->getModel('vote'), true);
