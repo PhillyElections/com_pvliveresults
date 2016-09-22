@@ -40,6 +40,6 @@ class PvliveresultsModelParty extends PvliveresultsModel
      * @var string
      */
     // default is:
-    //public $_where = ' WHERE `published` = 1 ';
+    //public $_where = '';
 
 }

@@ -39,7 +39,7 @@ class PvliveresultsModel extends JModel
      *
      * @var string
      */
-    public $_where = ' WHERE `published` = 1 ';
+    public $_where = '';
 
     /**
      * Method to set the Liveresult identifier.
@@ -76,7 +76,7 @@ class PvliveresultsModel extends JModel
 
         return true;
     }
-    
+
     public function publish($ids)
     {
         foreach ($ids as $id) {
