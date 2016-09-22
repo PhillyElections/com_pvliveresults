@@ -53,7 +53,7 @@ jimport( 'joomla.html.html' );
                     <?=JHTML::_('grid.id', $i, $row->id); ?>
                 </td>
                 <td>
-                    <input style="width:10px!;" type="text" name="order[<?=$row->id ;?>]" value="<?=$row->order ?>" />
+                    <input size="2" type="text" name="order[<?=$row->id ;?>]" value="<?=$row->order ?>" />
                 </td>
                 <td>
                     <a href="<?=$link; ?>"><?=$row->name; ?></a>
