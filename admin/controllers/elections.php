@@ -45,7 +45,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
     {
         JRequest::checkToken() or jexit('Invalid Token');
 
-        $election = $this->getModel('Election');
+        $election = $this->getModel('election');
         $election->publish();
     }
 
@@ -53,7 +53,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
     {
         JRequest::checkToken() or jexit('Invalid Token');
 
-        $election = $this->getModel('Election');
+        $election = $this->getModel('election');
         $election->unpublish();
     }
 }
