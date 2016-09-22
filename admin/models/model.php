@@ -62,7 +62,7 @@ class PvliveresultsModel extends JModel
     {
         $cids = JRequest::getVar('cid', array(0), 'post', 'array');
 
-        $row = JTable::getInstance($this->tableName['s'], 'Table');
+        $row = JTable::getInstance($this->_tableRef, 'Table');
 
         if (count($cids)) {
             foreach ($cids as $cid) {
@@ -76,10 +76,11 @@ class PvliveresultsModel extends JModel
 
         return true;
     }
+    
     public function publish($ids)
     {
         foreach ($ids as $id) {
-            $row = JTable::getInstance($this->tableName->s, 'Table');
+            $row = JTable::getInstance($this->_tableRef, 'Table');
             $row->load($id);
             $row->publish($id, 1);
         }
@@ -88,7 +89,7 @@ class PvliveresultsModel extends JModel
     public function unpublish($ids)
     {
         foreach ($ids as $id) {
-            $row = JTable::getInstance($this->tableName->s, 'Table');
+            $row = JTable::getInstance($this->_tableRef, 'Table');
             $row->load($id);
             $row->publish($id, 0);
         }
@@ -130,7 +131,7 @@ class PvliveresultsModel extends JModel
      */
     public function store()
     {
-        $row = JTable::getInstance($this->tableName['s'], 'Table');
+        $row = JTable::getInstance($this->_tableRef, 'Table');
 
         $data = JRequest::get('post');
 
