@@ -13,15 +13,21 @@ class PvliveresultsControllerElections extends PvliveresultsController
 {
     public function __construct()
     {
-        d('construct of elections controller');
+        d('constructor of elections controller');
         parent::__construct();
+        d('loaded parent constructor of elections controller');
     }
 
     public function display()
     {
+        d('display of elections controller');
+
         // if format isn't explicit, set to 'html'
         $view = $this->getView('elections', JRequest::getWord('format', 'html'));
+        d('loaded view in display of elections controller');
+
         $view->setModel($this->getModel('elections'), true);
+        d('loaded model in display of elections controller');
 
         $view->display();
     }
