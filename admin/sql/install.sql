@@ -115,7 +115,7 @@ ALTER TABLE `#__pv_live_election_offices`
   FOREIGN KEY (`election_id`) REFERENCES `#__pv_live_elections`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE
-  ADD CONSTRAINT `fk_office_id_election_offices`
+, ADD CONSTRAINT `fk_office_id_election_offices`
   FOREIGN KEY (`office_id`) REFERENCES `#__pv_live_offices`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
