@@ -71,23 +71,18 @@ class PvliveresultsModelElections extends PvliveresultsModel
     {
         // parent will setId(), which we don't need... so...
         parent::__construct();
-        d('in elections model constructor');
+
         $mainframe = JFactory::getApplication();
 
         // Get pagination request variables
         $limit      = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
         $limitstart = $mainframe->getUserStateFromRequest('global.list.limitstart', 'limitstart', '', 'int');
-        d('set limit/limitstart in elections model constructor');
 
         // In case limit has been changed, adjust it
         $limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
-        d('about to setstate in elections model constructor', $this, $limit, $limitstart);
+
         $this->setState('limit', $limit);
-        d('middle of setstate in elections model constructor');
-
         $this->setState('limitstart', $limitstart);
-        d('setstate in elections model constructor');
-
     }
 
     /**
