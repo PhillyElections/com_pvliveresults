@@ -20,7 +20,7 @@ jimport( 'joomla.html.html' );
                 <th width="5">
                     <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($elections); ?>);" />
                 </th>
-                <th width="20">
+                <th width="25">
                     <?=JText::_('ORDER'); ?>
                     <?=JHTML::_('grid.order',  $elections ); ?>
                 </th>
@@ -33,10 +33,10 @@ jimport( 'joomla.html.html' );
                 <th width="20">
                     <?=JText::_('PUBLISHED'); ?>
                 </th>
-                <th width="20">
+                <th width="50">
                     <?=JText::_('CREATED'); ?>
                 </th>
-                <th width="20">
+                <th width="50">
                     <?=JText::_('MODIFIED'); ?>
                 </th>
             </tr>
@@ -55,7 +55,7 @@ jimport( 'joomla.html.html' );
                     <?=JHTML::_('grid.id', $i, $row->id); ?>
                 </td>
                 <td>
-                    <input size="4" type="text" name="order[<?=$row->id ;?>]" value="<?=$row->ordering ?>" />
+                    <input size="5" type="text" name="order[<?=$row->id ;?>]" value="<?=$row->ordering ?>" />
                 </td>
                 <td>
                     <a href="<?=$link; ?>"><?=$row->name; ?></a>
