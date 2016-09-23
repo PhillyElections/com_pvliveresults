@@ -86,20 +86,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
     }
 
     /**
-     * Method to set the Liveresult identifier
-     *
-     * @access  public
-     * @param   int Liveresult identifier
-     * @return  void
-     */
-    public function setId($id)
-    {
-        // Set id and wipe data
-        $this->_id      = $id;
-        $this->_data    = null;
-    }
-
-    /**
      * Retrieves the Pvnews data
      * @return array Array of objects containing the data from the database
      */

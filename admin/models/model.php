@@ -25,6 +25,13 @@ class PvliveresultsModel extends JModel
     public $_fields = ' * ';
 
     /**
+     * id of loaded record (if any)
+     *
+     * @var string
+     */
+    public $_id;
+
+    /**
      * default sort order.
      *
      * @var string
