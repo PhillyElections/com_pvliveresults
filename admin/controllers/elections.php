@@ -74,9 +74,14 @@ class PvliveresultsControllerElections extends PvliveresultsController
     public function saveorder()
     {
         JRequest::checkToken() or jexit('Invalid Token');
+        $items = JRequest::getVar('ordering');
 
         $election = $this->getModel('election');
-dd($election , JRequest::get());
-        $election->saveorder();
+        foreach ($items as $key=>$value) {
+            $data = array('id'=>$key, 'ordering'=>$value);
+            dd($data);
+            $election->store($data);
+
+        }
     }
 }
