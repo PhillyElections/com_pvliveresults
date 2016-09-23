@@ -46,7 +46,7 @@ class PvliveresultsModelVotetype extends PvliveresultsModel
 
     /*
      * default sort order
-     * 
+     *
      * @var string
      */
     //public $_where = '';

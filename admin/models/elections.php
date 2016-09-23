@@ -32,35 +32,35 @@ class PvliveresultsModelElection extends PvliveresultsModel
 
     /**
      * Pagination object
-     * 
+     *
      * @var object
      */
     public $_pagination;
 
     /**
      * actual table name
-     * 
+     *
      * @var string
      */
     public $_table = '#__pv_live_elections';
 
     /**
      * table class name ref
-     * 
+     *
      * @var string
      */
     public $_tableRef = 'election';
 
     /**
      * Items total
-     * 
+     *
      * @var integer
      */
     public $_total;
 
     /**
      * default sort order
-     * 
+     *
      * @var string
      */
     //public $_where = '';

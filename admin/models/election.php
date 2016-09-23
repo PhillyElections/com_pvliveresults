@@ -32,21 +32,21 @@ class PvliveresultsModelElection extends PvliveresultsModel
 
     /**
      * actual table name
-     * 
+     *
      * @var string
      */
     public $_table = '#__pv_live_elections';
 
     /**
      * table class name ref
-     * 
+     *
      * @var string
      */
     public $_tableRef = 'election';
 
     /**
      * default sort order
-     * 
+     *
      * @var string
      */
     //public $_where = '';
