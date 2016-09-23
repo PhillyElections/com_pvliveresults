@@ -81,8 +81,7 @@ class PvliveresultsModelElections extends PvliveresultsModel
 
         // In case limit has been changed, adjust it
         $limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
-        d('about to setstate in elections model constructor');
-d($this, $limit, $limitstart);
+        d('about to setstate in elections model constructor', $this, $limit, $limitstart);
         $this->setState('limit', $limit);
         d('middle of setstate in elections model constructor');
 

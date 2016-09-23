@@ -61,6 +61,7 @@ class PvliveresultsModel extends JModel
 
     public function __construct()
     {
+        parent::__construct();
         $array = JRequest::getVar('cid', 0, '', 'array');
         $this->setId((int) $array[0]);
     }
