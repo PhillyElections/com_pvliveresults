@@ -2,7 +2,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 $pagination = &$this->pagination;
-$items = &$this->items;
+$elections = &$this->elections;
 
 jimport( 'joomla.html.html' );
 
@@ -16,11 +16,11 @@ jimport( 'joomla.html.html' );
                     <?=JText::_('ID'); ?>
                 </th>
                 <th width="5">
-                    <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($items); ?>);" />
+                    <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($elections); ?>);" />
                 </th>
                 <th width="5">
                     <?=JText::_('ORDER'); ?>
-                    <?=JHTML::_('grid.order',  $items ); ?>
+                    <?=JHTML::_('grid.order',  $elections ); ?>
                 </th>
                 <th>
                     <?=JText::_('NAME'); ?>
@@ -42,8 +42,8 @@ jimport( 'joomla.html.html' );
         <tbody>
     <?php
     $k = 0;
-    for ($i = 0, $n = count($items); $i < $n; ++$i) {
-        $row = &$items[$i];
+    for ($i = 0, $n = count($elections); $i < $n; ++$i) {
+        $row = &$elections[$i];
         $link = JRoute::_('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$row->id); ?>
             <tr class="<?="row$k"; ?>">
                 <td>
