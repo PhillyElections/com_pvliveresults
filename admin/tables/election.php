@@ -4,7 +4,7 @@ defined('_JEXEC') or die;
 
 /**
  * Election table for PVLiveResults
- * 
+ *
  * @package    Philadelphia.Votes
  * @subpackage Components
  * @license        GNU/GPL
@@ -25,4 +25,3 @@ class TableElection extends JTable
         parent::__construct('#__pv_live_elections', 'id', $db);
     }
 }
-

@@ -4,7 +4,7 @@ defined('_JEXEC') or die;
 
 /**
  * Vote table for PVLiveResults
- * 
+ *
  * @package    Philadelphia.Votes
  * @subpackage Components
  * @license        GNU/GPL
@@ -14,8 +14,7 @@ class TableVote extends JTable
 
     public $id = null;
     public $vote_type_id = null;
-    public $election_id = null;
-    public $office_id = null;
+    public $election_office_id = null;
     public $candidate_id = null;
     public $ward = null;
     public $division = null;
@@ -30,4 +29,3 @@ class TableVote extends JTable
         parent::__construct('#__pv_live_votes', 'id', $db);
     }
 }
-
