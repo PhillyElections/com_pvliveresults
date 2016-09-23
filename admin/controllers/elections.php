@@ -11,7 +11,7 @@ defined('_JEXEC') or die('Restricted access');
  */
 class PvliveresultsControllerElections extends PvliveresultsController
 {
-    public function __construct() 
+    public function __construct()
     {
         d('construct of elections controller');
         parent::__construct();
