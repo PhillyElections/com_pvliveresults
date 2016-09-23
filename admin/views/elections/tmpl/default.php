@@ -20,7 +20,7 @@ jimport( 'joomla.html.html' );
                 <th width="5">
                     <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($elections); ?>);" />
                 </th>
-                <th width="25">
+                <th width="30">
                     <?=JText::_('ORDER'); ?>
                     <?=JHTML::_('grid.order',  $elections ); ?>
                 </th>
