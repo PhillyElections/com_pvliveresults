@@ -13,7 +13,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
 {
     public function __construct() 
     {
-        dd('construct of elections model');
+        d('construct of elections controller');
         parent::__construct();
     }
 
