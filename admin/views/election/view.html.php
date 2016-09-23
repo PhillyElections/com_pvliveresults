@@ -5,7 +5,9 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Election View for PVLiveresults Component.
  *
- * @license        GNU/GPL
+ * @package    Philadelphia.Votes
+ * @subpackage Components
+ * @license    GNU/GPL
  */
 class PvliveresultsViewElection extends JView
 {
@@ -39,4 +41,3 @@ class PvliveresultsViewElection extends JView
         parent::display($tpl);
     }
 }
-

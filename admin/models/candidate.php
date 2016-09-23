@@ -3,6 +3,10 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Candidate Model.
+ *
+ * @package    Philadelphia.Votes
+ * @subpackage Components
+ * @license    GNU/GPL
  */
 class PvliveresultsModelCandidate extends PvliveresultsModel
 {
@@ -46,4 +50,5 @@ class PvliveresultsModelCandidate extends PvliveresultsModel
      * @var string
      */
     //public $_where = '';
+
 }

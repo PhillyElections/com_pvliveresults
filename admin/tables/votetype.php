@@ -7,7 +7,7 @@ defined('_JEXEC') or die;
  *
  * @package    Philadelphia.Votes
  * @subpackage Components
- * @license        GNU/GPL
+ * @license    GNU/GPL
  */
 class TableVotetype extends JTable
 {

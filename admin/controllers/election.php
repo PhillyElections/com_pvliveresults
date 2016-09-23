@@ -4,6 +4,10 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Election Controller.
+ *
+ * @package    Philadelphia.Votes
+ * @subpackage Components
+ * @license    GNU/GPL
  */
 class PvliveresultsControllerElection extends PvliveresultsController
 {
@@ -106,7 +110,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
      */
     public function save()
     {
-        JRequest::checkToken() or jexit('Invalid Token');        
+        JRequest::checkToken() or jexit('Invalid Token');
         // having timeout issues 2015.11.17
         ini_set('max_execution_time', 360);
         $e_year = JRequest::getVar('e_year');

@@ -4,8 +4,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 /**
  * Pvliveresults Election Model
  *
- * @package    Philadelphia.votes
+ * @package    Philadelphia.Votes
  * @subpackage Components
+ * @license    GNU/GPL
  */
 class PvliveresultsModelElection extends PvliveresultsModel
 {

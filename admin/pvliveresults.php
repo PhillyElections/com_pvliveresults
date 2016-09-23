@@ -1,9 +1,12 @@
 <?php
 /**
  * Bootstrap file for PVLiveResults.
- *
- * @license        GNU/GPL
+  *
+ * @package    Philadelphia.Votes
+ * @subpackage Components
+ * @license    GNU/GPL
  */
+
 ini_set('display_errors', 1);
 // No direct access
 defined('_JEXEC') or die('Restricted access');

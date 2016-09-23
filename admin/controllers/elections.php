@@ -4,6 +4,10 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Elections Controller.
+ *
+ * @package    Philadelphia.Votes
+ * @subpackage Components
+ * @license    GNU/GPL
  */
 class PvliveresultsControllerElections extends PvliveresultsController
 {

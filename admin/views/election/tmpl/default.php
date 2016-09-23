@@ -1,4 +1,4 @@
-<?php 
+<?php
 defined('_JEXEC') or die('Restricted access');
 jimport( 'joomla.html.html' );
 $election=$this->election;

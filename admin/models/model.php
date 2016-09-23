@@ -4,8 +4,9 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Pvliveresults PVModel (parent) Model.
  *
- * @package    Philadelphia.votes
+ * @package    Philadelphia.Votes
  * @subpackage Components
+ * @license    GNU/GPL
  */
 class PvliveresultsModel extends JModel
 {
