@@ -5,7 +5,6 @@ $pagination = &$this->pagination;
 $elections = &$this->elections;
 d($pagination);
 
-jimport( 'joomla.html.pagination' );
 jimport( 'joomla.html.html' );
 
 ?>
