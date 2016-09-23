@@ -11,6 +11,12 @@ defined('_JEXEC') or die('Restricted access');
  */
 class PvliveresultsControllerElections extends PvliveresultsController
 {
+    public function __construct() 
+    {
+        dd('construct of elections model');
+        parent::__construct();
+    }
+
     public function display()
     {
         // if format isn't explicit, set to 'html'
