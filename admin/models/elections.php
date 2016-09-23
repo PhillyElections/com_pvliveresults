@@ -71,7 +71,6 @@ class PvliveresultsModelElections extends PvliveresultsModel
     {
         // parent will setId(), which we don't need... so...
         //parent::__construct();
-dd('construct of elections model');
         $mainframe = JFactory::getApplication();
 
         // Get pagination request variables
