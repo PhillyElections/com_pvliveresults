@@ -144,10 +144,10 @@ INSERT INTO `#__pv_live_parties` VALUES
 
 INSERT INTO `#__pv_live_vote_types` VALUES
 ('', 'ABSENTEE',    1, 1, NOW(), '0000-00-00 00:00:00'),
-('', 'MACHINE',     2, 1, NOW(), '0000-00-00 00:00:00'),
+('', 'MACHINE',     1, 1, NOW(), '0000-00-00 00:00:00'),
 ('', 'PROVISIONAL', 3, 1, NOW(), '0000-00-00 00:00:00');
 
 INSERT INTO `#__pv_live_elections` VALUES
 ('', '2015 Primary Election', '2015-04-28', 1, 1, NOW(), '0000-00-00 00:00:00'),
-('', '2015 General Election', '2015-11-03', 2, 1, NOW(), '0000-00-00 00:00:00'),
-('', '2016 Primary Election', '2016-04-26', 3, 1, NOW(), '0000-00-00 00:00:00');
+('', '2015 General Election', '2015-11-03', 3, 1, NOW(), '0000-00-00 00:00:00'),
+('', '2016 Primary Election', '2016-04-26', 2, 1, NOW(), '0000-00-00 00:00:00');
