@@ -21,7 +21,7 @@ class PvliveresultsViewElection extends JView
 
         $tpl = $isNew ? 'add' : '';
         $text = $isNew ? JText::_('New') : JText::_('Edit');
-        JToolBarHelper::title(JText::_('PVLiveresults App').': <small><small>[ '.$text.' ]</small></small>');
+        JToolBarHelper::title(JText::_('PVLiveresults App').': <small>[ '.$text.' ]</small>');
 
         if ($isNew) {
             JToolBarHelper::save();

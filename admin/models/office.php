@@ -21,7 +21,7 @@ class PvliveresultsModelOffice extends PvliveresultsModel
      *
      * @var string
      */
-    //public $_fields = ' * ';
+    public $_fields = ' `o`.* ';
 
     /**
      * default sort order.
@@ -35,7 +35,7 @@ class PvliveresultsModelOffice extends PvliveresultsModel
      *
      * @var string
      */
-    public $_table = '#__pv_live_offices';
+    public $_table = ' `#__pv_live_offices` `o`, `#__pv_live_votes` `v` ';
 
     /**
      * table class name ref.
@@ -49,7 +49,7 @@ class PvliveresultsModelOffice extends PvliveresultsModel
      *
      * @var string
      */
-    //public $_where = '';
+    public $_where = ' `o`.`id` = `v`.`offices_id` ';
 
     public function publishOffices($currentElection)
     {
@@ -87,7 +87,7 @@ class PvliveresultsModelOffice extends PvliveresultsModel
     public function _buildQuery()
     {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT DISTINCT o.* '.' FROM `#__pv_live_offices` o, `#__pv_live_votes` v '.$this->_where.' '.$this->_order;
+        $query = 'SELECT DISTINCT ' . $this->_fields . ' '.' FROM ' . $this->_table . ' ' . $this->_where . ' ' . $this->_order . ' ';
 
         return $query;
     }
