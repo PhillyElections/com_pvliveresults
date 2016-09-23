@@ -35,16 +35,17 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
 , INDEX `name_offices` (`name`)
 ) ENGINE=MYISAM COLLATE='utf8_general_ci';
 
-CREATE TABLE IF NOT EXISTS `#__pv_live_office_election` (
+CREATE TABLE IF NOT EXISTS `#__pv_live_election_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
-, `office_id` int(11) unsigned NOT NULL DEFAULT 0
 , `election_id` int(11) unsigned NOT NULL DEFAULT 0
+, `office_id` int(11) unsigned NOT NULL DEFAULT 0
 , `ordering` int(11) unsigned NOT NULL DEFAULT 1
 , `published` tinyint(1) unsigned NOT NULL DEFAULT 0
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , PRIMARY KEY (`id`)
-, INDEX `party_id_offices` (`party_id`)
+, INDEX `election_id_election_offices` (`election_id`)
+, INDEX `office_id_election_offices` (`office_id`)
 ) ENGINE=MYISAM COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_parties` (
 CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
   `id` bigint(17) NOT NULL AUTO_INCREMENT
 , `vote_type_id` int(11) NOT NULL DEFAULT 0
-, `office_election_id` int(11) NOT NULL DEFAULT 0
+, `election_office_id` int(11) NOT NULL DEFAULT 0
 , `candidate_id` int(11) NOT NULL DEFAULT 0
 , `ward` smallint(5) NOT NULL DEFAULT 0
 , `division` smallint(5) NOT NULL DEFAULT 0
@@ -70,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 , INDEX `vote_type_id_votes` (`vote_type_id`)
-, INDEX `office_election_id_votes` (`office_election_id`)
+, INDEX `election_office_id_votes` (`election_office_id`)
 , INDEX `candidate_id_votes` (`candidate_id`)
 , INDEX `ward_votes` (`ward`)
 , INDEX `division_votes` (`division`)
