@@ -8,7 +8,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * @subpackage Components
  * @license    GNU/GPL
  */
-class PvliveresultsModelElection extends PvliveresultsModel
+class PvliveresultsModelElections extends PvliveresultsModel
 {
     /**
      * data array.
