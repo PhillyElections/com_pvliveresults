@@ -14,29 +14,29 @@ jimport( 'joomla.html.html' );
     <table class="adminlist">
         <thead>
             <tr>
-                <th width="5">
+                <th width="2%">
                     <?=JText::_('ID'); ?>
                 </th>
-                <th width="5">
+                <th width=2%>
                     <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($elections); ?>);" />
                 </th>
-                <th width="30">
+                <th width="7.5%">
                     <?=JText::_('ORDER'); ?>
                     <?=JHTML::_('grid.order',  $elections ); ?>
                 </th>
                 <th>
                     <?=JText::_('NAME'); ?>
                 </th>
-                <th width="30">
+                <th width="10%">
                     <?=JText::_('DATE'); ?>
                 </th>
-                <th width="20">
+                <th width="5%">
                     <?=JText::_('PUBLISHED'); ?>
                 </th>
-                <th width="50">
+                <th width="10%">
                     <?=JText::_('CREATED'); ?>
                 </th>
-                <th width="50">
+                <th width="10%">
                     <?=JText::_('MODIFIED'); ?>
                 </th>
             </tr>
