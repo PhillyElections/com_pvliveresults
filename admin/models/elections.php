@@ -76,7 +76,7 @@ class PvliveresultsModelElections extends PvliveresultsModel
 
         // Get pagination request variables
         $limit      = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
-        $limitstart = JRequest::getVar('limitstart', 0, '', 'int');
+        $limitstart = $mainframe->getUserStateFromRequest('global.list.limitstart', 'limitstart', '', 'int');
         d('set limit/limitstart in elections model constructor');
 
         // In case limit has been changed, adjust it
