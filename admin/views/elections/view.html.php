@@ -16,6 +16,7 @@ class PvliveresultsViewElections extends JView
      **/
     public function display($tpl = null)
     {
+        d('in view');
         JToolBarHelper::title(JText::_('PVLiveresults App Manager'), 'generic.png');
         JToolBarHelper::deleteList();
         JToolBarHelper::editListX();
