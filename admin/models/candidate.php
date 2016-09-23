@@ -18,7 +18,13 @@ class PvliveresultsModelCandidate extends PvliveresultsModel
      *
      * @var string
      */
-    // default is:
+    //public $_fields = ' * ';
+
+    /**
+     * default sort order.
+     *
+     * @var string
+     */
     //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
 
     /**
@@ -39,6 +45,5 @@ class PvliveresultsModelCandidate extends PvliveresultsModel
      * default sort order
      * @var string
      */
-    // default is:
     //public $_where = '';
 }

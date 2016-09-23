@@ -4,53 +4,65 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 /**
  * Pvliveresults Election Model
  *
- * @package    Joomla.Tutorials
+ * @package    Philadelphia.votes
  * @subpackage Components
  */
 class PvliveresultsModelElection extends PvliveresultsModel
 {
     /**
-     * data array
+     * data array.
+     *
      * @var array
      */
     //public $_data;
 
     /**
-     * default sort order
+     * default sort order.
+     *
      * @var string
      */
-    // default is:
+    //public $_fields = ' * ';
+
+    /**
+     * default sort order.
+     *
+     * @var string
+     */
     //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
 
     /**
      * Pagination object
+     * 
      * @var object
      */
     public $_pagination;
 
     /**
      * actual table name
+     * 
      * @var string
      */
     public $_table = '#__pv_live_elections';
 
     /**
      * table class name ref
+     * 
      * @var string
      */
     public $_tableRef = 'election';
 
     /**
      * Items total
+     * 
      * @var integer
      */
     public $_total;
 
     /**
      * default sort order
+     * 
      * @var string
      */
-    // default is:
     //public $_where = '';
 
 
@@ -84,17 +96,6 @@ class PvliveresultsModelElection extends PvliveresultsModel
         // Set id and wipe data
         $this->_id      = $id;
         $this->_data    = null;
-    }
-
-    /**
-     * Returns the query
-     * @return string The query to be used to retrieve the rows from the database
-     */
-    public function _buildQuery()
-    {
-        // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT * ' . ' FROM `' . $this->_table . '` ' . $this->_where . ' ' . $this->_order;
-        return $query;
     }
 
     /**

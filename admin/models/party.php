@@ -3,6 +3,9 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Party Model.
+ *
+ * @package    Philadelphia.votes
+ * @subpackage Components
  */
 class PvliveresultsModelParty extends PvliveresultsModel
 {
@@ -18,7 +21,13 @@ class PvliveresultsModelParty extends PvliveresultsModel
      *
      * @var string
      */
-    // default is:
+    //public $_fields = ' * ';
+
+    /**
+     * default sort order.
+     *
+     * @var string
+     */
     //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
 
     /**
@@ -37,9 +46,9 @@ class PvliveresultsModelParty extends PvliveresultsModel
 
     /*
      * default sort order
+     * 
      * @var string
      */
-    // default is:
     //public $_where = '';
 
 }

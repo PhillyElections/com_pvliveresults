@@ -1,9 +1,11 @@
 <?php
-
 defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults PVModel (parent) Model.
+ *
+ * @package    Philadelphia.votes
+ * @subpackage Components
  */
 class PvliveresultsModel extends JModel
 {
@@ -13,6 +15,13 @@ class PvliveresultsModel extends JModel
      * @var array
      */
     public $_data;
+
+    /**
+     * default sort order.
+     *
+     * @var string
+     */
+    public $_fields = ' * ';
 
     /**
      * default sort order.
@@ -110,7 +119,7 @@ class PvliveresultsModel extends JModel
     public function _buildQuery()
     {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT * '.' FROM `'.$this->_table.'` '.$this->_table.' '.$this->_order;
+        $query = 'SELECT ' . $this->_fields . ' '.' FROM `'.$this->_table.'` '.$this->_where.' '.$this->_order;
 
         return $query;
     }

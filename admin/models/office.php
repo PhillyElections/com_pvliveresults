@@ -3,6 +3,9 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Office Model.
+ *
+ * @package    Philadelphia.votes
+ * @subpackage Components
  */
 class PvliveresultsModelOffice extends PvliveresultsModel
 {
@@ -18,7 +21,13 @@ class PvliveresultsModelOffice extends PvliveresultsModel
      *
      * @var string
      */
-    // default is:
+    //public $_fields = ' * ';
+
+    /**
+     * default sort order.
+     *
+     * @var string
+     */
     //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
 
     /**
@@ -40,7 +49,6 @@ class PvliveresultsModelOffice extends PvliveresultsModel
      *
      * @var string
      */
-    // default is:
     //public $_where = '';
 
     public function publishOffices($currentElection)
@@ -69,5 +77,18 @@ class PvliveresultsModelOffice extends PvliveresultsModel
         }
 
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
+    }
+
+     /**
+     * Returns the query. -- OVERRIDDING that in PvliveresultsModel
+     *
+     * @return string The query to be used to retrieve the rows from the database
+     */
+    public function _buildQuery()
+    {
+        // added order by -- id desc for a defacto recent date sort
+        $query = 'SELECT DISTINCT o.* '.' FROM `#__pv_live_offices` o, `#__pv_live_votes` v '.$this->_where.' '.$this->_order;
+
+        return $query;
     }
 }
