@@ -26,7 +26,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $view = $this->getView('elections', JRequest::getWord('format', 'html'));
         d('loaded view in display of elections controller');
 
-        $view->setModel($this->getModel('elections'), true);
+        //$view->setModel($this->getModel('elections'), true);
         d('loaded model in display of elections controller');
 
         $view->display();
