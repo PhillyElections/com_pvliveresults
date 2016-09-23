@@ -76,7 +76,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         $election = $this->getModel('election');
-dd($election);
+dd($election , JRequest::get());
         $election->saveorder();
     }
 }
