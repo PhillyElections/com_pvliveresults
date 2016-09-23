@@ -36,7 +36,7 @@ class PvliveresultsModel extends JModel
      *
      * @var string
      */
-    public $_order = ' ORDER BY `ordering` DESC, `id` DESC ';
+    public $_order = ' ORDER BY `ordering` ASC, `id` DESC ';
 
     /**
      * actual table name.
