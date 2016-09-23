@@ -70,7 +70,7 @@ class PvliveresultsModelElections extends PvliveresultsModel
     public function __construct()
     {
         // parent will setId(), which we don't need... so...
-        //parent::__construct();
+        parent::__construct();
         d('in elections model constructor');
         $mainframe = JFactory::getApplication();
 
