@@ -76,11 +76,12 @@ class PvliveresultsControllerElections extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
         $items = JRequest::getVar('ordering');
 
-        foreach ($items as $key=>$value) {
+        foreach ($items as $key => $value) {
             $data = array('id'=>$key, 'ordering'=>$value);
             $election = $this->getModel('election');
             $election->store($data);
         }
+
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults');
     }
