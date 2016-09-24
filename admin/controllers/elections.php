@@ -81,5 +81,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
             $election = $this->getModel('election');
             $election->store($data);
         }
+        $mainframe = JFactory::getApplication();
+        $mainframe->redirect('index.php?option=com_pvliveresults');
     }
 }
