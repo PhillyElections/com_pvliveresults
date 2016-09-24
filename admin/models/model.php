@@ -154,11 +154,13 @@ class PvliveresultsModel extends JModel
      *
      * @return bool True on success
      */
-    public function store()
+    public function store($data = false)
     {
         $row = JTable::getInstance($this->_tableRef, 'Table');
 
-        $data = JRequest::get('post');
+        if (!$data) {
+            $data = JRequest::get('post');
+        }
 
         // Bind the form fields to the  table
         if (!$row->bind($data)) {
