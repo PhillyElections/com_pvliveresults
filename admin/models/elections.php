@@ -94,7 +94,6 @@ class PvliveresultsModelElections extends PvliveresultsModel
         // if data hasn't already been obtained, load it
         if (empty($this->_data)) {
             $query       = $this->_buildQuery();
-            d($query);
             $this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
         }
 
