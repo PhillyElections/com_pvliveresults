@@ -77,9 +77,11 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $items = JRequest::getVar('ordering');
 
         foreach ($items as $key => $value) {
-            $data = array('id'=>$key, 'ordering'=>$value);
-            $election = $this->getModel('election');
-            $election->store($data);
+            if (is_numeric($key) && is_numeric($value)) {
+                $data = array('id'=>(int)$key, 'ordering'=>(int)$value);
+                $election = $this->getModel('election');
+                $election->store($data);
+            }
         }
 
         $mainframe = JFactory::getApplication();
