@@ -29,7 +29,7 @@ class PvliveresultsModelElections extends PvliveresultsModel
      *
      * @var string
      */
-    //public $_order = ' ORDER BY `order` ASC, `name` ASC , `id` ASC ';
+    public $_order = ' ORDER BY `order` ASC, `name` ASC , `id` ASC ';
 
     /**
      * Pagination object
