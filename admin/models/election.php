@@ -52,6 +52,10 @@ class PvliveresultsModelElection extends PvliveresultsModel
      */
     //public $_where = '';
 
+    public function _buildQuery() {
+        return " SELECT * FROM " . $this->_db->quoteName($this->_table) . " WHERE `id` = " . $this->_id;
+    }
+
     public function bulkInsert($insert)
     {
         $db = &JFactory::getDBO();
