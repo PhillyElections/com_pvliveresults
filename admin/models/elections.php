@@ -1,5 +1,5 @@
 <?php
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Election Model
@@ -29,7 +29,7 @@ class PvliveresultsModelElections extends PvliveresultsModel
      *
      * @var string
      */
-    //public $_order = ' ORDER BY `order` DESC, `id` DESC ';
+    public $_order = ' ORDER BY `order` DESC, `name` DESC, `id` DESC ';
 
     /**
      * Pagination object
