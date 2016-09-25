@@ -19,7 +19,7 @@ class PvliveresultsViewElection extends JView
         d('in view', $this);
         //get the election
         $election = &$this->get('Data');
-        $isNew = ((int)$election->id < 1);
+        $isNew = ((int)$election[0]->id < 1);
         d($election, $election->id, $isNew);
 
         $tpl = $isNew ? 'add' : '';
@@ -37,7 +37,7 @@ class PvliveresultsViewElection extends JView
             JToolBarHelper::cancel('cancel', 'Close');
         }
 
-        $this->assignRef('election', $election);
+        $this->assignRef('election', $election[0]);
 
         parent::display($tpl);
     }
