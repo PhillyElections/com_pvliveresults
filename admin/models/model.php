@@ -63,7 +63,13 @@ class PvliveresultsModel extends JModel
     {
         parent::__construct();
         $array = JRequest::getVar('cid', 0, '', 'array');
-        $this->setId((int) $array[0]);
+        $id    = JRequest::getInt('id');
+        if ($id) {
+            // in case we're updating and check() failed
+            $this->setId((int) $id);
+        } else {
+            $this->setId((int) $array[0]);
+        }
     }
 
     /**
