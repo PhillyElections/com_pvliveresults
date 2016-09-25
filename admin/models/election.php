@@ -53,7 +53,9 @@ class PvliveresultsModelElection extends PvliveresultsModel
     //public $_where = '';
 
     public function _buildQuery() {
-        return " SELECT * FROM " . $this->_db->nameQuote($this->_table) . " WHERE `id` = " . $this->_id;
+        $query = " SELECT " . $this->_fields . " FROM " . $this->_db->nameQuote($this->_table) . " WHERE `id` = " . $this->_id;
+        d($query);
+        return $query;
     }
 
     public function bulkInsert($insert)
