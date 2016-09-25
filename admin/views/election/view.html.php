@@ -28,6 +28,7 @@ class PvliveresultsViewElection extends JView
         if ($isNew) {
             JToolBarHelper::save();
             JToolBarHelper::cancel();
+            $tpl='add';
         } else {
             // for existing items the button is renamed `close`
             JToolBarHelper::publish();
