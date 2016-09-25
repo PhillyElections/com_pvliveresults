@@ -149,7 +149,7 @@ class PvliveresultsModel extends JModel
         // Lets load the data if it doesn't already exist
         if (empty($this->_data)) {
             $query = $this->_buildQuery();
-            $this->_data = $this->_getList($query);
+            $this->_data = $this->_loadObject($query);
         }
 
         return $this->_data;
