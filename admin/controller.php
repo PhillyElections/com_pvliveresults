@@ -12,7 +12,7 @@ defined('_JEXEC') or die('Restricted access');
 class PvliveresultsController extends JController
 {
 
-    public __construct() {
+    public function __construct() {
         parent::__construct();
     }
 
