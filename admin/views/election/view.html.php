@@ -32,7 +32,7 @@ class PvliveresultsViewElection extends JView
             // for existing items the button is renamed `close`
             JToolBarHelper::publish();
             JToolBarHelper::unpublish();
-            JToolBarHelper::save('save_step2', 'Save');
+            JToolBarHelper::save();
             JToolBarHelper::cancel('cancel', 'Close');
         }
 
