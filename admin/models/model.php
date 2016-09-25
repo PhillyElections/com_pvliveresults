@@ -135,7 +135,7 @@ class PvliveresultsModel extends JModel
     {
         // added order by -- id desc for a defacto recent date sort
         $query = 'SELECT ' . $this->_fields . ' '.' FROM `'.$this->_table.'` '.$this->_where.' '.$this->_order;
-
+d($this);
         return $query;
     }
 
@@ -149,7 +149,7 @@ class PvliveresultsModel extends JModel
         // Lets load the data if it doesn't already exist
         if (empty($this->_data)) {
             $query = $this->_buildQuery();
-            $this->_data = $this->_loadObject($query);
+            $this->_data = $this->_getList($query);
         }
 
         return $this->_data;
