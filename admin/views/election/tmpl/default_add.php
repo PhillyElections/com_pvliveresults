@@ -40,8 +40,8 @@
             </td>
         </tr>
     </table>
-<p><sup>1</sup><?=JText::_('FIRST ROW WARNING')?></p>
-<p><sup>2</sup><?=JText::_('FILE FORMAT WARNING')?></p>
+<p><sup>1</sup> <?=JText::_('FIRST ROW WARNING')?></p>
+<p><sup>2</sup> <?=JText::_('FILE FORMAT WARNING')?></p>
     </fieldset>
 
 </div>
