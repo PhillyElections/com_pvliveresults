@@ -28,6 +28,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
     public function edit()
     {
         $view->setModel($this->getModel('elections'), true);
+        JRequest::setVar('hidemainmenu', 1);
 
         parent::display();
     }
