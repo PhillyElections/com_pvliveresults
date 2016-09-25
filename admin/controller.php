@@ -11,6 +11,11 @@ defined('_JEXEC') or die('Restricted access');
  */
 class PvliveresultsController extends JController
 {
+
+    public __construct() {
+        parent::__construct();
+    }
+
     /**
      * Method to display the view.
      */
