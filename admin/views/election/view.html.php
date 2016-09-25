@@ -19,6 +19,7 @@ class PvliveresultsViewElection extends JView
         d('in view', $this);
         //get the election
         $election = &$this->get('Data');
+        d($election);
         $isNew = ($election->id < 1);
 
         $tpl = $isNew ? 'add' : '';
