@@ -5,7 +5,7 @@ $pagination = &$this->pagination;
 $elections = &$this->elections;
 d($pagination);
 
-jimport( 'joomla.html.html' );
+jimport('joomla.html.html');
 
 ?>
 <form action="index.php" method="post" name="adminForm">
@@ -21,7 +21,7 @@ jimport( 'joomla.html.html' );
                 </th>
                 <th width="5%">
                     <?=JText::_('ORDER'); ?>
-                    <?=JHTML::_('grid.order',  $elections ); ?>
+                    <?=JHTML::_('grid.order', $elections); ?>
                 </th>
                 <th>
                     <?=JText::_('NAME'); ?>
@@ -63,7 +63,7 @@ jimport( 'joomla.html.html' );
                     <?=$row->date; ?>
                 </td>
                 <td>
-                    <?=JHTML::_('grid.published', $row, $i );?>
+                    <?=JHTML::_('grid.published', $row, $i);?>
                 </td>
                 <td>
                     <?=$row->created; ?>
@@ -89,5 +89,5 @@ jimport( 'joomla.html.html' );
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />
 <input type="hidden" name="controller" value="elections" />
-<?php echo JHTML::_( 'form.token' ); ?>
+<?php echo JHTML::_('form.token'); ?>
 </form>
