@@ -19,11 +19,11 @@ jimport( 'joomla.html.html' );
                 <th width=2%>
                     <input type="checkbox" name="toggle" value="" onclick="checkAll(<?=count($elections); ?>);" />
                 </th>
-<?/*                <th width="5%">
+                <th width="5%">
                     <?=JText::_('ORDER'); ?>
                     <?=JHTML::_('grid.order',  $elections ); ?>
                 </th>
-*/?>                <th>
+                <th>
                     <?=JText::_('NAME'); ?>
                 </th>
                 <th width="10%">
@@ -53,10 +53,10 @@ jimport( 'joomla.html.html' );
                 <td>
                     <?=JHTML::_('grid.id', $i, $row->id); ?>
                 </td>
-<?/*                <td>
+                <td>
                     <input size="7" type="text" name="ordering[<?=$row->id ;?>]" value="<?=$row->ordering ?>" />
                 </td>
-*/?>                <td>
+                <td>
                     <a href="<?=$link; ?>"><?=$row->name; ?></a>
                 </td>
                 <td>
