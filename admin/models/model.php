@@ -60,16 +60,14 @@ class PvliveresultsModel extends JModel
     public $_where = '';
 
     public function __construct()
-    { d('in base model constructor');
+    {
         parent::__construct();
         $cids = JRequest::getVar('cid', 0, '', 'array');
         $id    = JRequest::getInt('id');
         if ($id) {
-            d('setting by id');
             // in case we're updating and check() failed
             $this->setId((int) $id);
         } else {
-            d('setting by cid', $cids, $cids[0]);
             $this->setId((int) $cids[0]);
         }
     }
