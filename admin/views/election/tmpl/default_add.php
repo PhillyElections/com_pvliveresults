@@ -16,7 +16,17 @@
                 </label>
             </td>
             <td>
-                <input class="text_area" type="text" name="election" id="election" size="32" maxlength="250" value="<?php echo $this->hello->greeting;?>" />
+                <input class="text_area" type="text" name="name" id="name" size="32" maxlength="250" value="<?php echo $this->hello->greeting;?>" />
+            </td>
+        </tr>
+        <tr>
+            <td width="100" align="right" class="key">
+                <label for="greeting">
+                    <?=JText::_('ELECTION DATE'); ?>:
+                </label>
+            </td>
+            <td>
+                <?=JHTML::calendar('', 'date', 'date', '%Y-%m-%d', 'class="inputbox" size="25" maxlength="19"');?>
             </td>
         </tr>
         <tr>

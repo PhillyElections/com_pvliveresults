@@ -105,10 +105,31 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $this->setRedirect($link, $msg);
     }
 
+    public function save()
+    {
+        // if is new run update
+        if (JRequest::getVar('isNew')) {
+            $this->update();
+
+            return true; 
+        }
+
+        // 
+
+        // redirect to edit
+    }
+
+
+    public function update()
+    {
+
+        // return to edit
+        $this->setRedirect()
+    }
     /**
      * save a record (and redirect to main page).
      */
-    public function save()
+    public function save1()
     {
         JRequest::checkToken() or jexit('Invalid Token');
         // having timeout issues 2015.11.17
