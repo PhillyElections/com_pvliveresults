@@ -69,7 +69,7 @@ class PvliveresultsModel extends JModel
             // in case we're updating and check() failed
             $this->setId((int) $id);
         } else {
-            d('setting by cid');
+            d('setting by cid', $cids, $cids[0]);
             $this->setId((int) $cids[0]);
         }
     }
