@@ -1,15 +1,18 @@
-<?php defined('_JEXEC') or die('Restricted access'); ?>
+<?php defined('_JEXEC') or die('Restricted access'); 
+
+
+?>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 <div class="col100">
     <fieldset class="adminform">
-        <legend><?php echo JText::_( 'Details' ); ?></legend>
+        <legend><?=JText::_('DETAILS'); ?></legend>
 
         <table class="admintable">
         <tr>
             <td width="100" align="right" class="key">
                 <label for="greeting">
-                    <?php echo JText::_( 'Year' ); ?>:
+                    <?=JText::_('ELECTION'); ?>:
                 </label>
             </td>
             <td>
@@ -19,7 +22,7 @@
         <tr>
             <td width="100" align="right" class="key">
                 <label for="greeting">
-                    <?php echo JText::_( 'Exclude Header Row' ); ?>:
+                    <?=JText::_('EXCLUDE HEADER ROW'); ?>:
                 </label>
             </td>
             <td>
@@ -29,7 +32,7 @@
         <tr>
             <td width="100" align="right" class="key">
                 <label for="greeting">
-                    <?php echo JText::_( 'File' ); ?>:
+                    <?=JText::_('FILE'); ?>:
                 </label>
             </td>
             <td>
@@ -37,16 +40,16 @@
             </td>
         </tr>
     </table>
-<p><sup>1</sup>The first row is usually column headers, which are not needed.  Check if you're unsure.<br>  Blank lines will simply be ignored.</p>
-<p><sup>2</sup>Expected format is CSV either with text fields quoted or all fields quoted. ...I.E. the format exported by Guardian will work as-is (currently gives a .txt file in a .csv format), or will work after opening and casually saving out as .csv.<br>  Stray blank lines will be ignored.</p>
+<p><sup>1</sup><?=JText::_('FIRST ROW WARNING')?></p>
+<p><sup>2</sup><?=JText::_('FILE FORMAT WARNING')?></p>
     </fieldset>
 
 </div>
 <div class="clr"></div>
 
 <input type="hidden" name="option" value="com_pvliveresults" />
-<input type="hidden" name="id" value="<?php echo $this->hello->id; ?>" />
-<input type="hidden" name="task" value="" />
+<input type="hidden" name="id" value="" />
+<input type="hidden" name="task" value="save" />
 <input type="hidden" name="controller" value="election" />
 <?php echo JHTML::_('form.token');?>
 </form>
