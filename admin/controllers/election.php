@@ -32,7 +32,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         JRequest::setVar('view', 'election');
         if ($id) {
-            JRequest::setVar('year_id', $id);
+            JRequest::setVar('id', $id);
         }
 
         JRequest::setVar('hidemainmenu', 1);
