@@ -52,6 +52,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
             // we do not delete candidates, offices, parties, or votetypes -- all the bindings are in 'votes', so there's no reason
         }
+        dd('out of delete loop');
     }
 
     public function save()
@@ -291,7 +292,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
     public function unpublish()
     {
         JRequest::checkToken() or jexit('Invalid Token');
-        dd('need work here', JRequest::get());
+        date_diff()('need work here', JRequest::get());
         $election = $this->getModel('electionoffice');
         $cid = JRequest::getVar('cid');
 
