@@ -135,7 +135,7 @@ class PvliveresultsModel extends JModel
     {
         // added order by -- id desc for a defacto recent date sort
         $query = 'SELECT ' . $this->_fields . ' '.' FROM `'.$this->_table.'` '.$this->_where.' '.$this->_order;
-d($this);
+
         return $query;
     }
 
