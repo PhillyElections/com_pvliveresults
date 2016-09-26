@@ -202,6 +202,16 @@ class PvliveresultsModel extends JModel
         return $this->_data;
     }
 
+    public function getNameIdAssoc($key = 'name')
+    {
+        $query = "SELECT `id`, `name` FROM " . $this->_db->nameQuote($this->_table) . " ORDER BY `name` ASC ";
+
+        $this->_db->setQuery($query);
+        $this->_assoc = $this->_db->loadAssocList($key);
+
+        return $this->_assoc;
+    }
+
     public function getNow()
     {
         $dateNow = &JFactory::getDate();
