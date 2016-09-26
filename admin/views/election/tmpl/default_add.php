@@ -11,7 +11,7 @@
         <table class="admintable">
         <tr>
             <td width="100" align="right" class="key">
-                <label for="greeting">
+                <label for="name">
                     <?=JText::_('ELECTION'); ?>:
                 </label>
             </td>
@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <td width="100" align="right" class="key">
-                <label for="greeting">
+                <label for="date">
                     <?=JText::_('ELECTION DATE'); ?>:
                 </label>
             </td>
@@ -31,22 +31,22 @@
         </tr>
         <tr>
             <td width="100" align="right" class="key">
-                <label for="greeting">
+                <label for="exclude_header">
                     <?=JText::_('EXCLUDE HEADER ROW'); ?>:
                 </label>
             </td>
             <td>
-                <input class="text_area" type="checkbox" name="header" value="Include" checked=checked> <sup>1</sup>
+                <input class="text_area" type="checkbox" name="exclude_header" name="exclude_header" value="exclude" checked=checked> <sup>1</sup>
             </td>
         </tr>
         <tr>
             <td width="100" align="right" class="key">
-                <label for="greeting">
+                <label for="results_file">
                     <?=JText::_('FILE'); ?>:
                 </label>
             </td>
             <td>
-                <input type="file" name="fileToUpload" id="fileToUpload"> <sup>2</sup>
+                <input type="file" name="results_file" id="results_file"> <sup>2</sup>
             </td>
         </tr>
     </table>
