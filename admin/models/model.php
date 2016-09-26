@@ -162,8 +162,9 @@ class PvliveresultsModel extends JModel
      */
     public function store($data = false)
     {
-        $row = JTable::getInstance($this->_tableRef, 'Table');
 
+        $row = JTable::getInstance($this->_tableRef, 'Table');
+        d($row);
         if (!$data) {
             $data = JRequest::get('post');
         }
