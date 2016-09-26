@@ -129,7 +129,7 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
         $cid = JRequest::getVar('cid');
 
         foreach ($cid as $id) {
-            $row = JTable::getInstance($this->tableName['s'], 'Table');
+            $row = JTable::getInstance($this->_tableRef, 'Table');
             $row->load($id);
             $row->publish($id, 1);
         }
@@ -143,12 +143,11 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
         $cid = JRequest::getVar('cid');
 
         foreach ($cid as $id) {
-            $row = JTable::getInstance($this->tableName['s'], 'Table');
+            $row = JTable::getInstance($this->_tableRef, 'Table');
             $row->load($id);
             $row->publish($id, 0);
         }
 
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
     }
-
 }
