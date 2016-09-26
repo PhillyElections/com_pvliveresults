@@ -292,7 +292,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
     public function unpublish()
     {
         JRequest::checkToken() or jexit('Invalid Token');
-        date_diff()('need work here', JRequest::get());
+        dd('need work here', JRequest::get());
         $election = $this->getModel('electionoffice');
         $cid = JRequest::getVar('cid');
 
