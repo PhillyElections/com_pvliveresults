@@ -54,6 +54,35 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
     }
 
+    public function save()
+    {
+        // save election data
+        $election=$this->getModel('election');
+        $data = JRequest::getPost();
+        $data['created'] = 
+        $election->save();
+        // capure the id
+
+        // loop through the uploaded file
+            // is the office new? write it
+            // capture the id
+            // write the office_election link
+            // is the 
+
+        // redirect to edit
+        $link = 'index.php?option=com_pvliveresults';
+        $this->setRedirect($link, $msg);
+    }
+
+
+    public function update()
+    {
+
+        // return to edit
+        $link = 'index.php?option=com_pvliveresults';
+        $this->setRedirect($link, $msg);
+    }
+
     public function save_step2()
     {
         JRequest::checkToken() or jexit('Invalid Token');
@@ -100,41 +129,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $this->setRedirect($link, $msg);
     }
 
-    public function save()
-    {
-        // if is new run update
-        if (JRequest::getVar('isNew')) {
-            $this->update();
-
-            return true; 
-        }
-
-        // save election data
-        $election=$this->getModel('election');
-        $data = JRequest::getPost();
-        $data['created'] = 
-        $election->save();
-        // capure the id
-
-        // loop through the uploaded file
-            // is the office new? write it
-            // capture the id
-            // write the office_election link
-            // is the 
-
-        // redirect to edit
-        $link = 'index.php?option=com_pvliveresults';
-        $this->setRedirect($link, $msg);
-    }
-
-
-    public function update()
-    {
-
-        // return to edit
-        $link = 'index.php?option=com_pvliveresults';
-        $this->setRedirect($link, $msg);
-    }
     /**
      * save a record (and redirect to main page).
      */

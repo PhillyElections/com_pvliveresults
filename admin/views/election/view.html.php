@@ -16,12 +16,10 @@ class PvliveresultsViewElection extends JView
      **/
     public function display($tpl = null)
     {
-        d('in view', $this);
         //get the election
         $election = &$this->get('Data');
         $isNew = ((int)$election[0]->id < 1);
         $text = JText::_('Edit');
-        d($election, $election->id, $isNew);
 
         if ($isNew) {
             $tpl = 'add';
@@ -37,7 +35,7 @@ class PvliveresultsViewElection extends JView
             // for existing items the button is renamed `close`
             JToolBarHelper::publish();
             JToolBarHelper::unpublish();
-            JToolBarHelper::save();
+            JToolBarHelper::save('update', 'Save');
             JToolBarHelper::cancel('cancel', 'Close');
         }
 

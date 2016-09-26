@@ -83,7 +83,7 @@ $offices=$this->offices;
 
 <input type="hidden" name="option" value="com_pvliveresults" />
 <input type="hidden" name="id" value="<?=$election->id; ?>" />
-<input type="hidden" name="task" value="save" />
+<input type="hidden" name="task" value="update" />
 <input type="hidden" name="boxchecked" value="0" />
 <input type="hidden" name="controller" value="election" />
 <?php echo JHTML::_('form.token');?>
