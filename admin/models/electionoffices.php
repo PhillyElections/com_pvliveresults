@@ -36,14 +36,14 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
      *
      * @var string
      */
-    //public $_table = '';
+    public $_table = '#__pv_live_election_offices';
 
     /**
      * table class name ref.
      *
      * @var string
      */
-    //public $_tableRef = '';
+    public $_tableRef = 'electionoffice';
 
     /**
      * default sort order.
