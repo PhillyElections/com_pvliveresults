@@ -59,10 +59,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
     {
         // save election data
         $election=$this->getModel('election');
-        $data = JRequest::get('post');
+        $post = JRequest::get('post');
+        $data = array();
+        $data['name'] = $post['name'];
+        $data['date'] = $post['date'];
         $data['created'] = $election->getNow();
-        dd($data);
-        $election->store();
+        //dd($data);
+        $election->store($data);
+        dd($data, $election->getByName($data['name']))
         // capure the id
 
         // loop through the uploaded file
