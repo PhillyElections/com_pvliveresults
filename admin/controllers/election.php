@@ -66,7 +66,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $data['created'] = $election->getNow();
         //dd($data);
         $election->store($data);
-        dd($data, $election->getByName($data['name']))
+        dd($data, $election->getByName($data['name']));
         // capure the id
 
         // loop through the uploaded file
