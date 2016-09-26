@@ -57,19 +57,51 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
     public function save()
     {
+        JRequest::checkToken() or jexit('Invalid Token');
+
         // save election data
-        $election=$this->getModel('election');
+        $electionModel=$this->getModel('election');
+        dd($electionModel->getNameIdAssoc());
         $post = JRequest::get('post');
+
         $data = array();
         $data['name'] = $post['name'];
         $data['date'] = $post['date'];
         $data['created'] = $election->getNow();
-        dd($data,$election->getByName($data['name']));
-        //dd($data);
-        $election->store($data);
-        // capure the id
 
+        // save any conflicts detected by name
+        $oldElectionRows = $electionModel->getByName($post['name']);
+
+        // capure the id as you s ave
+        $electionId = $election->store($data);
+        $newFileName = JFile::makeSafe($data['name']) . ".csv";
+
+        $excludeHeader = isset($_POST['exclude_header']) ? true : false;
+
+
+        if (!$post['results_file']) {
+            // no file.  No need to go on.  Warn the user
+            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election', 'No file uploaded. You might want to delete this election and start over');
+        }
+
+        jimport('joomla.fiesystem.file');
+
+        $src = $post['results_file']['name'] . DS . $post['results_file'];
+        $dest = JPATH_COMPONENT.DS.'uploads'.DS. $newFileName;
+
+        ini_set('max_execution_time', 360);
+
+        if (!JFile::upload($src, $dest)) {
+            // failed file.  No need to go on.  Warn the user
+            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election', 'Failed file uploaded. You might want to delete this election and start over');            
+        }
+
+        $indecis = array();
+        $indecis['candidates'] = array();
+        $indecis['offices'] = array();
+        jimport('joomla.filesystem.archive');
         // loop through the uploaded file
+
             // is the office new? write it
             // capture the id
             // write the office_election link
@@ -82,83 +114,15 @@ class PvliveresultsControllerElection extends PvliveresultsController
     }
 
 
-    public function update()
-    {
-
-        // return to edit
-        $link = 'index.php?option=com_pvliveresults';
-        $this->setRedirect($link, $msg);
-    }
-
-    public function save_step2()
-    {
-        JRequest::checkToken() or jexit('Invalid Token');
-        // having timeout issues 2015.11.17
-        ini_set('max_execution_time', 360);
-
-        $election_year_id = JRequest::getVar('id');
-        $ids = JRequest::getVar('office_id');
-        $publish = JRequest::getVar('office_publish');
-        $name = JRequest::getVar('office_name');
-        $order = JRequest::getVar('publish_order');
-        $election_name = JRequest::getVar('election_name');
-        $election_date = JRequest::getVar('election_date');
-        $model = $this->getModel('Liveresult');
-        if (JRequest::getVar('deleted')) {
-            $model->delete_election($election_year_id);
-            $model->delete_related($ids);
-            $msg = JText::_('Record Deleted.');
-        } else {
-            $active_office = array();
-            $in_active_office = array();
-
-            $model->update_election_name($election_name, $election_year_id, $election_date);
-
-            //First Delete all wards and divisions from tables and then reinsert them. As it will save time and easy peasy task performance boost will occur by doing this.
-            $model->delete_related($ids);
-
-            $in_id = array();
-            foreach ($ids as $id => $value) {
-                if ($publish[$id]) {
-                    $active_office[$id] = $name[$id];
-                    $model->update_office($order[$id], $id);
-                    $model->insert_office_ward($ids[$id], $name[$id], $election_year_id);
-                } else {
-                    $in_active_office[$id] = $name[$id];
-                    $in_id[] = $id;
-                    $model->update_office($order[$id], $id);
-                }
-            }
-            //$model->bulk_insert($bulk_insert_array);
-            $msg = JText::_('Data Saved');
-        }
-        $link = 'index.php?option=com_pvliveresults';
-        $this->setRedirect($link, $msg);
-    }
 
     /**
      * save a record (and redirect to main page).
      */
     public function save1()
     {
-        JRequest::checkToken() or jexit('Invalid Token');
         // having timeout issues 2015.11.17
-        ini_set('max_execution_time', 360);
-        $e_year = JRequest::getVar('e_year');
-        $exclude_header = isset($_POST['header']) ? true : false;
-        $move_file = strtolower(str_replace(' ', '_', $e_year));
-        $move_file = preg_replace('/[^A-Za-z0-9\-]/', '_', $move_file).'.csv';
-        $votes = $this->getModel('Liveresult');
         $insertStart = 'INSERT into #__pv_live_votes (`office`,`ward`,`division`,`vote_type`,`name`,`party`,`votes`,`e_year`,`date_created`) VALUES ';
 
-        $path = JPATH_COMPONENT.DS.'uploads'.DS;
-        $fileName = $_FILES['fileToUpload']['name'];
-        $fileTmpLoc = $_FILES['fileToUpload']['tmp_name'];
-
-        // Path and file name
-        $pathAndName = $path.$fileName;
-        // Run the move_uploaded_file() function here
-        $moveResult = move_uploaded_file($fileTmpLoc, $pathAndName);
         // Evaluate the value returned from the function if needed
         if ($moveResult) {
             jimport('joomla.filesystem.archive');
@@ -256,6 +220,58 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $this->setRedirect($link, $msg);
     }
+
+    public function update()
+    {
+
+    }
+
+    public function save_step2()
+    {
+        JRequest::checkToken() or jexit('Invalid Token');
+        // having timeout issues 2015.11.17
+        ini_set('max_execution_time', 360);
+
+        $election_year_id = JRequest::getVar('id');
+        $ids = JRequest::getVar('office_id');
+        $publish = JRequest::getVar('office_publish');
+        $name = JRequest::getVar('office_name');
+        $order = JRequest::getVar('publish_order');
+        $election_name = JRequest::getVar('election_name');
+        $election_date = JRequest::getVar('election_date');
+        $model = $this->getModel('Liveresult');
+        if (JRequest::getVar('deleted')) {
+            $model->delete_election($election_year_id);
+            $model->delete_related($ids);
+            $msg = JText::_('Record Deleted.');
+        } else {
+            $active_office = array();
+            $in_active_office = array();
+
+            $model->update_election_name($election_name, $election_year_id, $election_date);
+
+            //First Delete all wards and divisions from tables and then reinsert them. As it will save time and easy peasy task performance boost will occur by doing this.
+            $model->delete_related($ids);
+
+            $in_id = array();
+            foreach ($ids as $id => $value) {
+                if ($publish[$id]) {
+                    $active_office[$id] = $name[$id];
+                    $model->update_office($order[$id], $id);
+                    $model->insert_office_ward($ids[$id], $name[$id], $election_year_id);
+                } else {
+                    $in_active_office[$id] = $name[$id];
+                    $in_id[] = $id;
+                    $model->update_office($order[$id], $id);
+                }
+            }
+            //$model->bulk_insert($bulk_insert_array);
+            $msg = JText::_('Data Saved');
+        }
+        $link = 'index.php?option=com_pvliveresults';
+        $this->setRedirect($link, $msg);
+    }
+
 
     /**
      * remove record(s).
