@@ -164,7 +164,7 @@ class PvliveresultsModel extends JModel
     {
 
         $row = JTable::getInstance($this->_tableRef, 'Table');
-        d($row);
+
         if (!$data) {
             $data = JRequest::get('post');
         }
@@ -190,7 +190,7 @@ class PvliveresultsModel extends JModel
             return false;
         }
 
-        return true;
+        return $this->_db->insertid();
     }
 
     public function getByName($name)
