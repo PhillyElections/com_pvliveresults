@@ -202,4 +202,11 @@ class PvliveresultsModel extends JModel
         }
         return false;
     }
+
+    public function getNow()
+    {
+        $dateNow = &JFactory::getDate();
+
+        return $dateNow->toMySQL();
+    }
 }

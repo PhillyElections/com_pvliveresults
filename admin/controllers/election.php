@@ -58,8 +58,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
     {
         // save election data
         $election=$this->getModel('election');
-        $data = JRequest::getPost();
-        $data['created'] = 
+        $data = JRequest::get('post');
+        $data['created'] = $election->getNow();
         $election->save();
         // capure the id
 
@@ -70,6 +70,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // is the 
 
         // redirect to edit
+        $msg = 'hey, lookie, we saved an election';
         $link = 'index.php?option=com_pvliveresults';
         $this->setRedirect($link, $msg);
     }
