@@ -83,7 +83,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         // capure the id as you s ave
         $electionId = $electionModel->store($data);
-        $electoinModel->squinchOrdering();
+        $electionModel->squinchOrdering();
 
 
         // verify we have an upload
