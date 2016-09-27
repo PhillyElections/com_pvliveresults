@@ -54,7 +54,7 @@ class PvliveresultsModelElection extends PvliveresultsModel
 
     public function _buildQuery() {
         $query = " SELECT " . $this->_fields . " FROM " . $this->_db->nameQuote($this->_table) . " WHERE `id` = " . $this->_id;
-        d($query);
+
         return $query;
     }
 
