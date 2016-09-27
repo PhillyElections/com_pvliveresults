@@ -196,7 +196,6 @@ class PvliveresultsModel extends JModel
     public function getByName($name)
     {
         $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table) . " WHERE `name` = " . $this->_db->Quote($name) . " ";
-
         $this->_data = $this->_getList($query);
 
         return $this->_data;
