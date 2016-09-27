@@ -262,7 +262,7 @@ class PvliveresultsModel extends JModel
      */
     public function bumpOrdering()
     {
-        $query = "UPDATE " . $this->_db->nameQuote($this->_table) . " set `ordering`=(`ordering` + 1) "
+        $query = "UPDATE " . $this->_db->nameQuote($this->_table) . " set `ordering`=(`ordering` + 1) ";
         $this->_db->setQuery($query);
         if (!$this->_db->query()) {
             $this->setError($this->_db->getErrorMsg());
