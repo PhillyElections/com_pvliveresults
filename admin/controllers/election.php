@@ -59,9 +59,17 @@ class PvliveresultsControllerElection extends PvliveresultsController
     {
         JRequest::checkToken() or jexit('Invalid Token');
 
-        // save election data
+        // let's get our 'name' models
+        $candidateModel=$this->getModel('candidate');
+        $candidatesIndex = $candidateModel->getNameIdAssoc();
+
         $electionModel=$this->getModel('election');
-        dd($electionModel->getNameIdAssoc());
+        $electionsIndex = $electionModel->getNameIdAssoc();
+
+        $officeModel=$this->getModel('office');
+        $officesIndex = $officeModel->getNameIdAssoc();
+
+        // shape and save election data
         $post = JRequest::get('post');
 
         $data = array();
@@ -69,50 +77,132 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $data['date'] = $post['date'];
         $data['created'] = $election->getNow();
 
-        // save any conflicts detected by name
-        $oldElectionRows = $electionModel->getByName($post['name']);
-
         // capure the id as you s ave
         $electionId = $election->store($data);
-        $newFileName = JFile::makeSafe($data['name']) . ".csv";
 
-        $excludeHeader = isset($_POST['exclude_header']) ? true : false;
-
-
+        // verify we have an upload
         if (!$post['results_file']) {
             // no file.  No need to go on.  Warn the user
             return $this->setRedirect('index.php?option=com_pvliveresults&controller=election', 'No file uploaded. You might want to delete this election and start over');
         }
 
+        // since we have an upload, we need to make sure JFile is available
         jimport('joomla.fiesystem.file');
+        $oldFileName = $post['fileToUpload']['name'];
+        $newFileName = JFile::makeSafe($post['name']) . ".csv";
+        $uploads = JPATH_COMPONENT . DS . 'uploads';
+        $src = $post['fileToUpload']['tmp_name'];
+        $dest = $uploads . DS . $oldFileName;
 
-        $src = $post['results_file']['name'] . DS . $post['results_file'];
-        $dest = JPATH_COMPONENT.DS.'uploads'.DS. $newFileName;
-
-        ini_set('max_execution_time', 360);
+        $excludeHeader = isset($post['exclude_header']) ? true : false;
 
         if (!JFile::upload($src, $dest)) {
             // failed file.  No need to go on.  Warn the user
-            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election', 'Failed file uploaded. You might want to delete this election and start over');            
+            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election', 'Failed file uploaded. You might want to delete this election and start over');
         }
 
-        $indecis = array();
-        $indecis['candidates'] = array();
-        $indecis['offices'] = array();
-        jimport('joomla.filesystem.archive');
+        // since the copy was completed, we need to make sure we have time to process the file
+        ini_set('max_execution_time', 360);
+
+        $path_parts = pathinfo($dest);
+        // if this is one of the extensions JArchive handles, lets extract it
+        if (in_array($path_parts['extension'], array('zip','tar','tgz','gz','gzip','bz2','bzip2','tbz2'))) {
+            // we have an archive.  pull in JArchive to handle it
+            jimport('joomla.filesystem.archive');
+
+            // when unzipping a 50MB text file, you take up a crapload of memory
+            ini_set('memory_limit', '200M');
+            JArchive::extract($dest, $path_parts['dirname']);
+            // drop the archive now
+            @unlink($dest);
+            // reset the filename
+            $dest=$uploads . DS . $path_parts['filename'].".txt";
+        }
+
+
+        $insert = '';
+        $counter = 0;
+        $inputFile = fopen($dest, 'r') or die('update_election_nameble to open file!');
+        $storagePath = JPATH_SITE .DS . 'files' . DS . 'raw-data' .DS;
+        $outputFile = fopen($path_site.$newFileName, 'w');
         // loop through the uploaded file
 
             // is the office new? write it
             // capture the id
             // write the office_election link
-            // is the 
+            // is the
 
         // redirect to edit
         $msg = 'hey, lookie, we saved an election';
         $link = 'index.php?option=com_pvliveresults';
         $this->setRedirect($link, $msg);
-    }
 
+        if ($excludeHeader) {
+            //lets drop that first row
+            $arr = str_getcsv(fgets($myfile));
+            fputcsv($outputFile, $arr);
+        }
+
+        while (($line = fgets($myfile)) !== false) {
+            $arr = str_getcsv($line);
+            dd($arr);
+            fputcsv($outputFile, $arr);
+            // if the line is blank or unparsable...
+            if (count($arr) === 1) {
+                $msg .= 'Note, the following line was not processed: '.$line."\n";
+                continue;
+            }
+            foreach ($arr as $a_key => $a_value) {
+                $arr[$a_key] = str_replace('"', '', $a_value);
+                $arr[$a_key] = trim($a_value);
+            }
+            $insert .= '("'.$arr[3].'", '.(int) $arr[0].', '.(int) $arr[1].', "'.$arr[2].'", "'.$arr[4].'", "'.$arr[5].'", '.(int) $arr[6].', "'.$e_year.'", NOW()),';
+            ++$counter;
+            if ($counter > 1000) {
+                $insert = rtrim($insert, ',');
+                $bulk_insert_array = $insertStart.$insert;
+                $insert = '';
+                try {
+                    $model->bulk_insert($bulk_insert_array);
+                } catch (Exception $e) {
+                    sd($e, $insert);
+                }
+                $counter = 0;
+            }
+        }
+
+        // catch the leftovers
+        if ($counter) {
+            $insert = rtrim($insert, ',');
+            $bulk_insert_array = $insertStart.$insert;
+            $insert = '';
+            try {
+                $model->bulk_insert($bulk_insert_array);
+            } catch (Exception $e) {
+                sd($e, $insert);
+            }
+        }
+
+        fclose($handle);
+        fclose($myfile);
+        if ($e_year) {
+            try {
+                $year_id = $model->insert_year($e_year);
+            } catch (Exception $e) {
+                sd($e, $model, $e_year);
+            }
+            try {
+                $office = $model->insert_office($e_year, $year_id);
+            } catch (Exception $e) {
+                sd($e, $model, $e_year);
+            }
+        }
+
+        @unlink($pathAndName);
+        $msg .= JText::_('Data Saved');
+        $link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]='.$year_id;
+
+    }
 
 
     /**
@@ -120,12 +210,26 @@ class PvliveresultsControllerElection extends PvliveresultsController
      */
     public function save1()
     {
+/*        JRequest::checkToken() or jexit('Invalid Token');
         // having timeout issues 2015.11.17
-        $insertStart = 'INSERT into #__pv_live_votes (`office`,`ward`,`division`,`vote_type`,`name`,`party`,`votes`,`e_year`,`date_created`) VALUES ';
+        ini_set('max_execution_time', 360);
+        $e_year = JRequest::getVar('e_year');
+        $exclude_header = isset($_POST['header']) ? true : false;
+        $move_file = strtolower(str_replace(' ', '_', $e_year));
+        $move_file = preg_replace('/[^A-Za-z0-9\-]/', '_', $move_file).'.csv';
+        $model = $this->getModel('ballotboxapp');
+        $insertStart = 'INSERT into #__rt_cold_data (`office`,`ward`,`division`,`vote_type`,`name`,`party`,`votes`,`e_year`,`date_created`) VALUES ';
 
+        $path = JPATH_COMPONENT.DS.'uploads'.DS;
+        $fileName = $_FILES['fileToUpload']['name'];
+        $fileTmpLoc = $_FILES['fileToUpload']['tmp_name'];
+
+        // Path and file name
+        $pathAndName = $path.$fileName;
+        // Run the move_uploaded_file() function here
+        $moveResult = move_uploaded_file($fileTmpLoc, $pathAndName);
         // Evaluate the value returned from the function if needed
         if ($moveResult) {
-            jimport('joomla.filesystem.archive');
             $path_parts = pathinfo($pathAndName);
             // if this is one of the extensions JArchive handles, lets extract it
             if (in_array($path_parts['extension'], array('zip','tar','tgz','gz','gzip','bz2','bzip2','tbz2'))) {
@@ -143,6 +247,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $myfile = fopen($pathAndName, 'r') or die('update_election_nameble to open file!');
             $path_site = JPATH_SITE.DS.'files'.DS.'raw-data'.DS;
             $handle = fopen($path_site.$move_file, 'w');
+
 
             if ($exclude_header) {
                 //lets drop that first row
@@ -206,19 +311,20 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
             /* $str = implode(",",$bulk_insert_array);
-            echo $str;die; */
+            echo $str;die; 
             @unlink($pathAndName);
             $msg .= JText::_('Data Saved');
-            $link = 'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$year_id;
+            $link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]='.$year_id;
         } else {
             //echo "ERROR: File not moved correctly";
-            $link = 'index.php?option=com_pvliveresults';
+            $link = 'index.php?option=com_ballotboxapp';
             $msg .= JText::_('ERROR: File not moved correctly');
         }
 
         // Check the table in so it can be edited.... we are done with it anyway
 
         $this->setRedirect($link, $msg);
+*/
     }
 
     public function update()
