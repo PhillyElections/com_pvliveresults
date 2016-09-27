@@ -83,7 +83,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         // verify we have an upload
         if (!$post['results_file']) {
             // no file.  No need to go on.  Warn the user
-            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election', 'No file uploaded. You might want to delete this election and start over');
+            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election&cid[]=' . $electionId , 'No file uploaded. You might want to delete this election and start over');
         }
 
         // since we have an upload, we need to make sure JFile is available
@@ -98,7 +98,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         if (!JFile::upload($src, $dest)) {
             // failed file.  No need to go on.  Warn the user
-            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election', 'Failed file uploaded. You might want to delete this election and start over');
+            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election&cid[]=' . $electionId , 'Failed file uploaded. You might want to delete this election and start over');
         }
 
         // since the copy was completed, we need to make sure we have time to process the file
