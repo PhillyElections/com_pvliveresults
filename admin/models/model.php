@@ -258,7 +258,7 @@ class PvliveresultsModel extends JModel
     /**
      * default (agnostic) push down of ordering (whole set)
      *
-     * @return     boolean  
+     * @return     boolean
      */
     public function bumpOrdering()
     {
