@@ -59,6 +59,9 @@ class PvliveresultsModel extends JModel
      */
     public $_where = '';
 
+    /**
+     * default constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -73,9 +76,10 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * Method to set the Liveresult identifier.
+     * default (agnostic) set the Liveresult identifier.
      *
-     * @param   int Liveresult identifier
+     * @param      <type>  $id     The identifier
+     * @param      int   Liveresult  identifier
      */
     public function setId($id)
     {
@@ -85,9 +89,11 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * Method to delete record(s).
+     * default (agnostic) delete record(s).
      *
-     * @return bool True on success
+     * @param      boolean  $cids   The cids
+     *
+     * @return     bool     True on success
      */
     public function delete($cids = false)
     {
@@ -108,6 +114,11 @@ class PvliveresultsModel extends JModel
         return true;
     }
 
+    /**
+     * default (agnostic) publish
+     *
+     * @param      <type>  $ids    The identifiers
+     */
     public function publish($ids)
     {
         foreach ($ids as $id) {
@@ -117,6 +128,11 @@ class PvliveresultsModel extends JModel
         }
     }
 
+    /**
+     * default (agnostic) unpublish
+     *
+     * @param      <type>  $ids    The identifiers
+     */
     public function unpublish($ids)
     {
         foreach ($ids as $id) {
@@ -127,22 +143,22 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * Returns the query.
+     * default (agnostic) method to return the query.
      *
-     * @return string The query to be used to retrieve the rows from the database
+     * @return     string  The query to be used to retrieve the rows from the database
      */
     public function _buildQuery()
     {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT ' . $this->_fields . ' '.' FROM `'.$this->_table.'` '.$this->_where.' '.$this->_order;
+        $query = 'SELECT ' . $this->_fields . ' '.' FROM ' . $this->_db->nameQuote($this->_table) . ' ' . $this->_where . ' ' . $this->_order . ' ';
 
         return $query;
     }
 
     /**
-     * Retrieves the Pvliveresults data.
+     * Default (agnostic) data retrieval
      *
-     * @return array Array of objects containing the data from the database
+     * @return     array  Array of objects containing the data from the database
      */
     public function getData()
     {
@@ -156,9 +172,11 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * Method to store a record.
+     * Default (agnostic) record store
      *
-     * @return bool True on success
+     * @param      boolean  $data   The data
+     *
+     * @return     bool     True on success
      */
     public function store($data = false)
     {
@@ -193,6 +211,13 @@ class PvliveresultsModel extends JModel
         return $this->_db->insertid();
     }
 
+    /**
+     * default (agnostic) get record(s) by name.
+     *
+     * @param      <type>  $name   The name
+     *
+     * @return     <type>  The by name.
+     */
     public function getByName($name)
     {
         $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table) . " WHERE `name` = " . $this->_db->Quote($name) . " ";
@@ -201,6 +226,13 @@ class PvliveresultsModel extends JModel
         return $this->_data;
     }
 
+    /**
+     * (agnostic) Gets the name identifier associated.
+     *
+     * @param      string  $key    The key
+     *
+     * @return     <type>  The name identifier associated.
+     */
     public function getNameIdAssoc($key = 'name')
     {
         $query = "SELECT `id` FROM " . $this->_db->nameQuote($this->_table) . " ORDER BY `name` ASC ";
@@ -211,10 +243,33 @@ class PvliveresultsModel extends JModel
         return $this->_assoc;
     }
 
+    /**
+     * load a date usable in a DB query
+     *
+     * @return     <type>  The now.
+     */
     public function getNow()
     {
         $dateNow = &JFactory::getDate();
 
         return $dateNow->toMySQL();
+    }
+
+    /**
+     * default (agnostic) push down of ordering (whole set)
+     *
+     * @return     boolean  
+     */
+    public function bumpOrdering()
+    {
+        $query = "UPDATE " . $this->_db->nameQuote($this->_table) . " set `ordering`=(`ordering` + 1) "
+        $this->_db->setQuery($query);
+        if (!$this->_db->query()) {
+            $this->setError($this->_db->getErrorMsg());
+
+            return false;
+        }
+
+        return true;
     }
 }
