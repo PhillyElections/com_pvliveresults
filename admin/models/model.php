@@ -204,7 +204,7 @@ class PvliveresultsModel extends JModel
 
     public function getNameIdAssoc($key = 'name')
     {
-        $query = "SELECT `id`, `name` FROM " . $this->_db->nameQuote($this->_table) . " ORDER BY `name` ASC ";
+        $query = "SELECT `id` FROM " . $this->_db->nameQuote($this->_table) . " ORDER BY `name` ASC ";
 
         $this->_db->setQuery($query);
         $this->_assoc = $this->_db->loadAssocList($key);
