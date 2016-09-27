@@ -36,7 +36,7 @@ class PvliveresultsViewElection extends JView
             JToolBarHelper::publish();
             JToolBarHelper::unpublish();
             JToolBarHelper::save('update', 'Save');
-            JToolBarHelper::delete();
+            JToolBarHelper::trash('delete', 'Delete');
             JToolBarHelper::cancel('cancel', 'Close');
         }
 
