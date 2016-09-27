@@ -75,7 +75,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $data = array();
         $data['name'] = $post['name'];
         $data['date'] = $post['date'];
-        $data['created'] = $election->getNow();
+        $data['created'] = $electionModel->getNow();
 
         // capure the id as you s ave
         $electionId = $election->store($data);
