@@ -89,19 +89,19 @@ class PvliveresultsModel extends JModel
      *
      * @return bool True on success
      */
-    public function delete()
+    public function delete($cids = false)
     {
-        $cids = JRequest::getVar('cid', array(0), 'post', 'array');
-
         $row = JTable::getInstance($this->_tableRef, 'Table');
 
-        if (count($cids)) {
-            foreach ($cids as $cid) {
-                if (!$row->delete($cid)) {
-                    $this->setError($row->getErrorMsg());
+        if (!$cids) {
+            $cids = JRequest::getVar('cid', array(0), 'post', 'array');
+        }
 
-                    return false;
-                }
+        foreach ($cids as $cid) {
+            if (!$row->delete($cid)) {
+                $this->setError($row->getErrorMsg());
+
+                return false;
             }
         }
 
@@ -198,7 +198,7 @@ class PvliveresultsModel extends JModel
         $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table) . " WHERE `name` = " . $this->_db->Quote($name) . " ";
 
         $this->_data = $this->_getList($query);
-        d($query, $this->_data);
+
         return $this->_data;
     }
 
