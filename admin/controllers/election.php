@@ -78,7 +78,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $data['created'] = $electionModel->getNow();
 
         // capure the id as you s ave
-        $electionId = $election->store($data);
+        $electionId = $electionModel->store($data);
 
         // verify we have an upload
         if (!$post['results_file']) {
