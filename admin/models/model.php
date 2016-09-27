@@ -272,4 +272,11 @@ class PvliveresultsModel extends JModel
 
         return true;
     }
+
+    public function squinchOrdering()
+    {
+        $table = $this->getTable($_this->_tableRef);
+
+        $table->reorder();
+    }
 }

@@ -68,7 +68,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $electionModel=$this->getModel('election');
         $electionsIndex = $electionModel->getNameIdAssoc();
-        $electionsIndex->bumpOrdering();
+        $electionModel->bumpOrdering();
 
         $officeModel=$this->getModel('office');
         $officesIndex = $officeModel->getNameIdAssoc();
@@ -83,6 +83,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         // capure the id as you s ave
         $electionId = $electionModel->store($data);
+        $electoinModel->squinchOrdering();
+
 
         // verify we have an upload
         if (!$post['results_file']) {
