@@ -36,7 +36,8 @@
     <administration>
         <menu link="option=com_pvliveresults">(PV) Live Election Results</menu>
         <submenu>
-            <menu controller="test">test</menu>
+            <menu controller="Elections">elections</menu>
+            <menu link="index.php?option=com_pvliveresults&amp;controller=election&amp;task=add&amp;cid=">New</menu>"
         </submenu>
         <files folder="admin">
             <filename>index.html</filename>
