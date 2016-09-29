@@ -39,6 +39,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
      */
     public function delete()
     {
+        JRequest::checkToken() or jexit('Invalid Token');
+
         $cids = JRequest::getVar('cid', 0, '', 'array');
         
         foreach ($cids as $cid) {
@@ -413,10 +415,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
     {
         JRequest::checkToken() or jexit('Invalid Token');
         dd('need work here', JRequest::get());
-        $election = $this->getModel('electionoffice');
+
+        $electionOffice = $this->getModel('electionoffice');
         $cid = JRequest::getVar('cid');
 
-        $election->publish($cid);
+        $electionOffice->publish($cid);
 
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election');
@@ -426,10 +429,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
     {
         JRequest::checkToken() or jexit('Invalid Token');
         dd('need work here', JRequest::get());
-        $election = $this->getModel('electionoffice');
+
+        $electionOffice = $this->getModel('electionoffice');
         $cid = JRequest::getVar('cid');
 
-        $election->unpublish($cid, '');
+        $electionOffice->unpublish($cid, '');
 
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election');
