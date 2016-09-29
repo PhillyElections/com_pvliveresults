@@ -47,9 +47,14 @@
                     <input type="file" name="results_file" id="results_file"> <sup>2</sup>
                 </td>
             </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <p><sup>1</sup> <?=JText::_('FIRST ROW WARNING')?></p>
+                    <p><sup>2</sup> <?=JText::_('FILE FORMAT WARNING')?></p>
+                </td>
+            </tr>
         </table>
-    <p><sup>1</sup> <?=JText::_('FIRST ROW WARNING')?></p>
-    <p><sup>2</sup> <?=JText::_('FILE FORMAT WARNING')?></p>
         </fieldset>
     </div>
     <div class="clr"></div>
