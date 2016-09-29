@@ -90,15 +90,16 @@ class PvliveresultsControllerElection extends PvliveresultsController
         // verify we have an upload
         if (!$_FILES['results_file']) {
             // no file.  No need to go on.  Warn the user
-            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=' . $electionId, 'No file uploaded. You might want to delete this election and start over');
+            return $this->setRedirect(
+                'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=' . $electionId,
+                'No file uploaded. You might want to delete this election and start over'
+            );
         }
 
         // since we have an upload, we need to make sure JFile is available
         jimport('joomla.fiesystem.file');
         $oldFileName = $_FILES['results_file']['name'];
         $newFileName = JString::str_ireplace(" ", "_", JString::strtolower(JFile::makeSafe($post['name']))) . ".csv";
-
-        dd($oldFileName, $newFileName);
 
         $uploads = JPATH_COMPONENT . DS . 'uploads';
         $src = $_FILES['results_file']['tmp_name'];
@@ -108,7 +109,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         if (!JFile::upload($src, $dest)) {
             // failed file.  No need to go on.  Warn the user
-            return $this->setRedirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=' . $electionId, 'Failed file uploaded. You might want to delete this election and start over');
+            return $this->setRedirect(
+                'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=' . $electionId,
+                'Failed file uploaded. You might want to delete this election and start over'
+            );
         }
 
         // since the copy was completed, we need to make sure we have time to process the file
@@ -129,7 +133,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $dest=$uploads . DS . $path_parts['filename'].".txt";
         }
 
-
+        dd($dest);
         $insert = '';
         $counter = 0;
         $inputFile = fopen($dest, 'r') or die('update_election_nameble to open file!');
