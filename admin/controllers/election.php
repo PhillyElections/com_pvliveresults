@@ -98,6 +98,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
         jimport('joomla.fiesystem.file');
         $oldFileName = $post['fileToUpload']['name'];
         $newFileName = JFile::makeSafe($post['name']) . ".csv";
+
+        dd($oldFileName, $newFileName);
+        
         $uploads = JPATH_COMPONENT . DS . 'uploads';
         $src = $post['fileToUpload']['tmp_name'];
         $dest = $uploads . DS . $oldFileName;
