@@ -29,7 +29,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
     {
         $view = $this->getView('election', 'html');
         $view->setModel($this->getModel('election'), true);
-        JRequest::setVar('hidemainmenu', 1);
+        //JRequest::setVar('hidemainmenu', 1);
 
         $view->display();
     }
