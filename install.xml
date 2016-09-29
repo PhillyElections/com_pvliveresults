@@ -38,6 +38,7 @@
         <submenu>
             <menu controller="Elections">elections</menu>
             <menu link="index.php?option=com_pvliveresults&amp;controller=election&amp;task=add&amp;cid=">New</menu>"
+            <menu link="index.php?option=com_installer&amp;view=controllers">Installer</menu>"
         </submenu>
         <files folder="admin">
             <filename>index.html</filename>
