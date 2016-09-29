@@ -86,7 +86,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         // capure the id as you s ave
         $electionId = $electionModel->store($data);
         $electionModel->squinchOrdering();
-
+        dd($post);
 
         // verify we have an upload
         if (!$post['results_file']) {
@@ -100,7 +100,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $newFileName = JFile::makeSafe($post['name']) . ".csv";
 
         dd($oldFileName, $newFileName);
-        
+
         $uploads = JPATH_COMPONENT . DS . 'uploads';
         $src = $post['fileToUpload']['tmp_name'];
         $dest = $uploads . DS . $oldFileName;
