@@ -36,7 +36,7 @@ class PvliveresultsViewElection extends JView
             JToolBarHelper::publish();
             JToolBarHelper::unpublish();
             JToolBarHelper::save('update', 'Save');
-            JToolBarHelper::custom('delete', 'icon-32-delete.jpg', 'icon-32-delete.jpg', 'delete', false, true);
+            JToolBarHelper::custom('delete', 'delete.png', 'delete.png', 'delete', false, true);
             JToolBarHelper::cancel('cancel', 'Close');
         }
 
