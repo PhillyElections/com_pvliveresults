@@ -57,7 +57,7 @@ class PvliveresultsModel extends JModel
      *
      * @var string
      */
-    public $_where = '';
+    public $_where = ' 1 ';
 
     /**
      * default constructor
@@ -150,7 +150,7 @@ class PvliveresultsModel extends JModel
     public function _buildQuery()
     {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT ' . $this->_fields . ' '.' FROM ' . $this->_db->nameQuote($this->_table) . ' ' . $this->_where . ' ' . $this->_order . ' ';
+        $query = 'SELECT ' . $this->_fields . ' '.' FROM ' . $this->_db->nameQuote($this->_table) . ' WHERE ' . $this->_where . ' ' . $this->_order . ' ';
 
         return $query;
     }
