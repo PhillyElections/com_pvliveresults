@@ -42,15 +42,15 @@ class PvliveresultsControllerElection extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         $electionOfficeModel = $this->getModel('electionoffice');
-        $voteModel = $this->getModel('vote');
+        $voteModel           = $this->getModel('vote');
 
         $cids = JRequest::getVar('cid', 0, '', 'array');
-        
+
         foreach ($cids as $cid) {
             // reset model properties (loop reset) and get by election_id
-            $electionOfficeModel->_data = null;
+            $electionOfficeModel->_data  = null;
             $electionOfficeModel->_where = ' `election_id` = ' . $cid . ' ';
-            $electionOffices = $electionOfficeModel->getData();
+            $electionOffices             = $electionOfficeModel->getData();
 
             foreach ($electionOffices as $electionOffice) {
                 // delete votes
@@ -61,11 +61,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
             // votes are gone, lets delete the EO link
             d('votes are gone, let\'s delete the EO link');
-            
             $electionOfficeModel->deleteByFk($cid);
+
             // delete election
             d('hey, i\'m deleting the election');
-
             $election = $this->getModel('election');
             $election->delete(array($cid));
 
@@ -78,22 +77,22 @@ class PvliveresultsControllerElection extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         // let's get our 'name' models
-        $candidateModel=$this->getModel('candidate');
+        $candidateModel  = $this->getModel('candidate');
         $candidatesIndex = $candidateModel->getNameIdAssoc();
 
-        $electionModel=$this->getModel('election');
+        $electionModel  = $this->getModel('election');
         $electionsIndex = $electionModel->getNameIdAssoc();
         $electionModel->bumpOrdering();
 
-        $officeModel=$this->getModel('office');
+        $officeModel  = $this->getModel('office');
         $officesIndex = $officeModel->getNameIdAssoc();
 
         // shape and save election data
         $post = JRequest::get('post');
 
-        $data = array();
-        $data['name'] = $post['name'];
-        $data['date'] = $post['date'];
+        $data            = array();
+        $data['name']    = $post['name'];
+        $data['date']    = $post['date'];
         $data['created'] = $electionModel->getNow();
 
         // capure the id as you s ave
@@ -115,8 +114,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $newFileName = JString::str_ireplace(" ", "_", JString::strtolower(JFile::makeSafe($post['name']))) . ".csv";
 
         $uploads = JPATH_COMPONENT . DS . 'uploads';
-        $src = $_FILES['results_file']['tmp_name'];
-        $dest = $uploads . DS . $oldFileName;
+        $src     = $_FILES['results_file']['tmp_name'];
+        $dest    = $uploads . DS . $oldFileName;
 
         $excludeHeader = isset($post['exclude_header']) ? true : false;
 
@@ -133,7 +132,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $path_parts = pathinfo($dest);
         // if this is one of the extensions JArchive handles, lets extract it
-        if (in_array($path_parts['extension'], array('zip','tar','tgz','gz','gzip','bz2','bzip2','tbz2'))) {
+        if (in_array($path_parts['extension'], array('zip', 'tar', 'tgz', 'gz', 'gzip', 'bz2', 'bzip2', 'tbz2'))) {
             // we have an archive.  pull in JArchive to handle it
             jimport('joomla.filesystem.archive');
 
@@ -143,27 +142,16 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // drop the archive now
             @unlink($dest);
             // reset the filename
-            $dest=$uploads . DS . $path_parts['filename'].".txt";
+            $dest = $uploads . DS . $path_parts['filename'] . ".txt";
         }
 
-        dd($dest, $path_parts);
-        $insert = '';
-        $counter = 0;
-        $inputFile = fopen($dest, 'r') or die('update_election_nameble to open file!');
-        $storagePath = JPATH_SITE .DS . 'files' . DS . 'raw-data' .DS;
-        $outputFile = fopen($path_site.$newFileName, 'w');
-        // loop through the uploaded file
+        $insert      = '';
+        $counter     = 0;
+        $inputFile   = fopen($dest, 'r') or die('update_election_nameble to open file!');
+        $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
+        $outputFile  = fopen($path_site . $newFileName, 'w');
 
-            // is the office new? write it
-            // capture the id
-            // write the office_election link
-            // is the
-
-        // redirect to edit
-        $msg = 'hey, lookie, we saved an election';
-        $link = 'index.php?option=com_pvliveresults';
-        $this->setRedirect($link, $msg);
-
+        // do we have a header row?
         if ($excludeHeader) {
             //lets drop that first row
             $arr = str_getcsv(fgets($myfile));
@@ -171,24 +159,30 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
 
         while (($line = fgets($myfile)) !== false) {
+
+            // is the office new? write it
+            // capture the id
+            // write the office_election link
+            // is the
+
             $arr = str_getcsv($line);
             dd($arr);
             fputcsv($outputFile, $arr);
             // if the line is blank or unparsable...
             if (count($arr) === 1) {
-                $msg .= 'Note, the following line was not processed: '.$line."\n";
+                $msg .= 'Note, the following line was not processed: ' . $line . "\n";
                 continue;
             }
             foreach ($arr as $a_key => $a_value) {
                 $arr[$a_key] = str_replace('"', '', $a_value);
                 $arr[$a_key] = trim($a_value);
             }
-            $insert .= '("'.$arr[3].'", '.(int) $arr[0].', '.(int) $arr[1].', "'.$arr[2].'", "'.$arr[4].'", "'.$arr[5].'", '.(int) $arr[6].', "'.$e_year.'", NOW()),';
+            $insert .= '("' . $arr[3] . '", ' . (int) $arr[0] . ', ' . (int) $arr[1] . ', "' . $arr[2] . '", "' . $arr[4] . '", "' . $arr[5] . '", ' . (int) $arr[6] . ', "' . $e_year . '", NOW()),';
             ++$counter;
             if ($counter > 1000) {
-                $insert = rtrim($insert, ',');
-                $bulk_insert_array = $insertStart.$insert;
-                $insert = '';
+                $insert            = rtrim($insert, ',');
+                $bulk_insert_array = $insertStart . $insert;
+                $insert            = '';
                 try {
                     $model->bulk_insert($bulk_insert_array);
                 } catch (Exception $e) {
@@ -200,9 +194,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         // catch the leftovers
         if ($counter) {
-            $insert = rtrim($insert, ',');
-            $bulk_insert_array = $insertStart.$insert;
-            $insert = '';
+            $insert            = rtrim($insert, ',');
+            $bulk_insert_array = $insertStart . $insert;
+            $insert            = '';
             try {
                 $model->bulk_insert($bulk_insert_array);
             } catch (Exception $e) {
@@ -227,10 +221,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         @unlink($pathAndName);
         $msg .= JText::_('Data Saved');
-        $link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]='.$year_id;
+        $link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]=' . $year_id;
 
     }
-
 
     /**
      * save a record (and redirect to main page).
@@ -238,120 +231,119 @@ class PvliveresultsControllerElection extends PvliveresultsController
     public function save1()
     {
 /*        JRequest::checkToken() or jexit('Invalid Token');
-        // having timeout issues 2015.11.17
-        ini_set('max_execution_time', 360);
-        $e_year = JRequest::getVar('e_year');
-        $exclude_header = isset($_POST['header']) ? true : false;
-        $move_file = strtolower(str_replace(' ', '_', $e_year));
-        $move_file = preg_replace('/[^A-Za-z0-9\-]/', '_', $move_file).'.csv';
-        $model = $this->getModel('ballotboxapp');
-        $insertStart = 'INSERT into #__rt_cold_data (`office`,`ward`,`division`,`vote_type`,`name`,`party`,`votes`,`e_year`,`date_created`) VALUES ';
+// having timeout issues 2015.11.17
+ini_set('max_execution_time', 360);
+$e_year = JRequest::getVar('e_year');
+$exclude_header = isset($_POST['header']) ? true : false;
+$move_file = strtolower(str_replace(' ', '_', $e_year));
+$move_file = preg_replace('/[^A-Za-z0-9\-]/', '_', $move_file).'.csv';
+$model = $this->getModel('ballotboxapp');
+$insertStart = 'INSERT into #__rt_cold_data (`office`,`ward`,`division`,`vote_type`,`name`,`party`,`votes`,`e_year`,`date_created`) VALUES ';
 
-        $path = JPATH_COMPONENT.DS.'uploads'.DS;
-        $fileName = $_FILES['fileToUpload']['name'];
-        $fileTmpLoc = $_FILES['fileToUpload']['tmp_name'];
+$path = JPATH_COMPONENT.DS.'uploads'.DS;
+$fileName = $_FILES['fileToUpload']['name'];
+$fileTmpLoc = $_FILES['fileToUpload']['tmp_name'];
 
-        // Path and file name
-        $pathAndName = $path.$fileName;
-        // Run the move_uploaded_file() function here
-        $moveResult = move_uploaded_file($fileTmpLoc, $pathAndName);
-        // Evaluate the value returned from the function if needed
-        if ($moveResult) {
-            $path_parts = pathinfo($pathAndName);
-            // if this is one of the extensions JArchive handles, lets extract it
-            if (in_array($path_parts['extension'], array('zip','tar','tgz','gz','gzip','bz2','bzip2','tbz2'))) {
-                // when unzipping a 50MB text file, you take up a crapload of memory
-                ini_set('memory_limit', '200M');
-                JArchive::extract($pathAndName, $path_parts['dirname']);
-                // drop the archive now
-                @unlink($pathAndName);
-                // reset the filename
-                $pathAndName=$path.$path_parts['filename'].".txt";
-            }
+// Path and file name
+$pathAndName = $path.$fileName;
+// Run the move_uploaded_file() function here
+$moveResult = move_uploaded_file($fileTmpLoc, $pathAndName);
+// Evaluate the value returned from the function if needed
+if ($moveResult) {
+$path_parts = pathinfo($pathAndName);
+// if this is one of the extensions JArchive handles, lets extract it
+if (in_array($path_parts['extension'], array('zip','tar','tgz','gz','gzip','bz2','bzip2','tbz2'))) {
+// when unzipping a 50MB text file, you take up a crapload of memory
+ini_set('memory_limit', '200M');
+JArchive::extract($pathAndName, $path_parts['dirname']);
+// drop the archive now
+@unlink($pathAndName);
+// reset the filename
+$pathAndName=$path.$path_parts['filename'].".txt";
+}
 
-            $insert = '';
-            $counter = 0;
-            $myfile = fopen($pathAndName, 'r') or die('update_election_nameble to open file!');
-            $path_site = JPATH_SITE.DS.'files'.DS.'raw-data'.DS;
-            $handle = fopen($path_site.$move_file, 'w');
+$insert = '';
+$counter = 0;
+$myfile = fopen($pathAndName, 'r') or die('update_election_nameble to open file!');
+$path_site = JPATH_SITE.DS.'files'.DS.'raw-data'.DS;
+$handle = fopen($path_site.$move_file, 'w');
 
+if ($exclude_header) {
+//lets drop that first row
+$arr = str_getcsv(fgets($myfile));
+fputcsv($handle, $arr);
+}
 
-            if ($exclude_header) {
-                //lets drop that first row
-                $arr = str_getcsv(fgets($myfile));
-                fputcsv($handle, $arr);
-            }
+// Output one line until end-of-file
+while (($line = fgets($myfile)) !== false) {
+$arr = str_getcsv($line);
+fputcsv($handle, $arr);
+// if the line is blank or unparsable...
+if (count($arr) === 1) {
+$msg .= 'Note, the following line was not processed: '.$line."\n";
+continue;
+}
+foreach ($arr as $a_key => $a_value) {
+$arr[$a_key] = str_replace('"', '', $a_value);
+$arr[$a_key] = trim($a_value);
+}
+$insert .= '("'.$arr[3].'", '.(int) $arr[0].', '.(int) $arr[1].', "'.$arr[2].'", "'.$arr[4].'", "'.$arr[5].'", '.(int) $arr[6].', "'.$e_year.'", NOW()),';
+++$counter;
+if ($counter > 1000) {
+$insert = rtrim($insert, ',');
+$bulk_insert_array = $insertStart.$insert;
+$insert = '';
+try {
+$model->bulk_insert($bulk_insert_array);
+} catch (Exception $e) {
+sd($e, $insert);
+}
+$counter = 0;
+}
+}
 
-            // Output one line until end-of-file
-            while (($line = fgets($myfile)) !== false) {
-                $arr = str_getcsv($line);
-                fputcsv($handle, $arr);
-                // if the line is blank or unparsable...
-                if (count($arr) === 1) {
-                    $msg .= 'Note, the following line was not processed: '.$line."\n";
-                    continue;
-                }
-                foreach ($arr as $a_key => $a_value) {
-                    $arr[$a_key] = str_replace('"', '', $a_value);
-                    $arr[$a_key] = trim($a_value);
-                }
-                $insert .= '("'.$arr[3].'", '.(int) $arr[0].', '.(int) $arr[1].', "'.$arr[2].'", "'.$arr[4].'", "'.$arr[5].'", '.(int) $arr[6].', "'.$e_year.'", NOW()),';
-                ++$counter;
-                if ($counter > 1000) {
-                    $insert = rtrim($insert, ',');
-                    $bulk_insert_array = $insertStart.$insert;
-                    $insert = '';
-                    try {
-                        $model->bulk_insert($bulk_insert_array);
-                    } catch (Exception $e) {
-                        sd($e, $insert);
-                    }
-                    $counter = 0;
-                }
-            }
+// catch the leftovers
+if ($counter) {
+$insert = rtrim($insert, ',');
+$bulk_insert_array = $insertStart.$insert;
+$insert = '';
+try {
+$model->bulk_insert($bulk_insert_array);
+} catch (Exception $e) {
+sd($e, $insert);
+}
+}
 
-            // catch the leftovers
-            if ($counter) {
-                $insert = rtrim($insert, ',');
-                $bulk_insert_array = $insertStart.$insert;
-                $insert = '';
-                try {
-                    $model->bulk_insert($bulk_insert_array);
-                } catch (Exception $e) {
-                    sd($e, $insert);
-                }
-            }
+fclose($handle);
+fclose($myfile);
+if ($e_year) {
+try {
+$year_id = $model->insert_year($e_year);
+} catch (Exception $e) {
+sd($e, $model, $e_year);
+}
+try {
+$office = $model->insert_office($e_year, $year_id);
+} catch (Exception $e) {
+sd($e, $model, $e_year);
+}
+}
 
-            fclose($handle);
-            fclose($myfile);
-            if ($e_year) {
-                try {
-                    $year_id = $model->insert_year($e_year);
-                } catch (Exception $e) {
-                    sd($e, $model, $e_year);
-                }
-                try {
-                    $office = $model->insert_office($e_year, $year_id);
-                } catch (Exception $e) {
-                    sd($e, $model, $e_year);
-                }
-            }
+/* $str = implode(",",$bulk_insert_array);
+echo $str;die;
+@unlink($pathAndName);
+$msg .= JText::_('Data Saved');
+$link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]='.$year_id;
+} else {
+//echo "ERROR: File not moved correctly";
+$link = 'index.php?option=com_ballotboxapp';
+$msg .= JText::_('ERROR: File not moved correctly');
+}
 
-            /* $str = implode(",",$bulk_insert_array);
-            echo $str;die; 
-            @unlink($pathAndName);
-            $msg .= JText::_('Data Saved');
-            $link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]='.$year_id;
-        } else {
-            //echo "ERROR: File not moved correctly";
-            $link = 'index.php?option=com_ballotboxapp';
-            $msg .= JText::_('ERROR: File not moved correctly');
-        }
+// Check the table in so it can be edited.... we are done with it anyway
 
-        // Check the table in so it can be edited.... we are done with it anyway
-
-        $this->setRedirect($link, $msg);
-*/
+$this->setRedirect($link, $msg);
+ */
     }
 
     public function update()
@@ -359,26 +351,26 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
     }
 
-    public function save_step2()
+    public function saveStep2()
     {
         JRequest::checkToken() or jexit('Invalid Token');
         // having timeout issues 2015.11.17
         ini_set('max_execution_time', 360);
 
         $election_year_id = JRequest::getVar('id');
-        $ids = JRequest::getVar('office_id');
-        $publish = JRequest::getVar('office_publish');
-        $name = JRequest::getVar('office_name');
-        $order = JRequest::getVar('publish_order');
-        $election_name = JRequest::getVar('election_name');
-        $election_date = JRequest::getVar('election_date');
-        $model = $this->getModel('Liveresult');
+        $ids              = JRequest::getVar('office_id');
+        $publish          = JRequest::getVar('office_publish');
+        $name             = JRequest::getVar('office_name');
+        $order            = JRequest::getVar('publish_order');
+        $election_name    = JRequest::getVar('election_name');
+        $election_date    = JRequest::getVar('election_date');
+        $model            = $this->getModel('Liveresult');
         if (JRequest::getVar('deleted')) {
             $model->delete_election($election_year_id);
             $model->delete_related($ids);
             $msg = JText::_('Record Deleted.');
         } else {
-            $active_office = array();
+            $active_office    = array();
             $in_active_office = array();
 
             $model->update_election_name($election_name, $election_year_id, $election_date);
@@ -394,7 +386,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     $model->insert_office_ward($ids[$id], $name[$id], $election_year_id);
                 } else {
                     $in_active_office[$id] = $name[$id];
-                    $in_id[] = $id;
+                    $in_id[]               = $id;
                     $model->update_office($order[$id], $id);
                 }
             }
@@ -404,7 +396,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $link = 'index.php?option=com_pvliveresults';
         $this->setRedirect($link, $msg);
     }
-
 
     /**
      * remove record(s).
@@ -436,7 +427,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         dd('need work here', JRequest::get());
 
         $electionOffice = $this->getModel('electionoffice');
-        $cid = JRequest::getVar('cid');
+        $cid            = JRequest::getVar('cid');
 
         $electionOffice->publish($cid);
 
@@ -450,7 +441,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         dd('need work here', JRequest::get());
 
         $electionOffice = $this->getModel('electionoffice');
-        $cid = JRequest::getVar('cid');
+        $cid            = JRequest::getVar('cid');
 
         $electionOffice->unpublish($cid, '');
 
