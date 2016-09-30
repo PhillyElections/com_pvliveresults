@@ -41,14 +41,28 @@ class PvliveresultsControllerElection extends PvliveresultsController
     {
         JRequest::checkToken() or jexit('Invalid Token');
 
+        $electionOfficeModel = $this->getModel('electionoffice');
+        $voteModel = $this->getModel('vote');
+
         $cids = JRequest::getVar('cid', 0, '', 'array');
         
         foreach ($cids as $cid) {
-            d('deleting', $cid);
+            // reset model properties (loop reset) and get by election_id
+            $electionOfficeModel->_data = null;
+            $electionOfficeModel->_where = ' `election_id` = ' . $cid . ' ';
+            $electionOffices = $electionOfficeModel->getData();
 
-            // delete votes
-            d('hey, i\'m deleting votes');
+            foreach ($electionOffices as $electionOffice) {
+                // delete votes
+                d('hey, i\'m deleting votes');
 
+                $voteModel->deleteByFk($electionOffice->id);
+            }
+
+            // votes are gone, lets delete the EO link
+            d('votes are gone, let\'s delete the EO link');
+            
+            $electionOfficeModel->deleteByFk($cid);
             // delete election
             d('hey, i\'m deleting the election');
 
@@ -57,7 +71,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
             // we do not delete candidates, offices, parties, or votetypes -- all the bindings are in 'votes', so there's no reason
         }
-        dd('out of delete loop');
     }
 
     public function save()

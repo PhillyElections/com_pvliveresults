@@ -60,7 +60,7 @@ class PvliveresultsModelVote extends PvliveresultsModel
      *
      * @return     bool     True on success
      */
-    public function deleteByElectionOfficeId($id = false)
+    public function deleteByFk($id = false)
     {
         // delete by electionOfficeId
         if (is_numeric($id)) {

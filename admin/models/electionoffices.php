@@ -158,7 +158,7 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
      *
      * @return     bool     True on success
      */
-    public function deleteByElectionId($id = false)
+    public function deleteByFk($id = false)
     {
         // get all the electionOffice rows
         d('get all the electionOffice rows');

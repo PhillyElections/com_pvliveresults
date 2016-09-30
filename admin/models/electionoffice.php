@@ -8,7 +8,7 @@ defined('_JEXEC') or die('Restricted access');
  * @subpackage Components
  * @license    GNU/GPL
  */
-class PvliveresultsModelOffice extends PvliveresultsModel
+class PvliveresultsModelElectionoffice extends PvliveresultsModel
 {
     /**
      * data array.
@@ -36,14 +36,14 @@ class PvliveresultsModelOffice extends PvliveresultsModel
      *
      * @var string
      */
-    public $_table = '#__pv_live_offices';
+    public $_table = '#__pv_live_election_offices';
 
     /**
      * table class name ref.
      *
      * @var string
      */
-    public $_tableRef = 'office';
+    public $_tableRef = 'electionoffice';
 
     /**
      * default sort order.
