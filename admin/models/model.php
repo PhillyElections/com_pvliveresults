@@ -60,6 +60,13 @@ class PvliveresultsModel extends JModel
     public $_where = ' 1 ';
 
     /**
+     * public key field for FK deletes
+     * 
+     * @var string
+     */
+    public $_fk = '';
+    
+    /**
      * default constructor
      */
     public function __construct()
@@ -278,5 +285,24 @@ class PvliveresultsModel extends JModel
         $table = $this->getTable($_this->_tableRef);
 
         $table->reorder();
+    }
+
+    /**
+     * default (agnostic) delete record(s) by FK
+     *
+     * @param      boolean  $cids   The cids
+     *
+     * @return     bool     True on success
+     */
+    public function deleteByFk($id = false)
+    {
+        // delete by electionOfficeId
+        if (is_numeric($id)) {
+            $this->_db->seQuery("DELETE * FROM " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($this->_fk) . " = " . $id . " ");
+            $this->_db->query();
+
+            return true;
+        }
+        return false;
     }
 }

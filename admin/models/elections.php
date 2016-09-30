@@ -66,7 +66,13 @@ class PvliveresultsModelElections extends PvliveresultsModel
      */
     //public $_where = '';
 
-
+    /**
+     * public key field for FK deletes
+     * 
+     * @var string
+     */
+    //public $_fk = '';
+    
     public function __construct()
     {
         // parent will setId(), which we don't need... so...

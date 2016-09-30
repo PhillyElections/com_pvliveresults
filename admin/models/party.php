@@ -52,4 +52,10 @@ class PvliveresultsModelParty extends PvliveresultsModel
      */
     //public $_where = '';
 
+    /**
+     * public key field for FK deletes
+     * 
+     * @var string
+     */
+    //public $_fk = '';
 }

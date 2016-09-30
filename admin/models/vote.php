@@ -51,22 +51,11 @@ class PvliveresultsModelVote extends PvliveresultsModel
      * @var string
      */
     //public $_where = '';
-
-
+    
     /**
-     * default (agnostic) delete record(s).
-     *
-     * @param      boolean  $cids   The cids
-     *
-     * @return     bool     True on success
+     * public key field for FK deletes
+     * 
+     * @var string
      */
-    public function deleteByFk($id = false)
-    {
-        // delete by electionOfficeId
-        if (is_numeric($id)) {
-            $this->_db->seQuery("DELETE * FROM " . $this->_db->nameQuote($this->_tableRef) . " WHERE election_office_id = " . $id . " ");
-            $this->_db->query();
-        }
-        return true;
-    }
+    public $_fk = 'election_office_id';
 }

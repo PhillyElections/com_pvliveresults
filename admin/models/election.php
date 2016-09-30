@@ -52,6 +52,13 @@ class PvliveresultsModelElection extends PvliveresultsModel
      */
     //public $_where = '';
 
+    /**
+     * public key field for FK deletes
+     * 
+     * @var string
+     */
+    //public $_fk = '';
+    
     public function _buildQuery() {
         $query = " SELECT " . $this->_fields . " FROM " . $this->_db->nameQuote($this->_table) . " WHERE `id` = " . $this->_id;
 

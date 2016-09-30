@@ -51,4 +51,10 @@ class PvliveresultsModelCandidate extends PvliveresultsModel
      */
     //public $_where = '';
 
+    /**
+     * public key field for FK deletes
+     * 
+     * @var string
+     */
+    //public $_fk = '';
 }
