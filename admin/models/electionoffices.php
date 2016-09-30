@@ -150,4 +150,31 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
 
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
     }
+
+    /**
+     * default (agnostic) delete record(s).
+     *
+     * @param      boolean  $cids   The cids
+     *
+     * @return     bool     True on success
+     */
+    public function deleteByElectionId($id = false)
+    {
+        // get all the electionOffice rows
+        d('get all the electionOffice rows');
+
+        // loop through the rows
+        d('loop through the rows');
+
+            // call deleteByElectionOfficeId
+            d('load votes and call deleteByElectionOfficeId');
+
+            // $this->delete()
+            d('$this->delete()');
+        // end loop
+        d('end loop ... and done with electionOffices');
+
+
+        return true;
+    }
 }
