@@ -298,7 +298,7 @@ class PvliveresultsModel extends JModel
     {
         // delete by electionOfficeId
         if (is_numeric($id)) {
-            $this->_db->seQuery("DELETE * FROM " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($this->_fk) . " = " . $id . " ");
+            $this->_db->setQuery("DELETE * FROM " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($this->_fk) . " = " . $id . " ");
             $this->_db->query();
 
             return true;
