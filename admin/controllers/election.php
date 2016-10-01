@@ -151,21 +151,29 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
         $outputFile  = fopen($path_site . $newFileName, 'w');
 
+        // detect delimiter
+        $line  = fgets($inputFile);
+        $delim = ','; // default
+
+        if (count(str_getcsv($line, '@')) > 1) {
+            $delim = "@"; // option 2
+        }
+
         // do we have a header row?
         if ($excludeHeader) {
             //lets drop that first row
-            $arr = str_getcsv(fgets($myfile));
+            $arr = str_getcsv($line, $delim);
             fputcsv($outputFile, $arr);
         }
 
-        while (($line = fgets($myfile)) !== false) {
+        while (($line = fgets($inputFile)) !== false) {
 
             // is the office new? write it
             // capture the id
             // write the office_election link
             // is the
 
-            $arr = str_getcsv($line);
+            $arr = str_getcsv($line, $delim);
             dd($arr);
             fputcsv($outputFile, $arr);
             // if the line is blank or unparsable, note it and skip to the next
@@ -205,7 +213,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
 
         fclose($handle);
-        fclose($myfile);
+        fclose($inputFile);
         if ($e_year) {
             try {
                 $year_id = $model->insert_year($e_year);
