@@ -83,6 +83,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $electionModel  = $this->getModel('election');
         $electionsIndex = $electionModel->getNameIdAssoc();
         $electionModel->bumpOrdering();
+        $created = $electionModel->getNow();
 
         $officeModel  = $this->getModel('office');
         $officesIndex = $officeModel->getNameIdAssoc();
@@ -93,7 +94,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $data            = array();
         $data['name']    = $post['name'];
         $data['date']    = $post['date'];
-        $data['created'] = $electionModel->getNow();
+        $data['created'] = $created;
 
         // capure the id as you s ave
         $electionId = $electionModel->store($data);
@@ -229,8 +230,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         @unlink($pathAndName);
         $msg .= JText::_('Data Saved');
-        $link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]=' . $year_id;
+        $link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]=' . $electionId;
 
+        $this->setRedirect($link, $msg);
     }
 
     /**
