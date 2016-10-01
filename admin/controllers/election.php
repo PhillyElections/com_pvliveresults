@@ -168,7 +168,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $arr = str_getcsv($line);
             dd($arr);
             fputcsv($outputFile, $arr);
-            // if the line is blank or unparsable...
+            // if the line is blank or unparsable, note it and skip to the next
             if (count($arr) === 1) {
                 $msg .= 'Note, the following line was not processed: ' . $line . "\n";
                 continue;
@@ -426,9 +426,9 @@ $this->setRedirect($link, $msg);
         JRequest::checkToken() or jexit('Invalid Token');
         dd('need work here', JRequest::get());
 
-        $electionOffice = $this->getModel('electionoffice');
-        $cid            = JRequest::getVar('cid');
+        $cid = JRequest::getVar('cid');
 
+        $electionOffice = $this->getModel('electionoffice');
         $electionOffice->publish($cid);
 
         $mainframe = JFactory::getApplication();
