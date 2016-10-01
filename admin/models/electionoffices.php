@@ -1,11 +1,10 @@
 <?php
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Office Model.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class PvliveresultsModelElectionoffices extends PvliveresultsModel
@@ -53,12 +52,12 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
     //public $_where = '';
 
     /**
-     * public key field for FK deletes
+     * public key field for FK deletes.
      * 
      * @var string
      */
     //public $_fk = '';
-    
+
     public function __construct()
     {
         // parent will setId(), which we don't need... so...
@@ -67,7 +66,7 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
         $mainframe = JFactory::getApplication();
 
         // Get pagination request variables
-        $limit      = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
+        $limit = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
         $limitstart = $mainframe->getUserStateFromRequest('global.list.limitstart', 'limitstart', '', 'int');
 
         // In case limit has been changed, adjust it
@@ -77,31 +76,32 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
         $this->setState('limitstart', $limitstart);
     }
 
-     /**
-     * Returns the query. -- OVERRIDDING that in PvliveresultsModel
+    /**
+     * Returns the query. -- OVERRIDDING that in PvliveresultsModel.
      *
      * @return string The query to be used to retrieve the rows from the database
      */
     public function _buildQuery()
     {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT ` od.id as id, o.id as office_id, o.name as name, eo.published as published, eo.ordering as ordering ' .
-                    'FROM  `#__pv_live_offices` `o`, `#__pv_live_election_offices` `eo` ' .
-                    'WHERE `o`.`id` = `eo`.`offices_id` and `eo`.`election_id` = ' . (int)$this->_id . ' ' .
-                    $this->_order . ' ';
+        $query = 'SELECT ` od.id as id, o.id as office_id, o.name as name, eo.published as published, eo.ordering as ordering '.
+                    'FROM  `#__pv_live_offices` `o`, `#__pv_live_election_offices` `eo` '.
+                    'WHERE `o`.`id` = `eo`.`offices_id` and `eo`.`election_id` = '.(int) $this->_id.' '.
+                    $this->_order.' ';
 
         return $query;
     }
 
     /**
-     * Retrieves the Pvnews data
+     * Retrieves the Pvnews data.
+     *
      * @return array Array of objects containing the data from the database
      */
     public function getData()
     {
         // if data hasn't already been obtained, load it
         if (empty($this->_data)) {
-            $query       = $this->_buildQuery();
+            $query = $this->_buildQuery();
             $this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
         }
 
@@ -112,7 +112,7 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
     {
         // Load the content if it doesn't already exist
         if (empty($this->_total)) {
-            $query        = $this->_buildQuery();
+            $query = $this->_buildQuery();
             $this->_total = $this->_getListCount($query);
         }
 

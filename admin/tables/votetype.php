@@ -3,15 +3,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Votetype table for PVLiveResults
+ * Votetype table for PVLiveResults.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class TableVotetype extends JTable
 {
-
     public $id = null;
     public $name = null;
     public $ordering = null;

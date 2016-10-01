@@ -3,15 +3,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Parties table for PVLiveResults
+ * Parties table for PVLiveResults.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class TableParty extends JTable
 {
-
     public $id = null;
     public $name = null;
     public $ordering = null;

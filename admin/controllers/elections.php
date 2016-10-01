@@ -5,8 +5,6 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Pvliveresults Elections Controller.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class PvliveresultsControllerElections extends PvliveresultsController
@@ -25,8 +23,8 @@ class PvliveresultsControllerElections extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         $mainframe = JFactory::getApplication();
-        $cid       = JRequest::getVar('cid');
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid=' . $cid[0]);
+        $cid = JRequest::getVar('cid');
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid='.$cid[0]);
     }
 
     public function add()
@@ -34,7 +32,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         $mainframe = JFactory::getApplication();
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=add&&cid=' . $cid[0]);
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=add&&cid='.$cid[0]);
     }
 
     public function delete()
@@ -42,7 +40,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         $mainframe = JFactory::getApplication();
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=delete&&cid=' . $cid[0]);
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=delete&&cid='.$cid[0]);
     }
 
     public function publish()
@@ -77,7 +75,7 @@ class PvliveresultsControllerElections extends PvliveresultsController
         $items = JRequest::getVar('ordering');
 
         foreach ($items as $key => $value) {
-            $data = array('id'=>(int)$key, 'ordering'=>(int)$value);
+            $data = array('id' => (int) $key, 'ordering' => (int) $value);
             $election = $this->getModel('election');
             $election->store($data);
         }

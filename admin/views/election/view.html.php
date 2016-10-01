@@ -5,8 +5,6 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Election View for PVLiveresults Component.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class PvliveresultsViewElection extends JView
@@ -18,7 +16,7 @@ class PvliveresultsViewElection extends JView
     {
         //get the election
         $election = &$this->get('Data');
-        $isNew = ((int)$election[0]->id < 1);
+        $isNew = ((int) $election[0]->id < 1);
         $text = JText::_('Edit');
 
         if ($isNew) {

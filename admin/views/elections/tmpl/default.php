@@ -45,31 +45,42 @@ jimport('joomla.html.html');
     $k = 0;
     for ($i = 0, $n = count($elections); $i < $n; ++$i) {
         $row = &$elections[$i];
-        $link = JRoute::_('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$row->id); ?>
-            <tr class="<?="row$k"; ?>">
+        $link = JRoute::_('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$row->id);
+        ?>
+            <tr class="<?="row$k";
+        ?>">
                 <td>
-                    <?=$row->id; ?>
+                    <?=$row->id;
+        ?>
                 </td>
                 <td>
-                    <?=JHTML::_('grid.id', $i, $row->id); ?>
+                    <?=JHTML::_('grid.id', $i, $row->id);
+        ?>
                 </td>
                 <td>
-                    <input size="7" type="text" name="ordering[<?=$row->id ;?>]" value="<?=$row->ordering ?>" />
+                    <input size="7" type="text" name="ordering[<?=$row->id;
+        ?>]" value="<?=$row->ordering ?>" />
                 </td>
                 <td>
-                    <a href="<?=$link; ?>"><?=$row->name; ?></a>
+                    <a href="<?=$link;
+        ?>"><?=$row->name;
+        ?></a>
                 </td>
                 <td>
-                    <?=$row->date; ?>
+                    <?=$row->date;
+        ?>
                 </td>
                 <td>
-                    <?=JHTML::_('grid.published', $row, $i);?>
+                    <?=JHTML::_('grid.published', $row, $i);
+        ?>
                 </td>
                 <td>
-                    <?=$row->created; ?>
+                    <?=$row->created;
+        ?>
                 </td>
                 <td>
-                    <?=$row->modified; ?>
+                    <?=$row->modified;
+        ?>
                 </td>
             </tr>
         <?php

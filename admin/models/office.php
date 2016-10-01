@@ -1,11 +1,10 @@
 <?php
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Office Model.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class PvliveresultsModelOffice extends PvliveresultsModel
@@ -45,14 +44,14 @@ class PvliveresultsModelOffice extends PvliveresultsModel
      */
     public $_tableRef = 'office';
 
-    /**
+    /*
      * default sort order.
      *
      * @var string
      */
     //public $_where = '';
 
-    /**
+    /*
      * public key field for FK deletes
      * 
      * @var string

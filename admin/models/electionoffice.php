@@ -1,11 +1,10 @@
 <?php
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults Office Model.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class PvliveresultsModelElectionoffice extends PvliveresultsModel
@@ -53,7 +52,7 @@ class PvliveresultsModelElectionoffice extends PvliveresultsModel
     //public $_where = '';
 
     /**
-     * public key field for FK deletes
+     * public key field for FK deletes.
      * 
      * @var string
      */

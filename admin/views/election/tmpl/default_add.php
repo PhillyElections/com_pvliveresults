@@ -1,6 +1,5 @@
 <?php defined('_JEXEC') or die('Restricted access');
 
-
 ?>
 <form action="index.php" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
     <div class="col100">

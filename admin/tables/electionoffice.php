@@ -3,15 +3,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Electionoffice table for PVLiveResults
+ * Electionoffice table for PVLiveResults.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class TableElectionoffice extends JTable
 {
-
     public $id = null;
     public $election_id = null;
     public $office_id = null;

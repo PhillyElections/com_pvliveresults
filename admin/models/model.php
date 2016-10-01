@@ -1,11 +1,10 @@
 <?php
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
  * Pvliveresults PVModel (parent) Model.
  *
- * @package    Philadelphia.Votes
- * @subpackage Components
  * @license    GNU/GPL
  */
 class PvliveresultsModel extends JModel
@@ -25,7 +24,7 @@ class PvliveresultsModel extends JModel
     public $_fields = ' * ';
 
     /**
-     * id of loaded record (if any)
+     * id of loaded record (if any).
      *
      * @var string
      */
@@ -60,20 +59,20 @@ class PvliveresultsModel extends JModel
     public $_where = ' 1 ';
 
     /**
-     * public key field for FK deletes
+     * public key field for FK deletes.
      * 
      * @var string
      */
     public $_fk = '';
-    
+
     /**
-     * default constructor
+     * default constructor.
      */
     public function __construct()
     {
         parent::__construct();
         $cids = JRequest::getVar('cid', 0, '', 'array');
-        $id    = JRequest::getInt('id');
+        $id = JRequest::getInt('id');
         if ($id) {
             // in case we're updating and check() failed
             $this->setId((int) $id);
@@ -85,7 +84,7 @@ class PvliveresultsModel extends JModel
     /**
      * default (agnostic) set the Liveresult identifier.
      *
-     * @param      <type>  $id     The identifier
+     * @param <type> $id The identifier
      * @param      int   Liveresult  identifier
      */
     public function setId($id)
@@ -98,9 +97,9 @@ class PvliveresultsModel extends JModel
     /**
      * default (agnostic) delete record(s).
      *
-     * @param      boolean  $cids   The cids
+     * @param bool $cids The cids
      *
-     * @return     bool     True on success
+     * @return bool True on success
      */
     public function delete($cids = false)
     {
@@ -122,9 +121,9 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * default (agnostic) publish
+     * default (agnostic) publish.
      *
-     * @param      <type>  $ids    The identifiers
+     * @param <type> $ids The identifiers
      */
     public function publish($ids)
     {
@@ -136,9 +135,9 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * default (agnostic) unpublish
+     * default (agnostic) unpublish.
      *
-     * @param      <type>  $ids    The identifiers
+     * @param <type> $ids The identifiers
      */
     public function unpublish($ids)
     {
@@ -152,20 +151,20 @@ class PvliveresultsModel extends JModel
     /**
      * default (agnostic) method to return the query.
      *
-     * @return     string  The query to be used to retrieve the rows from the database
+     * @return string The query to be used to retrieve the rows from the database
      */
     public function _buildQuery()
     {
         // added order by -- id desc for a defacto recent date sort
-        $query = 'SELECT ' . $this->_fields . ' '.' FROM ' . $this->_db->nameQuote($this->_table) . ' WHERE ' . $this->_where . ' ' . $this->_order . ' ';
+        $query = 'SELECT '.$this->_fields.' '.' FROM '.$this->_db->nameQuote($this->_table).' WHERE '.$this->_where.' '.$this->_order.' ';
 
         return $query;
     }
 
     /**
-     * Default (agnostic) data retrieval
+     * Default (agnostic) data retrieval.
      *
-     * @return     array  Array of objects containing the data from the database
+     * @return array Array of objects containing the data from the database
      */
     public function getData()
     {
@@ -179,15 +178,14 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * Default (agnostic) record store
+     * Default (agnostic) record store.
      *
-     * @param      boolean  $data   The data
+     * @param bool $data The data
      *
-     * @return     bool     True on success
+     * @return bool True on success
      */
     public function store($data = false)
     {
-
         $row = JTable::getInstance($this->_tableRef, 'Table');
 
         if (!$data) {
@@ -221,13 +219,13 @@ class PvliveresultsModel extends JModel
     /**
      * default (agnostic) get record(s) by name.
      *
-     * @param      <type>  $name   The name
+     * @param <type> $name The name
      *
-     * @return     <type>  The by name.
+     * @return <type> The by name.
      */
     public function getByName($name)
     {
-        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table) . " WHERE `name` = " . $this->_db->Quote($name) . " ";
+        $query = 'SELECT * FROM '.$this->_db->nameQuote($this->_table).' WHERE `name` = '.$this->_db->Quote($name).' ';
         $this->_data = $this->_getList($query);
 
         return $this->_data;
@@ -236,13 +234,13 @@ class PvliveresultsModel extends JModel
     /**
      * (agnostic) Gets the name identifier associated.
      *
-     * @param      string  $key    The key
+     * @param string $key The key
      *
-     * @return     <type>  The name identifier associated.
+     * @return <type> The name identifier associated.
      */
     public function getNameIdAssoc($key = 'name')
     {
-        $query = "SELECT `id` FROM " . $this->_db->nameQuote($this->_table) . " ORDER BY `name` ASC ";
+        $query = 'SELECT `id` FROM '.$this->_db->nameQuote($this->_table).' ORDER BY `name` ASC ';
 
         $this->_db->setQuery($query);
         $this->_assoc = $this->_db->loadAssocList($key);
@@ -251,9 +249,9 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * load a date usable in a DB query
+     * load a date usable in a DB query.
      *
-     * @return     <type>  The now.
+     * @return <type> The now.
      */
     public function getNow()
     {
@@ -263,13 +261,13 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * default (agnostic) push down of ordering (whole set)
+     * default (agnostic) push down of ordering (whole set).
      *
-     * @return     boolean
+     * @return bool
      */
     public function bumpOrdering()
     {
-        $query = "UPDATE " . $this->_db->nameQuote($this->_table) . " set `ordering`=(`ordering` + 1) ";
+        $query = 'UPDATE '.$this->_db->nameQuote($this->_table).' set `ordering`=(`ordering` + 1) ';
         $this->_db->setQuery($query);
         if (!$this->_db->query()) {
             $this->setError($this->_db->getErrorMsg());
@@ -288,21 +286,22 @@ class PvliveresultsModel extends JModel
     }
 
     /**
-     * default (agnostic) delete record(s) by FK
+     * default (agnostic) delete record(s) by FK.
      *
-     * @param      boolean  $cids   The cids
+     * @param bool $cids The cids
      *
-     * @return     bool     True on success
+     * @return bool True on success
      */
     public function deleteByFk($id = false)
     {
         // delete by electionOfficeId
         if (is_numeric($id)) {
-            $this->_db->setQuery("DELETE * FROM " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($this->_fk) . " = " . $id . " ");
+            $this->_db->setQuery('DELETE * FROM '.$this->_db->nameQuote($this->_table).' WHERE '.$this->_db->nameQuote($this->_fk).' = '.$id.' ');
             $this->_db->query();
 
             return true;
         }
+
         return false;
     }
 }
