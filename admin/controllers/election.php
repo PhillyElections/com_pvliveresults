@@ -177,7 +177,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // is the
 
             $arr = str_getcsv($line, $delim);
-            dd($arr);
             fputcsv($outputFile, $arr);
             // if the line is blank or unparsable, note it and skip to the next
             if (count($arr) === 1) {
@@ -188,6 +187,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $arr[$key] = str_replace('"', '', $value);
                 $arr[$key] = trim($value);
             }
+            dd($arr);
+
             $insert .= '("' . $arr[3] . '", ' . (int) $arr[0] . ', ' . (int) $arr[1] . ', "' . $arr[2] . '", "' . $arr[4] . '", "' . $arr[5] . '", ' . (int) $arr[6] . ', "' . $e_year . '", NOW()),';
             ++$counter;
             if ($counter > 1000) {
