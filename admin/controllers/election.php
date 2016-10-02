@@ -75,6 +75,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
     public function save()
     {
         JRequest::checkToken() or jexit('Invalid Token');
+        $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
+        $baseLink = "index.php?option=com_pvliveresults";
 
         // let's get our 'name' models
         $candidateModel  = $this->getModel('candidate');
@@ -103,10 +105,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         // verify we have an upload
         if (!$_FILES['results_file']) {
             // no file.  No need to go on.  Warn the user
-            return $this->setRedirect(
-                'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=' . $electionId,
-                'No file uploaded. You might want to delete this election and start over'
-            );
+            return $this->setRedirect($editLink . $electionId, 'No file uploaded. You might want to delete this election and start over');
         }
 
         // since we have an upload, we need to make sure JFile is available
@@ -122,10 +121,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         if (!JFile::upload($src, $dest)) {
             // failed file.  No need to go on.  Warn the user
-            return $this->setRedirect(
-                'index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=' . $electionId,
-                'Failed file uploaded. You might want to delete this election and start over'
-            );
+            return $this->setRedirect($editLink . $electionId, 'Failed file uploaded. You might want to delete this election and start over');
         }
 
         // since the copy was completed, we need to make sure we have time to process the file
@@ -148,16 +144,21 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $insert      = '';
         $counter     = 0;
-        $inputFile   = fopen($dest, 'r') or die('update_election_nameble to open file!');
+        $inputFile   = fopen($dest, 'r') or return $this->setRedirect($baseLink, 'update_election_nameble to open file!');
         $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
         $outputFile  = fopen($path_site . $newFileName, 'w');
 
         // detect delimiter
         $line  = fgets($inputFile);
         $delim = ','; // default
+        // 7 column import
+        // [0]ward    [1]division    [2]type    [3]office  [4]candidate   [5]party   [6]votes
 
         if (count(str_getcsv($line, '@')) > 1) {
             $delim = "@"; // option 2
+            // 8 column import
+            // Precinct_Name@Office/Prop Name@Tape_Text@Vote_Count@Last_Name@First_Name@Middle_Name@Party_Name@
+            // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
         }
 
         // do we have a header row?
@@ -168,7 +169,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
 
         while (($line = fgets($inputFile)) !== false) {
-
             // is the office new? write it
             // capture the id
             // write the office_election link
@@ -182,9 +182,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $msg .= 'Note, the following line was not processed: ' . $line . "\n";
                 continue;
             }
-            foreach ($arr as $a_key => $a_value) {
-                $arr[$a_key] = str_replace('"', '', $a_value);
-                $arr[$a_key] = trim($a_value);
+            foreach ($arr as $key => $value) {
+                $arr[$key] = str_replace('"', '', $value);
+                $arr[$key] = trim($value);
             }
             $insert .= '("' . $arr[3] . '", ' . (int) $arr[0] . ', ' . (int) $arr[1] . ', "' . $arr[2] . '", "' . $arr[4] . '", "' . $arr[5] . '", ' . (int) $arr[6] . ', "' . $e_year . '", NOW()),';
             ++$counter;
