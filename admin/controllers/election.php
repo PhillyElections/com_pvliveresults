@@ -144,7 +144,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $insert      = '';
         $counter     = 0;
-        $inputFile   = fopen($dest, 'r') or return $this->setRedirect($baseLink, 'update_election_nameble to open file!');
+        if (!$inputFile   = fopen($dest, 'r')) {
+            return $this->setRedirect($baseLink, 'unable to open file!');
+        }
         $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
         $outputFile  = fopen($path_site . $newFileName, 'w');
 
