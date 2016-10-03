@@ -86,7 +86,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $electionModel  = $this->getModel('election');
         $electionsIndex = $electionModel->getIdAssocByName();
 
-        $electinofficeModel  = $this->getModel('electionoffice');
+        $electionofficeModel  = $this->getModel('electionoffice');
 
         $officeModel  = $this->getModel('office');
         $officesIndex = $officeModel->getIdAssocByName();
