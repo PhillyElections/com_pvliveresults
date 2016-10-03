@@ -94,7 +94,7 @@ class PvliveresultsModelVote extends PvliveresultsModel
                 $tmp[$vtId][$eoId][$cId][$ward] = array();
             }
             if (!isset($tmp[$vtId][$eoId][$cId][$ward][$div])) {
-                $tmp[$vtId][$eoId][$cId][$ward][$div] = $row->id;
+                $tmp[$vtId][$eoId][$cId][$ward][$div] = (int)$row->id;
             }
         }
         array_push($t, microtime(true));

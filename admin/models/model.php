@@ -248,7 +248,7 @@ class PvliveresultsModel extends JModel
             $row = $data[$i];
             $name = $row->name;
             if (!isset($tmp[$name])) {
-                $tmp[$name] = $row->id;
+                $tmp[$name] = (int)$row->id;
             }
         }
 
