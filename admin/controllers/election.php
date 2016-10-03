@@ -80,21 +80,22 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         // let's get our 'name' models
         $candidateModel  = $this->getModel('candidate');
-        $candidatesIndex = $candidateModel->getNameIdAssoc();
+        $candidatesIndex = $candidateModel->getIdAssocByName();
 
         $electionModel  = $this->getModel('election');
-        $electionsIndex = $electionModel->getNameIdAssoc();
+        $electionsIndex = $electionModel->getIdAssocByName();
         $electionModel->bumpOrdering();
         $created = $electionModel->getNow();
 
         $officeModel  = $this->getModel('office');
-        $officesIndex = $officeModel->getNameIdAssoc();
+        $officesIndex = $officeModel->getIdAssocByName();
 
         $partyModel  = $this->getModel('party');
-        $partiesIndex = $partyeModel->getNameIdAssoc();
+        $partiesIndex = $partyeModel->getIdAssocByName();
 
         $votetypeModel  = $this->getModel('votetype');
-        $votetypesIndex = $votetypeModel->getNameIdAssoc();
+        $votetypesIndex = $votetypeModel->getIdAssocByName();
+        $votetypes = array('A'=>'ABSENTEE', 'M'=>'MACHINE', 'P'=>'PROVISIONAL');
 
         $voteModel  = $this->getModel('vote');
         //$votesIndex = $voteModel->getVoteEOid();
@@ -200,22 +201,39 @@ class PvliveresultsControllerElection extends PvliveresultsController
             //dd($arr);
             $ward = (int)$arr[0];
             $division = (int)$arr[1];
-            $voteType = 
+            $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] $votetypesIndex['MACHINE'];
             $office = $arr[3];
             $candidate = $arr[4];
-            $party = $arr[5];
+            $partyId = (int)$partiesIndex[$arr[5]];
             // is the office new? write it, index it, an save the id
-            if ($officeId = $officesIndex[]) {
-                 
+            if ($officeId = $officesIndex[$office]) {
+                // no more work needed
             } else {
-
+                // wite new office, capturing id
+                $officeId = $officeModel->store(
+                    array(
+                        'created'=>$created,
+                        'name'=>$office,
+                        'published'=>1
+                        )
+                    );
+                // index new office
+                array_push($officesIndex, array($office=>$officeId));
             }
 
             // is the candidate new? write it, index it, and save the id
-            if (isset($candidatesIndex[]) {
-
+            if ($candidateId = $candidatesIndex[$candidate]) {
+                // no more work needed
             } else {
-
+                $candidateId = $candidateModel->store(
+                    array(
+                        'created'=>$created,
+                        'name'=>$candidate,
+                        'published'=>1,
+                        'party_id'=>$partyId
+                        )
+                    );
+                array_push($candidatesIndex, array($candidate=>$candidateId));
             }
 
             // record the election_office link and save the id
