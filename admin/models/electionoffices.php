@@ -157,4 +157,21 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
 
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
     }
+
+    public function getIdAssocByKeys($electionId)
+    {
+        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_id` = " . $electionId . " ";
+        $data = $this->_getList($query);
+
+        $tmp = array();
+        for ($i = 0; $i<count($data); $i++) {
+            $row = $data[$i];
+            if (!isset($tmp[$row['election_id']])) {
+                $tmp[$row['election_id']] = array();
+            }
+            if (!isset($tmp[$row['election_id']][$row['office_id']])) {
+                $tmp[$row['election_id']][$row['office_id']] = $row['id'];
+            }
+        }
+    }
 }
