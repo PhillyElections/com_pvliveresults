@@ -90,6 +90,15 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $officeModel  = $this->getModel('office');
         $officesIndex = $officeModel->getNameIdAssoc();
 
+        $partyModel  = $this->getModel('party');
+        $partiesIndex = $partyeModel->getNameIdAssoc();
+
+        $votetypeModel  = $this->getModel('votetype');
+        $votetypesIndex = $votetypeModel->getNameIdAssoc();
+
+        $voteModel  = $this->getModel('vote');
+        //$votesIndex = $voteModel->getVoteEOid();
+
         // shape and save election data
         $post = JRequest::get('post');
 
@@ -169,7 +178,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $arr = str_getcsv($line, $delim);
             fputcsv($outputFile, $arr);
         }
-
+        $msg = ""; // make sure we start with an empty msg
         while (($line = fgets($inputFile)) !== false) {
             // is the office new? write it
             // capture the id
@@ -183,11 +192,35 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $msg .= 'Note, the following line was not processed: ' . $line . "\n";
                 continue;
             }
+            // get rid of any articulated quotes witing array elements
             foreach ($arr as $key => $value) {
                 $arr[$key] = str_replace('"', '', $value);
                 $arr[$key] = trim($value);
             }
-            dd($arr);
+            //dd($arr);
+            $ward = (int)$arr[0];
+            $division = (int)$arr[1];
+            $voteType = 
+            $office = $arr[3];
+            $candidate = $arr[4];
+            $party = $arr[5];
+            // is the office new? write it, index it, an save the id
+            if ($officeId = $officesIndex[]) {
+                 
+            } else {
+
+            }
+
+            // is the candidate new? write it, index it, and save the id
+            if (isset($candidatesIndex[]) {
+
+            } else {
+
+            }
+
+            // record the election_office link and save the id
+
+            // record the votes
 
             $insert .= '("' . $arr[3] . '", ' . (int) $arr[0] . ', ' . (int) $arr[1] . ', "' . $arr[2] . '", "' . $arr[4] . '", "' . $arr[5] . '", ' . (int) $arr[6] . ', "' . $e_year . '", NOW()),';
             ++$counter;
