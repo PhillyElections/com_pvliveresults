@@ -201,7 +201,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             //dd($arr);
             $ward = (int)$arr[0];
             $division = (int)$arr[1];
-            $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] $votetypesIndex['MACHINE'];
+            $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
             $office = $arr[3];
             $candidate = $arr[4];
             $partyId = (int)$partiesIndex[$arr[5]];
@@ -215,8 +215,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'created'=>$created,
                         'name'=>$office,
                         'published'=>1
-                        )
-                    );
+                    )
+                );
                 // index new office
                 array_push($officesIndex, array($office=>$officeId));
             }
@@ -231,8 +231,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'name'=>$candidate,
                         'published'=>1,
                         'party_id'=>$partyId
-                        )
-                    );
+                    )
+                );
                 array_push($candidatesIndex, array($candidate=>$candidateId));
             }
 
@@ -412,7 +412,6 @@ $this->setRedirect($link, $msg);
 
     public function update()
     {
-
     }
 
     public function saveStep2()
