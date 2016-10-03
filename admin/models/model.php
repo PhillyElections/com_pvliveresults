@@ -243,7 +243,7 @@ class PvliveresultsModel extends JModel
         $query = 'SELECT `id` FROM ' . $this->_db->nameQuote($this->_table) . ' ORDER BY `name` ASC ';
 
         $this->_db->setQuery($query);
-        $this->_assoc = $this->_db->loadAssocList($key);
+        $this->_assoc = $this->_db->loadAssoc($key);
 d($this->_assoc, $query, $this);
         return $this->_assoc;
     }
