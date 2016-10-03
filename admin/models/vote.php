@@ -70,9 +70,10 @@ class PvliveresultsModelVote extends PvliveresultsModel
         $t[] = microtime(1);
         $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_office_id` in (" . $eoIds . ") ";
         $data = $this->_getList($query);
+        $limit = count($data);
 
         $tmp = array();
-        for ($i = 0; $i<count($data); $i++) {
+        for ($i = 0; $i<$limit; $i++) {
             $row  = $data[$i];
             $vtId = (int)$row['vote_type_id'];
             $cId  = (int)$row['candidate_id'];
