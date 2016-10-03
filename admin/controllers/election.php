@@ -198,13 +198,16 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $arr[$key] = str_replace('"', '', $value);
                 $arr[$key] = trim($value);
             }
-            //dd($arr);
+
             $ward = (int)$arr[0];
             $division = (int)$arr[1];
             $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
             $office = $arr[3];
             $candidate = $arr[4];
             $partyId = (int)$partiesIndex[$arr[5]];
+
+            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex);
+            
             // is the office new? write it, index it, an save the id
             if ($officeId = $officesIndex[$office]) {
                 // no more work needed
