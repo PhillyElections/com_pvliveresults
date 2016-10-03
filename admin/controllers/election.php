@@ -122,7 +122,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $electionofficesIndex = $electionofficeModel->getIdAssocByKeys($electionId);
 
         $electionofficeIds = '';
-        for ($electionofficesIndex as $key=>$arr) {
+        foreach ($electionofficesIndex as $key=>$arr) {
             $electionofficeIds .= "$key,";
         }
         $electionofficialsIds = trim($electionofficeIds, ',');
