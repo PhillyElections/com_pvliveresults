@@ -65,9 +65,9 @@ class PvliveresultsModelVote extends PvliveresultsModel
      *
      * @return     array   voteId associated by (descending) eoId, cId, ward, div.
      */
-    public function getIdAssocByKeys($eoId)
+    public function getIdAssocByKeys($eoIds)
     {
-        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_office_id` = " . $eoId . " ";
+        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_office_id` in (" . $eoIds . ") ";
         $data = $this->_getList($query);
 
         $tmp = array();
