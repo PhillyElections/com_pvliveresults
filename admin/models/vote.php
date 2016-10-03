@@ -68,7 +68,7 @@ class PvliveresultsModelVote extends PvliveresultsModel
     public function getIdAssocByKeys($eoIds)
     {
         $t = array();
-        $t[] = microtime(1);
+        array_push($t, microtime(true));
         $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_office_id` in (" . $eoIds . ") ";
         $data = $this->_getList($query);
         $limit = count($data);
@@ -97,7 +97,7 @@ class PvliveresultsModelVote extends PvliveresultsModel
                 $tmp[$vtId][$eoId][$cId][$ward][$div] = $row['id'];
             }
         }
-        $t[] = microtime(1);
+        array_push($t, microtime(true));
         d($t[1]-$t[0]);
         return $tmp;
     }
