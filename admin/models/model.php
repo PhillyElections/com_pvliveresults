@@ -60,7 +60,7 @@ class PvliveresultsModel extends JModel
 
     /**
      * public key field for FK deletes.
-     * 
+     *
      * @var string
      */
     public $_fk = '';
@@ -240,12 +240,19 @@ class PvliveresultsModel extends JModel
      */
     public function getIdAssocByName($key = 'name')
     {
-        $query = 'SELECT `id` FROM ' . $this->_db->nameQuote($this->_table) . ' ORDER BY `name` ASC ';
+        $query = 'SELECT * FROM ' . $this->_db->nameQuote($this->_table) . ' ORDER BY `name` ASC ';
+        $data = $this->_getList($query);
 
-        $this->_db->setQuery($query);
-        $this->_assoc = $this->_db->loadAssoc($key);
-d($this->_assoc, $query, $this);
-        return $this->_assoc;
+        $tmp = array();
+        for ($i = 0; $i<count($data); $i++) {
+            $row = $data[$i];
+            $name = $row['name'];
+            if (!isset($tmp[$name])) {
+                $tmp[$name] = $row['id'];
+            }
+        }
+
+        return $tmp;
     }
 
     /**
