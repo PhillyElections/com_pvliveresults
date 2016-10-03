@@ -76,10 +76,10 @@ class PvliveresultsModelVote extends PvliveresultsModel
         $tmp = array();
         for ($i = 0; $i<$limit; $i++) {
             $row  = $data[$i];
-            $vtId = (int)$row['vote_type_id'];
-            $cId  = (int)$row['candidate_id'];
-            $ward = (int)$row['ward'];
-            $div  = (int)$row['division'];
+            $vtId = (int)$row->vote_type_id;
+            $cId  = (int)$row->candidate_id;
+            $ward = (int)$row->ward;
+            $div  = (int)$row->division;
 
             if (!isset($tmp[$vtId])) {
                 $tmp[$vtId] = array();
@@ -94,7 +94,7 @@ class PvliveresultsModelVote extends PvliveresultsModel
                 $tmp[$vtId][$eoId][$cId][$ward] = array();
             }
             if (!isset($tmp[$vtId][$eoId][$cId][$ward][$div])) {
-                $tmp[$vtId][$eoId][$cId][$ward][$div] = $row['id'];
+                $tmp[$vtId][$eoId][$cId][$ward][$div] = $row->id;
             }
         }
         array_push($t, microtime(true));

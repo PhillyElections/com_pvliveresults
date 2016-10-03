@@ -71,12 +71,12 @@ class PvliveresultsModelElectionoffice extends PvliveresultsModel
 
         for ($i = 0; $i<count($data); $i++) {
             $row = $data[$i];
-            $oId = (int)$row['office_id'];
+            $oId = (int)$row->office_id;
             if (!isset($tmp[$eId])) {
                 $tmp[$eId] = array();
             }
             if (!isset($tmp[$eId][$oId])) {
-                $tmp[$eId][$oId] = $row['id'];
+                $tmp[$eId][$oId] = $row->id;
             }
         }
         array_push($t, microtime(true));
