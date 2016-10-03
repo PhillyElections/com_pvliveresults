@@ -122,7 +122,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $electionofficesIndex = $electionofficeModel->getIdAssocByKeys($electionId);
 
         $electionofficeIds = '';
-        foreach ($electionofficesIndex as $key=>$arr) {
+        foreach ($electionofficesIndex as $key => $arr) {
             $electionofficeIds .= "$key,";
         }
         $electionofficialsIds = trim($electionofficeIds, ',');
@@ -224,7 +224,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $candidate = $arr[4];
             $partyId = (int)$partiesIndex[$arr[5]];
 
-            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex);
+            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex);
             
             // is the office new? write it, index it, an save the id
             if ($officeId = $officesIndex[$office]) {
