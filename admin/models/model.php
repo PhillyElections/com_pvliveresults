@@ -244,7 +244,7 @@ class PvliveresultsModel extends JModel
 
         $this->_db->setQuery($query);
         $this->_assoc = $this->_db->loadAssocList($key);
-d($this->_assoc);
+d($this->_assoc, $query, $this);
         return $this->_assoc;
     }
 
