@@ -130,7 +130,7 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
         return $this->_pagination;
     }
 
-    public function publishOffices($currentElection)
+    public function publishOffices($eId)
     {
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
@@ -141,10 +141,10 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
             $row->publish($id, 1);
         }
 
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$eId);
     }
 
-    public function unpublishOffices($currentElection)
+    public function unpublishOffices($eId)
     {
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
@@ -155,23 +155,27 @@ class PvliveresultsModelElectionoffices extends PvliveresultsModel
             $row->publish($id, 0);
         }
 
-        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$currentElection);
+        $mainframe->redirect('index.php?option=com_pvliveresults&controller=election&task=edit&cid[]='.$eId);
     }
 
-    public function getIdAssocByKeys($electionId)
+    public function getIdAssocByKeys($eId)
     {
-        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_id` = " . $electionId . " ";
+        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_id` = " . $eId . " ";
         $data = $this->_getList($query);
 
         $tmp = array();
+
         for ($i = 0; $i<count($data); $i++) {
             $row = $data[$i];
-            if (!isset($tmp[$row['election_id']])) {
-                $tmp[$row['election_id']] = array();
+            $oId = (int)$row['office_id'];
+            if (!isset($tmp[$eId])) {
+                $tmp[$eId] = array();
             }
-            if (!isset($tmp[$row['election_id']][$row['office_id']])) {
-                $tmp[$row['election_id']][$row['office_id']] = $row['id'];
+            if (!isset($tmp[$eId][$oId])) {
+                $tmp[$eId][$oId] = $row['id'];
             }
         }
+
+        return $tmp;
     }
 }
