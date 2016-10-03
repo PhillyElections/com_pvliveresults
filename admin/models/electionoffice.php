@@ -53,7 +53,7 @@ class PvliveresultsModelElectionoffice extends PvliveresultsModel
 
     /**
      * public key field for FK deletes.
-     * 
+     *
      * @var string
      */
     public $_fk = 'election_id';
