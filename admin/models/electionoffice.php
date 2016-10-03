@@ -58,5 +58,31 @@ class PvliveresultsModelElectionoffice extends PvliveresultsModel
      */
     public $_fk = 'election_id';
 
-    
+
+    public function getIdAssocByKeys($eId)
+    {
+        $t = array();
+        array_push($t, microtime(true));
+
+        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_id` = " . $eId . " ";
+        $data = $this->_getList($query);
+
+        $tmp = array();
+
+        for ($i = 0; $i<count($data); $i++) {
+            $row = $data[$i];
+            $oId = (int)$row['office_id'];
+            if (!isset($tmp[$eId])) {
+                $tmp[$eId] = array();
+            }
+            if (!isset($tmp[$eId][$oId])) {
+                $tmp[$eId][$oId] = $row['id'];
+            }
+        }
+        array_push($t, microtime(true));
+        d($t[1]-$t[0]);
+
+        return $tmp;
+    }
+
 }
