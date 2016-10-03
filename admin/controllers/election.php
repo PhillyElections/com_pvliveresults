@@ -95,10 +95,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $partiesIndex = $partyModel->getIdAssocByName();
 
         $votetypeModel  = $this->getModel('votetype');
+        $votetypesIndex = $votetypeModel->getIdAssocByName();
         $votetypes = array('A'=>'ABSENTEE', 'M'=>'MACHINE', 'P'=>'PROVISIONAL');
 
         $voteModel  = $this->getModel('vote');
-        $votesIndex = $voteModel->getIdAssocByKeys();
 
         // let's set a common 'created' for any new rows
         $created = $electionModel->getNow();
@@ -125,10 +125,19 @@ class PvliveresultsControllerElection extends PvliveresultsController
         foreach ($electionofficesIndex as $key => $arr) {
             $electionofficeIds .= "$key,";
         }
-        $electionofficialsIds = trim($electionofficeIds, ',');
+        $electionofficeIds = count($electionofficeIds) ? trim($electionofficeIds, ',') : false;
 
         // now that we have all current eoIds, we can pull a votes index
-        $votesIndex = $voteModel->getIdAssocByKeys($electionofficeIds);
+        if ($electionofficeIds ) {
+            $votesIndex = $voteModel->getIdAssocByKeys($electionofficeIds);
+        }
+
+        // Let's make sure they're all arrays upfront
+        foreach (array('electionsIndex', 'candidatesIndex', 'electionofficesIndex', 'officesIndex', 'partiesIndex', 'votetypesIndex', 'votesIndex') as $index) {
+            if (!is_array($$index)) {
+                $$index = array();
+            }
+        }
 
         // verify we have an upload
         if (!$_FILES['results_file']) {
