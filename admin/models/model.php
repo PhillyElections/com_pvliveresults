@@ -238,7 +238,7 @@ class PvliveresultsModel extends JModel
      *
      * @return <type> The name identifier associated.
      */
-    public function getNameIdAssoc($key = 'name')
+    public function getIdAssocByName($key = 'name')
     {
         $query = 'SELECT `id` FROM '.$this->_db->nameQuote($this->_table).' ORDER BY `name` ASC ';
 
