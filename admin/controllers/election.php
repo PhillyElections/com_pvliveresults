@@ -79,28 +79,29 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $baseLink = "index.php?option=com_pvliveresults";
 
 
-        $electionModel  = $this->getModel('election');
-        $electionsIndex = $electionModel->getIdAssocByName();
-        $electionModel->bumpOrdering();
-        $created = $electionModel->getNow();
-
         // let's get our 'name' models
         $candidateModel  = $this->getModel('candidate');
-        d($candidateModel, $electionModel);
         $candidatesIndex = $candidateModel->getIdAssocByName();
+
+        $electionModel  = $this->getModel('election');
+        $electionsIndex = $electionModel->getIdAssocByName();
+
+        $electinofficeModel  = $this->getModel('electionoffice');
 
         $officeModel  = $this->getModel('office');
         $officesIndex = $officeModel->getIdAssocByName();
 
         $partyModel  = $this->getModel('party');
-        $partiesIndex = $partyeModel->getIdAssocByName();
+        $partiesIndex = $partyModel->getIdAssocByName();
 
         $votetypeModel  = $this->getModel('votetype');
-        $votetypesIndex = $votetypeModel->getIdAssocByName();
         $votetypes = array('A'=>'ABSENTEE', 'M'=>'MACHINE', 'P'=>'PROVISIONAL');
 
         $voteModel  = $this->getModel('vote');
-        //$votesIndex = $voteModel->getVoteEOid();
+        $votesIndex = $voteModel->getIdAssocByKeys();
+
+        // let's set a common 'created' for any new rows
+        $created = $electionModel->getNow();
 
         // shape and save election data
         $post = JRequest::get('post');
@@ -110,9 +111,24 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $data['date']    = $post['date'];
         $data['created'] = $created;
 
+        // new row to the top: make room
+        $electionModel->bumpOrdering();
+
         // capure the id as you s ave
         $electionId = $electionModel->store($data);
         $electionModel->squinchOrdering();
+
+        // now that we have an electionId, we can get an eoIndex
+        $electionofficesIndex = $electionofficeModel->getIdAssocByKeys($electionId);
+
+        $electionofficeIds = '';
+        for ($electionofficesIndex as $key=>$arr) {
+            $electionofficeIds .= "$key,";
+        }
+        $electionofficialsIds = trim($electionofficeIds, ',');
+
+        // now that we have all current eoIds, we can pull a votes index
+        $votesIndex = $voteModel->getIdAssocByKeys($electionofficeIds);
 
         // verify we have an upload
         if (!$_FILES['results_file']) {
