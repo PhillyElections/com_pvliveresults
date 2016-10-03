@@ -69,7 +69,7 @@ class PvliveresultsModelVote extends PvliveresultsModel
     {
         $t = array();
         array_push($t, microtime(true));
-        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_office_id` in (" . $eoIds . ") ";
+        $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table) . " WHERE `election_office_id` in (" . $eoIds . ") ";
         $data = $this->_getList($query);
         $limit = count($data);
 
