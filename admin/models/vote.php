@@ -53,11 +53,18 @@ class PvliveresultsModelVote extends PvliveresultsModel
 
     /**
      * public key field for FK deletes.
-     * 
-     * @var string
+     *
+     * @var        string
      */
     public $_fk = 'election_office_id';
 
+    /**
+     * Gets the identifier associated by true primary key.
+     *
+     * @param      string  $eoId   The electionoffice identifier
+     *
+     * @return     array   voteId associated by (descending) eoId, cId, ward, div.
+     */
     public function getIdAssocByKeys($eoId)
     {
         $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_office_id` = " . $eoId . " ";
