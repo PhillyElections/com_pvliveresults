@@ -63,34 +63,40 @@ class PvliveresultsModelVote extends PvliveresultsModel
      *
      * @param      string  $eoId   The electionoffice identifier
      *
-     * @return     array   voteId associated by (descending) eoId, cId, ward, div.
+     * @return     array   voteId associated by (descending) vtId, eoId, cId, ward, div.
      */
     public function getIdAssocByKeys($eoIds)
     {
+        $t[] = microtime(1);
         $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table)) . " WHERE `election_office_id` in (" . $eoIds . ") ";
         $data = $this->_getList($query);
 
         $tmp = array();
         for ($i = 0; $i<count($data); $i++) {
             $row  = $data[$i];
+            $vtId = (int)$row['vote_type_id'];
             $cId  = (int)$row['candidate_id'];
             $ward = (int)$row['ward'];
             $div  = (int)$row['division'];
 
-            if (!isset($tmp[$eoId])) {
-                $tmp[$eoId] = array();
+            if (!isset($tmp[$vtId])) {
+                $tmp[$vtId] = array();
             }
-            if (!isset($tmp[$eoId][$cId])) {
-                $tmp[$eoId][$cId] = array();
+            if (!isset($tmp[$vtId][$eoId])) {
+                $tmp[$vtId][$eoId] = array();
             }
-            if (!isset($tmp[$eoId][$cId][$ward])) {
-                $tmp[$eoId][$cId][$ward] = array();
+            if (!isset($tmp[$vtId][$eoId][$cId])) {
+                $tmp[$vtId][$eoId][$cId] = array();
             }
-            if (!isset($tmp[$eoId][$cId][$ward][$div])) {
-                $tmp[$eoId][$cId][$ward][$div] = $row['id'];
+            if (!isset($tmp[$vtId][$eoId][$cId][$ward])) {
+                $tmp[$vtId][$eoId][$cId][$ward] = array();
+            }
+            if (!isset($tmp[$vtId][$eoId][$cId][$ward][$div])) {
+                $tmp[$vtId][$eoId][$cId][$ward][$div] = $row['id'];
             }
         }
-
+        $t[] = microtime(1);
+        d($t[1]-$t[0]);
         return $tmp;
     }
 }
