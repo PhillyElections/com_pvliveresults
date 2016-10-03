@@ -78,14 +78,16 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
         $baseLink = "index.php?option=com_pvliveresults";
 
-        // let's get our 'name' models
-        $candidateModel  = $this->getModel('candidate');
-        $candidatesIndex = $candidateModel->getIdAssocByName();
 
         $electionModel  = $this->getModel('election');
         $electionsIndex = $electionModel->getIdAssocByName();
         $electionModel->bumpOrdering();
         $created = $electionModel->getNow();
+
+        // let's get our 'name' models
+        $candidateModel  = $this->getModel('candidate');
+        d($candidateModel, $electionModel);
+        $candidatesIndex = $candidateModel->getIdAssocByName();
 
         $officeModel  = $this->getModel('office');
         $officesIndex = $officeModel->getIdAssocByName();
