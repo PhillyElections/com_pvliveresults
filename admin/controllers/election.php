@@ -551,9 +551,9 @@ $this->setRedirect($link, $msg);
         JRequest::checkToken() or jexit('Invalid Token');
         dd('need work here', JRequest::get());
 
-        $electionofficeModel = $this->getModel('electionoffice');
         $cid            = JRequest::getVar('cid');
 
+        $electionofficeModel = $this->getModel('electionoffice');
         $electionofficeModel->unpublish($cid, '');
 
         $mainframe = JFactory::getApplication();
