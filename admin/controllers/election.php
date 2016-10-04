@@ -233,8 +233,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $candidate = $arr[4];
             $partyId = (int)$partiesIndex[$arr[5]];
 
-            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex);
-            
             // is the office new? write it, index it, an save the id
             if ($officeId = $officesIndex[$office]) {
                 // no more work needed
@@ -250,6 +248,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 // index new office
                 array_push($officesIndex, array($office=>$officeId));
             }
+            d($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $partyId, $electionId, $officeId); //, $candidateId, $electionofficeId);
+            return $this->setRedirect($editLink . $electionid, 'let\'s see whatwe have');
 
             // is the candidate new? write it, index it, and save the id
             if ($candidateId = $candidatesIndex[$candidate]) {
@@ -267,6 +267,22 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
             // record the election_office link and save the id
+            // is the candidate new? write it, index it, and save the id
+            if ($electionofficeId = $electionofficesIndex[$electionId][$officeId]) {
+                // no more work needed
+            } else {
+                $electionofficeId = $electionofficeModel->store(
+                    array(
+                        'created'=>$created,
+                        'election_id'=>$electionId,
+                        'office_id'=>$electionId,
+                        'published'=>0,
+                    )
+                );
+                array_push($candidatesIndex, array($candidate=>$candidateId));
+            }
+
+
 
             // record the votes
 
