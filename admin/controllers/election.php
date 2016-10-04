@@ -240,9 +240,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 // wite new office, capturing id
                 $officeId = $officeModel->store(
                     array(
-                        'created'=>$created,
                         'name'=>$office,
                         'published'=>1
+                        'created'=>$created,
                     )
                 );
                 // index new office
@@ -255,10 +255,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
             } else {
                 $candidateId = $candidateModel->store(
                     array(
-                        'created'=>$created,
                         'name'=>$candidate,
                         'published'=>1,
                         'party_id'=>$partyId
+                        'created'=>$created,
                     )
                 );
                 array_push($candidatesIndex, array($candidate=>$candidateId));
@@ -271,10 +271,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
             } else {
                 $electionofficeId = $electionofficeModel->store(
                     array(
-                        'created'=>$created,
                         'election_id'=>$electionId,
                         'office_id'=>$electionId,
                         'published'=>0,
+                        'created'=>$created,
                     )
                 );
                 if (!is_array($electionofficesIndex[$electionId])) {
@@ -282,13 +282,37 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 }
                 $electionofficesIndex[$electionId][$officeId] = $electionofficeId;
             }
+            // record the votes 
+            // is the vote entity new? write it, but don't index
+            // if not, update
+            if ($voteId = $votesIndex[$voteTypeId][$electionofficeId][$electionofficeId][$candidateId][$ward][$division]) {
+                $badId = $voteModel->store(
+                    array(
+                        'votes'=>$votes,
+                        'modified'=>$created,
+                    )
+                );
+            } else {
+                $voteId = $voteModel->store(
+                    array(
+                        'election_office_id'=>$electionofficeId,
+                        'candidate_id'=>$candidateId,
+                        'ward'=>$electionofficeId,
+                        'division'=>$electionofficeId,
+                        'votes'=>$votes,
+                        'published'=>1,
+                        'created'=>$created,
+                    )
+                );
+            }
+
 
             dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
 
 
             // record the votes
 
-            $insert .= '("' . $arr[3] . '", ' . (int) $arr[0] . ', ' . (int) $arr[1] . ', "' . $arr[2] . '", "' . $arr[4] . '", "' . $arr[5] . '", ' . (int) $arr[6] . ', "' . $e_year . '", NOW()),';
+/*            $insert .= '("' . $arr[3] . '", ' . (int) $arr[0] . ', ' . (int) $arr[1] . ', "' . $arr[2] . '", "' . $arr[4] . '", "' . $arr[5] . '", ' . (int) $arr[6] . ', "' . $e_year . '", NOW()),';
             ++$counter;
             if ($counter > 1000) {
                 $insert            = rtrim($insert, ',');
@@ -300,11 +324,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     sd($e, $insert);
                 }
                 $counter = 0;
-            }
+            }*/
         }
 
         // catch the leftovers
-        if ($counter) {
+/*        if ($counter) {
             $insert            = rtrim($insert, ',');
             $bulk_insert_array = $insertStart . $insert;
             $insert            = '';
@@ -313,7 +337,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             } catch (Exception $e) {
                 sd($e, $insert);
             }
-        }
+        }*/
 
         fclose($handle);
         fclose($inputFile);
