@@ -247,7 +247,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     )
                 );
                 // index new office
-                array_push($officesIndex, array($office=>$officeId));
+                $electionofficesIndex[$office] = $officeId;
             }
 
             // is the candidate new? write it, index it, and save the id
@@ -262,7 +262,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'created'=>$created,
                     )
                 );
-                array_push($candidatesIndex, array($candidate=>$candidateId));
+
+                $candidatesIndex[$candidate] = $candidateId;
             }
 
             // record the election_office link and save the id
