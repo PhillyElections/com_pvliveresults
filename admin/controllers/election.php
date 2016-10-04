@@ -41,27 +41,27 @@ class PvliveresultsControllerElection extends PvliveresultsController
     {
         JRequest::checkToken() or jexit('Invalid Token');
 
-        $electionOfficeModel = $this->getModel('electionoffice');
+        $electionofficeModel = $this->getModel('electionoffice');
         $voteModel           = $this->getModel('vote');
 
         $cids = JRequest::getVar('cid', 0, '', 'array');
 
         foreach ($cids as $cid) {
             // reset model properties (loop reset) and get by election_id
-            $electionOfficeModel->_data  = null;
-            $electionOfficeModel->_where = ' `election_id` = ' . $cid . ' ';
-            $electionOffices             = $electionOfficeModel->getData();
+            $electionofficeModel->_data  = null;
+            $electionofficeModel->_where = ' `election_id` = ' . $cid . ' ';
+            $electionoffices             = $electionofficeModel->getData();
 
-            foreach ($electionOffices as $electionOffice) {
+            foreach ($electionoffices as $electionoffice) {
                 // delete votes
                 d('hey, i\'m deleting votes');
 
-                $voteModel->deleteByFk($electionOffice->id);
+                $voteModel->deleteByFk($electionoffice->id);
             }
 
             // votes are gone, lets delete the EO link
             d('votes are gone, let\'s delete the EO link');
-            $electionOfficeModel->deleteByFk($cid);
+            $electionofficeModel->deleteByFk($cid);
 
             // delete election
             d('hey, i\'m deleting the election');
@@ -264,8 +264,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 array_push($candidatesIndex, array($candidate=>$candidateId));
             }
 
-            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate); //, $electionofficeId);
-
             // record the election_office link and save the id
             // is the candidate new? write it, index it, and save the id
             if ($electionofficeId = $electionofficesIndex[$electionId][$officeId]) {
@@ -279,9 +277,13 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'published'=>0,
                     )
                 );
-                array_push($candidatesIndex, array($candidate=>$candidateId));
+                if (!is_array($electionofficesIndex[$electionId])) {
+                    $electionofficesIndex[$electionId] = array();
+                }
+                $electionofficesIndex[$electionId][$officeId] = $electionofficeId;
             }
 
+            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
 
 
             // record the votes
@@ -537,8 +539,8 @@ $this->setRedirect($link, $msg);
 
         $cid = JRequest::getVar('cid');
 
-        $electionOffice = $this->getModel('electionoffice');
-        $electionOffice->publish($cid);
+        $electionofficeModel = $this->getModel('electionoffice');
+        $electionofficeModel->publish($cid);
 
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election');
@@ -549,10 +551,10 @@ $this->setRedirect($link, $msg);
         JRequest::checkToken() or jexit('Invalid Token');
         dd('need work here', JRequest::get());
 
-        $electionOffice = $this->getModel('electionoffice');
+        $electionofficeModel = $this->getModel('electionoffice');
         $cid            = JRequest::getVar('cid');
 
-        $electionOffice->unpublish($cid, '');
+        $electionofficeModel->unpublish($cid, '');
 
         $mainframe = JFactory::getApplication();
         $mainframe->redirect('index.php?option=com_pvliveresults&controller=election');
