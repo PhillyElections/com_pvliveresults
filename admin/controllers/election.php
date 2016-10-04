@@ -282,7 +282,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 }
                 $electionofficesIndex[$electionId][$officeId] = $electionofficeId;
             }
-            // record the votes 
+            
+            // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
             if ($voteId = $votesIndex[$voteTypeId][$electionofficeId][$electionofficeId][$candidateId][$ward][$division]) {
