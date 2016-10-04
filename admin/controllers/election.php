@@ -78,6 +78,12 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
         $baseLink = "index.php?option=com_pvliveresults";
 
+        // Let's make sure they're all arrays upfront
+        foreach (array('electionsIndex', 'candidatesIndex', 'electionofficesIndex', 'officesIndex', 'partiesIndex', 'votetypesIndex', 'votesIndex') as $index) {
+            if (!is_array($$index)) {
+                $$index = array();
+            }
+        }
 
         // let's get our 'name' models
         $candidateModel  = $this->getModel('candidate');
@@ -130,13 +136,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
         // now that we have all current eoIds, we can pull a votes index
         if ($electionofficeIds) {
             $votesIndex = $voteModel->getIdAssocByKeys($electionofficeIds);
-        }
-
-        // Let's make sure they're all arrays upfront
-        foreach (array('electionsIndex', 'candidatesIndex', 'electionofficesIndex', 'officesIndex', 'partiesIndex', 'votetypesIndex', 'votesIndex') as $index) {
-            if (!is_array($$index)) {
-                $$index = array();
-            }
         }
 
         // verify we have an upload
@@ -310,7 +309,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
 
-            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
+//            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
 
 
             // record the votes
