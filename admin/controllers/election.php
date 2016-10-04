@@ -128,7 +128,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $electionofficeIds = count($electionofficeIds) ? trim($electionofficeIds, ',') : false;
 
         // now that we have all current eoIds, we can pull a votes index
-        if ($electionofficeIds ) {
+        if ($electionofficeIds) {
             $votesIndex = $voteModel->getIdAssocByKeys($electionofficeIds);
         }
 
@@ -248,8 +248,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 // index new office
                 array_push($officesIndex, array($office=>$officeId));
             }
-            d($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $partyId, $electionId, $officeId); //, $candidateId, $electionofficeId);
-            return $this->setRedirect($editLink . $electionid, 'let\'s see whatwe have');
+            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $partyId, $electionId, $officeId); //, $candidateId, $electionofficeId);
 
             // is the candidate new? write it, index it, and save the id
             if ($candidateId = $candidatesIndex[$candidate]) {
