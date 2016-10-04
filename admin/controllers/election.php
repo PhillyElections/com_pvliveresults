@@ -146,7 +146,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         // since we have an upload, we need to make sure JFile is available
         jimport('joomla.fiesystem.file');
-        $oldFileName = JString::strtolower($_FILES['results_file']['name']);
+        $oldFileName = $_FILES['results_file']['name'];
         $newFileName = JString::str_ireplace(" ", "_", JString::strtolower(JFile::makeSafe($post['name']))) . ".csv";
 
         $uploads = JPATH_COMPONENT . DS . 'uploads';
