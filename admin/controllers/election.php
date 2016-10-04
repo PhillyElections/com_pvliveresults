@@ -248,7 +248,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 // index new office
                 array_push($officesIndex, array($office=>$officeId));
             }
-            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $arr[0], $arr[1], $arr[2], $arr[3], $arr[4], $arr[5], $arr[6]); //, $candidateId, $electionofficeId);
 
             // is the candidate new? write it, index it, and save the id
             if ($candidateId = $candidatesIndex[$candidate]) {
@@ -264,6 +263,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 );
                 array_push($candidatesIndex, array($candidate=>$candidateId));
             }
+
+            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate); //, $electionofficeId);
 
             // record the election_office link and save the id
             // is the candidate new? write it, index it, and save the id
