@@ -161,6 +161,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
 
         // since the copy was completed, we need to make sure we have time to process the file
+        ini_set('memory_limit', '200M');
         ini_set('max_execution_time', 360);
 
         $path_parts = pathinfo($dest);
@@ -170,7 +171,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
             jimport('joomla.filesystem.archive');
 
             // when unzipping a 50MB text file, you take up a crapload of memory
-            ini_set('memory_limit', '200M');
             JArchive::extract($dest, $path_parts['dirname']);
             // drop the archive now
             @unlink($dest);
@@ -181,6 +181,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $insert      = '';
         $counter     = 0;
         if (!$inputFile   = fopen($dest, 'r')) {
+            $
             return $this->setRedirect($baseLink, 'unable to open file!');
         }
         $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
@@ -358,9 +359,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         @unlink($pathAndName);
         $msg .= JText::_('Data Saved');
-        $link = 'index.php?option=com_ballotboxapp&controller=ballotboxapp&task=edit&cid[]=' . $electionId;
 
-        $this->setRedirect($link, $msg);
+        $this->setRedirect($editLink . $electionId, $msg);
     }
 
     /**
