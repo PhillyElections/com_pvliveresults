@@ -235,8 +235,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $votes = (int)$arr[6];
 
             // is the office new? write it, index it, an save the id
-            if ($officeId = $officesIndex[$office]) {
-                // no more work needed
+            if (isset($officesIndex[$office])) {
+                $officeId = $officesIndex[$office];
             } else {
                 // wite new office, capturing id
                 $officeId = $officeModel->store(
@@ -251,8 +251,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
             // is the candidate new? write it, index it, and save the id
-            if ($candidateId = $candidatesIndex[$candidate]) {
-                // no more work needed
+            if (isset($candidatesIndex[$candidate])) {
+                $candidateId = $candidatesIndex[$candidate]
             } else {
                 $candidateId = $candidateModel->store(
                     array(
@@ -267,8 +267,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
             // record the election_office link and save the id
             // is the candidate new? write it, index it, and save the id
-            if ($electionofficeId = $electionofficesIndex[$electionId][$officeId]) {
-                // no more work needed
+            if (isset($electionofficesIndex[$electionId][$officeId])) {
+                $electionofficeId = $electionofficesIndex[$electionId][$officeId]
             } else {
                 $electionofficeId = $electionofficeModel->store(
                     array(
@@ -287,15 +287,15 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
-            if ($voteId = $votesIndex[$voteTypeId][$electionofficeId][$candidateId][$ward][$division]) {
-                $badId = $voteModel->store(
+            if ($votesIndex[$voteTypeId][$electionofficeId][$candidateId][$ward][$division]) {
+                $voteModel->store(
                     array(
                         'votes'=>$votes,
                         'modified'=>$created,
                     )
                 );
             } else {
-                $voteId = $voteModel->store(
+                $voteModel->store(
                     array(
                         'vote_type_id'=>$votetypeId,
                         'election_office_id'=>$electionofficeId,
@@ -310,7 +310,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
 
-            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
+            //dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
 
 
             // record the votes
