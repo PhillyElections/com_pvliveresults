@@ -257,7 +257,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     array(
                         'name'=>$candidate,
                         'published'=>1,
-                        'party_id'=>$partyId
+                        'party_id'=>$partyId,
                         'created'=>$created,
                     )
                 );
@@ -282,7 +282,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 }
                 $electionofficesIndex[$electionId][$officeId] = $electionofficeId;
             }
-            
+
             // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
