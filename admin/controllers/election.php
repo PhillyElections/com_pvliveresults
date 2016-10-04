@@ -287,14 +287,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // is the vote entity new? write it, but don't index
             // if not, update
             if ($voteId = $votesIndex[$voteTypeId][$electionofficeId][$electionofficeId][$candidateId][$ward][$division]) {
-                $badId = $voteModel->store(
+/*                $badId = $voteModel->store(
                     array(
                         'votes'=>$votes,
                         'modified'=>$created,
                     )
-                );
+                );*/
             } else {
-                $voteId = $voteModel->store(
+/*                $voteId = $voteModel->store(
                     array(
                         'vote_type_id'=>$votetypeId,
                         'election_office_id'=>$electionofficeId,
@@ -305,7 +305,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'published'=>1,
                         'created'=>$created,
                     )
-                );
+                );*/
             }
 
 
