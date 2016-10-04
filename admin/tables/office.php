@@ -11,6 +11,7 @@ class TableOffice extends JTable
 {
     public $id = null;
     public $party_id = null;
+    public $name = null;
     public $ordering = null;
     public $published = null;
     public $created = null;
