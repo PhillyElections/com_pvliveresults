@@ -252,7 +252,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
             // is the candidate new? write it, index it, and save the id
             if (isset($candidatesIndex[$candidate])) {
-                $candidateId = $candidatesIndex[$candidate]
+                $candidateId = $candidatesIndex[$candidate];
             } else {
                 $candidateId = $candidateModel->store(
                     array(
@@ -268,7 +268,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // record the election_office link and save the id
             // is the candidate new? write it, index it, and save the id
             if (isset($electionofficesIndex[$electionId][$officeId])) {
-                $electionofficeId = $electionofficesIndex[$electionId][$officeId]
+                $electionofficeId = $electionofficesIndex[$electionId][$officeId];
             } else {
                 $electionofficeId = $electionofficeModel->store(
                     array(
