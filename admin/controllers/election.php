@@ -241,7 +241,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $officeId = $officeModel->store(
                     array(
                         'name'=>$office,
-                        'published'=>1
+                        'published'=>1,
                         'created'=>$created,
                     )
                 );
