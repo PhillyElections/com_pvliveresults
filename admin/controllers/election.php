@@ -247,7 +247,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     )
                 );
                 // index new office
-                $electionofficesIndex[$office] = $officeId;
+                $officesIndex[$office] = $officeId;
             }
 
             // is the candidate new? write it, index it, and save the id
