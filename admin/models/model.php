@@ -191,7 +191,7 @@ class PvliveresultsModel extends JModel
         if (!$data) {
             $data = JRequest::get('post');
         }
-d($data);
+
         // Bind the form fields to the  table
         if (!$row->bind($data)) {
             $this->setError($this->_db->getErrorMsg());
