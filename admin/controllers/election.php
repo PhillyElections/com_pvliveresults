@@ -232,6 +232,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $office = $arr[3];
             $candidate = $arr[4];
             $partyId = (int)$partiesIndex[$arr[5]];
+            $votes = (int)$arr[6];
 
             // is the office new? write it, index it, an save the id
             if ($officeId = $officesIndex[$office]) {
@@ -296,6 +297,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             } else {
                 $voteId = $voteModel->store(
                     array(
+                        'vote_type_id'=>$votetypeId,
                         'election_office_id'=>$electionofficeId,
                         'candidate_id'=>$candidateId,
                         'ward'=>$electionofficeId,
