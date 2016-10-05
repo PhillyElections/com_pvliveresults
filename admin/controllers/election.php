@@ -307,6 +307,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'updated'=>$created,
                     )
                 );
+                d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));
             } else {
                 $voteModel->store(
                     array(
@@ -352,22 +353,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
         }*/
 
-        fclose($handle);
+        fclose($outputFile);
         fclose($inputFile);
-        if ($e_year) {
-            try {
-                $year_id = $model->insert_year($e_year);
-            } catch (Exception $e) {
-                sd($e, $model, $e_year);
-            }
-            try {
-                $office = $model->insert_office($e_year, $year_id);
-            } catch (Exception $e) {
-                sd($e, $model, $e_year);
-            }
-        }
 
-        @unlink($pathAndName);
+        @unlink($dest);
         $msg .= JText::_('Data Saved');
 
         $this->setRedirect($editLink . $electionId, $msg);
