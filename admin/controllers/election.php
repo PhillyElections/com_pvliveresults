@@ -358,7 +358,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         @unlink($dest);
         $msg .= JText::_('Data Saved');
-
+        dd('1', $msg, $candidatesIndex, $electionsIndex, $officesIndex, $electionofficesIndex, $partiesIndex, $votesIndex, $votetypesIndex);
         $this->setRedirect($editLink . $electionId, $msg);
     }
 
