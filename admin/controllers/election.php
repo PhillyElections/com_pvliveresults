@@ -272,7 +272,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
                 $candidatesIndex[$candidate] = $candidateId;
             }
-
+d($electionofficesIndex[$electionId], $electionofficesIndex[$electionId][$officeId]);
             // record the election_office link and save the id
             // is the candidate new? write it, index it, and save the id
             if (isset($electionofficesIndex[$electionId][$officeId])) {
@@ -287,6 +287,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     )
                 );
                 if (!is_array($electionofficesIndex[$electionId])) {
+                    d('$electionofficesIndex[$electionId] not set', $electionofficesIndex[$electionId]);
                     $electionofficesIndex[$electionId] = array();
                 }
                 $electionofficesIndex[$electionId][$officeId] = $electionofficeId;
