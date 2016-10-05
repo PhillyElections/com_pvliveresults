@@ -78,6 +78,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
         $baseLink = "index.php?option=com_pvliveresults";
         $insertFields = 'INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES ';
+        $limit = 1000;
 
         // Let's make sure they're all arrays upfront
         foreach (array('electionsIndex', 'candidatesIndex', 'electionofficesIndex', 'officesIndex', 'partiesIndex', 'votetypesIndex', 'votesIndex') as $index) {
@@ -166,7 +167,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $excludeHeader = isset($post['exclude_header']) ? true : false;
 
-        if (!JFile::upload($src, $dest)) {
+        if (!move_uploaded_file($src, $dest)) {
             // failed file.  No need to go on.  Warn the user
             return $this->setRedirect($editLink . $electionId, 'Failed file uploaded. You might want to delete this election and start over');
         }
@@ -198,7 +199,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
         $outputFile  = fopen($path_site . $newFileName, 'w');
 
-        $firstLine = true;
+        $delimChecked = false;
         $delim = ','; // default
         // 7 column import
         // [0]ward    [1]division    [2]type    [3]office  [4]candidate   [5]party   [6]votes
@@ -206,8 +207,16 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $msg = ""; // make sure we start with an empty msg
         while (($line = fgets($inputFile)) !== false) {
 
-            if (!$firstLine) {
-                $firstLine = false;
+            // do we have a header row?
+            if ($excludeHeader) {
+                //lets drop that first row
+                $arr = str_getcsv($line, $delim);
+                fputcsv($outputFile, $arr);
+                continue;
+            }
+
+            if (!$delimChecked) {
+                $delimChecked = true;
                 if (count(str_getcsv($line, '@')) > 1) {
                     $delim = "@"; // option 2
                     // 8 column import
@@ -215,13 +224,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
                 }
 
-                // do we have a header row?
-                if ($excludeHeader) {
-                    //lets drop that first row
-                    $arr = str_getcsv($line, $delim);
-                    fputcsv($outputFile, $arr);
-                    continue;
-                }
             }
 
             // is the office new? write it
