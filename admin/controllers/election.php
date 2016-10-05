@@ -320,7 +320,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     );
                 }
             }
-                d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));*/
+                /*d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));*/
             } else {
 /*                $voteModel->store(
                     array(
