@@ -85,5 +85,4 @@ class PvliveresultsModelElectionoffice extends PvliveresultsModel
 
         return $tmp;
     }
-
 }
