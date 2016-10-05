@@ -77,6 +77,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
         $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
         $baseLink = "index.php?option=com_pvliveresults";
+        $insertFields = 'INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES ';
 
         // Let's make sure they're all arrays upfront
         foreach (array('electionsIndex', 'candidatesIndex', 'electionofficesIndex', 'officesIndex', 'partiesIndex', 'votetypesIndex', 'votesIndex') as $index) {
@@ -197,27 +198,32 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
         $outputFile  = fopen($path_site . $newFileName, 'w');
 
-        // detect delimiter
-        $line  = fgets($inputFile);
+        $firstLine = true;
         $delim = ','; // default
         // 7 column import
         // [0]ward    [1]division    [2]type    [3]office  [4]candidate   [5]party   [6]votes
 
-        if (count(str_getcsv($line, '@')) > 1) {
-            $delim = "@"; // option 2
-            // 8 column import
-            // Precinct_Name@Office/Prop Name@Tape_Text@Vote_Count@Last_Name@First_Name@Middle_Name@Party_Name@
-            // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
-        }
-
-        // do we have a header row?
-        if ($excludeHeader) {
-            //lets drop that first row
-            $arr = str_getcsv($line, $delim);
-            fputcsv($outputFile, $arr);
-        }
         $msg = ""; // make sure we start with an empty msg
         while (($line = fgets($inputFile)) !== false) {
+
+            if (!$firstLine) {
+                $firstLine = false;
+                if (count(str_getcsv($line, '@')) > 1) {
+                    $delim = "@"; // option 2
+                    // 8 column import
+                    // Precinct_Name@Office/Prop Name@Tape_Text@Vote_Count@Last_Name@First_Name@Middle_Name@Party_Name@
+                    // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
+                }
+
+                // do we have a header row?
+                if ($excludeHeader) {
+                    //lets drop that first row
+                    $arr = str_getcsv($line, $delim);
+                    fputcsv($outputFile, $arr);
+                    continue;
+                }
+            }
+
             // is the office new? write it
             // capture the id
             // write the office_election link
@@ -298,18 +304,23 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
-            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division])) {
+            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['id'])) {
                 $voteId = $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division];
-                $voteModel->store(
-                    array(
-                        'id'=>$voteId,
-                        'votes'=>$votes,
-                        'updated'=>$created,
-                    )
-                );
-                d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));
+                if ( (int)$votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['votes'] === (int)$votes ) {
+                    // votes match, do nothing
+                } else {
+                    $voteModel->store(
+                        array(
+                            'id'=>$voteId,
+                            'votes'=>$votes,
+                            'updated'=>$created,
+                        )
+                    );
+                }
+            }
+                d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));*/
             } else {
-                $voteModel->store(
+/*                $voteModel->store(
                     array(
                         'vote_type_id'=>$votetypeId,
                         'election_office_id'=>$electionofficeId,
@@ -320,7 +331,18 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'published'=>1,
                         'created'=>$created,
                     )
-                );
+                );*/
+                // INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES 
+                $insertValues .= " ($votetypeId, $electionofficeId, $candidateId, $ward, $division, $votes, 1, '$created') ";
+                $insertRows++;
+
+                if ($insertRows === $limit) {
+                    $this->_db->setQuery($insertFields . $insertValues);
+                    $this->_db->query();
+                    $insertRows = 0;
+                } else {
+                    $insertValues .= ', ';
+                }
             }
 
 //        dd('1', $msg, $candidatesIndex, $electionsIndex, $officesIndex, $electionofficesIndex, $partiesIndex, $votesIndex, $votetypesIndex);
@@ -342,6 +364,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }*/
         }
 
+        if ($insertRows) {
+            $this->_db->setQuery($insertFields . $insertValues);
+            $this->_db->query();
+        }
         // catch the leftovers
 /*        if ($counter) {
             $insert            = rtrim($insert, ',');
