@@ -290,7 +290,7 @@ d($electionofficesIndex[$electionId], $electionofficesIndex[$electionId][$office
                     d('$electionofficesIndex[$electionId] not set', $electionofficesIndex[$electionId]);
                     $electionofficesIndex[$electionId] = array();
                 }
-                $electionofficesIndex[$electionId][$officeId] = $electionofficeId;
+                $electionofficesIndex[$electionId][$officeId] = (int)$electionofficeId;
             }
 
             // record the votes
