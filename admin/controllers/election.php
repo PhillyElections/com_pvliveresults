@@ -190,7 +190,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $dest = $uploads . DS . $path_parts['filename'] . ".txt";
         }
 
-        $insert      = '';
+        $insertRows      = '';
         $counter     = 0;
         if (!$inputFile = fopen($dest, 'r')) {
             dd($dest, $path_parts);
@@ -206,7 +206,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $msg = ""; // make sure we start with an empty msg
         while (($line = fgets($inputFile)) !== false) {
-
+dd('1');
             // do we have a header row?
             if ($excludeHeader) {
                 //lets drop that first row
