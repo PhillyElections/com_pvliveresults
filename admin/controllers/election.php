@@ -311,7 +311,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
 
-            //dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
+            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
 
 
             // record the votes
