@@ -297,7 +297,7 @@ d('let\'s lay out what\'s there' ,$electionofficesIndex, $electionofficesIndex[$
             // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
-            if ($votesIndex[$voteTypeId][$electionofficeId][$candidateId][$ward][$division]) {
+            if ($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]) {
                 $voteModel->store(
                     array(
                         'votes'=>$votes,
