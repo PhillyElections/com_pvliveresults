@@ -116,7 +116,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         if (isset($electionsIndex[$post['name']])) {
             $electionId = $electionsIndex[$post['name']];
-            $data['modified'] = $created;
+            $data['updated'] = $created;
             $data['id'] = (int)$electionId;
             // update
             $electionModel->store($data);
@@ -304,7 +304,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     array(
                         'id'=>$voteId,
                         'votes'=>$votes,
-                        'modified'=>$created,
+                        'updated'=>$created,
                     )
                 );
             } else {
