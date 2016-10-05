@@ -77,7 +77,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
         $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
         $baseLink = "index.php?option=com_pvliveresults";
-        $insertFields = 'INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES ';
+        $insertFields = "INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES ";
         $limit = 1000;
 
         // Let's make sure they're all arrays upfront
@@ -306,8 +306,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
-            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['id'])) {
-                $voteId = $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division];
+            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division])) {
+                $voteId = $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['id'];
                 if ( (int)$votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['votes'] === (int)$votes ) {
                     // votes match, do nothing
                 } else {
@@ -338,6 +338,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $insertRows++;
 
                 if ($insertRows === $limit) {
+                    dd($insertFields . $insertValues);
                     $this->_db->setQuery($insertFields . $insertValues);
                     $this->_db->query();
                     $insertRows = 0;
