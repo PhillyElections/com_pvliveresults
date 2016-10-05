@@ -65,12 +65,12 @@ class PvliveresultsModelElectionoffice extends PvliveresultsModel
         array_push($t, microtime(true));
 
         $eId = (int)$eId;
-        
+
         $query = "SELECT * FROM " . $this->_db->nameQuote($this->_table) . " WHERE `election_id` = " . $eId . " ";
         $data = $this->_getList($query);
 
         $tmp = array();
-
+d(count($data), $data);
         for ($i = 0; $i<count($data); $i++) {
             $row = $data[$i];
             $oId = (int)$row->office_id;
