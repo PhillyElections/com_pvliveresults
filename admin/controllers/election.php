@@ -309,7 +309,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 );
                 d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));
             } else {
-/*                $voteModel->store(
+                $voteModel->store(
                     array(
                         'vote_type_id'=>$votetypeId,
                         'election_office_id'=>$electionofficeId,
@@ -320,7 +320,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'published'=>1,
                         'created'=>$created,
                     )
-                );*/
+                );
             }
 
 //        dd('1', $msg, $candidatesIndex, $electionsIndex, $officesIndex, $electionofficesIndex, $partiesIndex, $votesIndex, $votetypesIndex);
