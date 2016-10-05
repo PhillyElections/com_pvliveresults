@@ -77,6 +77,7 @@ class PvliveresultsModelVote extends PvliveresultsModel
         for ($i = 0; $i<$limit; $i++) {
             $row  = $data[$i];
             $vtId = (int)$row->vote_type_id;
+            $eoId = (int)$row->election_office_id;
             $cId  = (int)$row->candidate_id;
             $ward = (int)$row->ward;
             $div  = (int)$row->division;
