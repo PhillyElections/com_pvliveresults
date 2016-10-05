@@ -98,7 +98,7 @@ class PvliveresultsModelVote extends PvliveresultsModel
             }
         }
         array_push($t, microtime(true));
-        d($t[1]-$t[0]);
+        d($t[1]-$t[0], $query, $data, $limit, $tmp);
         return $tmp;
     }
 }
