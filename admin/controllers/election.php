@@ -137,7 +137,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $electionofficeIds = '';
         foreach ($electionofficesIndex as $e => $os) {
-            foreach ($os as $o=>$eo) {
+            foreach ($os as $o => $eo) {
                 $electionofficeIds .= "$eo,";
             }
         }
@@ -299,8 +299,10 @@ d($votesIndex, $votesIndex[$votetypeId], $votesIndex[$votetypeId][$electionoffic
             // is the vote entity new? write it, but don't index
             // if not, update
             if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division])) {
+                $voteId = $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division];
                 $voteModel->store(
                     array(
+                        'id'=>$voteId,
                         'votes'=>$votes,
                         'modified'=>$created,
                     )
