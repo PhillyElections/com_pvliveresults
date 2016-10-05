@@ -292,7 +292,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 }
                 $electionofficesIndex[$electionId][$officeId] = (int)$electionofficeId;
             }
-d($votesIndex,$votesIndex[$votetypeId],$votesIndex[$votetypeId][$electionofficeId],$votesIndex[$votetypeId][$electionofficeId][$candidateId], $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward], $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]);
+d($votesIndex, $votesIndex[$votetypeId], $votesIndex[$votetypeId][$electionofficeId], $votesIndex[$votetypeId][$electionofficeId][$candidateId], $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward], $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]);
             // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
@@ -309,8 +309,8 @@ d($votesIndex,$votesIndex[$votetypeId],$votesIndex[$votetypeId][$electionofficeI
                         'vote_type_id'=>$votetypeId,
                         'election_office_id'=>$electionofficeId,
                         'candidate_id'=>$candidateId,
-                        'ward'=>$electionofficeId,
-                        'division'=>$electionofficeId,
+                        'ward'=>$ward,
+                        'division'=>$division,
                         'votes'=>$votes,
                         'published'=>1,
                         'created'=>$created,
