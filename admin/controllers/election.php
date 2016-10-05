@@ -272,7 +272,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
                 $candidatesIndex[$candidate] = $candidateId;
             }
-d($electionofficesIndex[$electionId], $electionofficesIndex[$electionId][$officeId]);
+d('let\'s lay out what\'s there' ,$electionofficesIndex, $electionofficesIndex[$electionId], $electionofficesIndex[$electionId][$officeId]);
             // record the election_office link and save the id
             // is the candidate new? write it, index it, and save the id
             if (isset($electionofficesIndex[$electionId][$officeId])) {
