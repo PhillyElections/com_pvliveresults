@@ -281,7 +281,7 @@ d('let\'s lay out what\'s there' ,$electionofficesIndex, $electionofficesIndex[$
                 $electionofficeId = $electionofficeModel->store(
                     array(
                         'election_id'=>$electionId,
-                        'office_id'=>$electionId,
+                        'office_id'=>$officeId,
                         'published'=>0,
                         'created'=>$created,
                     )
