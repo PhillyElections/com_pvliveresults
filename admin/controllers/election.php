@@ -273,7 +273,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
                 $candidatesIndex[$candidate] = $candidateId;
             }
-d('let\'s lay out what\'s there' ,$electionofficesIndex, $electionofficesIndex[$electionId], $electionofficesIndex[$electionId][$officeId]);
             // record the election_office link and save the id
             // is the candidate new? write it, index it, and save the id
             if (isset($electionofficesIndex[$electionId][$officeId])) {
@@ -293,11 +292,11 @@ d('let\'s lay out what\'s there' ,$electionofficesIndex, $electionofficesIndex[$
                 }
                 $electionofficesIndex[$electionId][$officeId] = (int)$electionofficeId;
             }
-
+d($votesIndex,$votesIndex[$votetypeId],$votesIndex[$votetypeId][$electionofficeId],$votesIndex[$votetypeId][$electionofficeId][$candidateId], $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward], $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]);
             // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
-            if ($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]) {
+            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division])) {
                 $voteModel->store(
                     array(
                         'votes'=>$votes,
@@ -320,7 +319,7 @@ d('let\'s lay out what\'s there' ,$electionofficesIndex, $electionofficesIndex[$
             }
 
 
-            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $electionofficesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId, $electionofficesIndex[$electionId][$officeId]);
+            dd('1');
 
 
             // record the votes
