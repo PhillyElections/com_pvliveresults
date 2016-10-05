@@ -81,7 +81,7 @@ class PvliveresultsModelElectionoffice extends PvliveresultsModel
             }
         }
         array_push($t, microtime(true));
-        d($t[1]-$t[0], $row, $tmp, count($data), $data);
+        d($t[1]-$t[0], $row, $tmp, count($data), $data, $oId, $eId);
 
         return $tmp;
     }
