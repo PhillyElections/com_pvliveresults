@@ -109,20 +109,27 @@ class PvliveresultsControllerElection extends PvliveresultsController
         // let's set a common 'created' for any new rows
         $created = $electionModel->getNow();
 
-        // shape and save election data
         $post = JRequest::get('post');
+        $data = array();
+        $data['name'] = $post['name'];
+        $data['date'] = $post['date'];
 
-        $data            = array();
-        $data['name']    = $post['name'];
-        $data['date']    = $post['date'];
-        $data['created'] = $created;
+        if (isset($electionsIndex[$post['name']])) {
+            $electionId = $electionsIndex[$post['name']];
+            $data['modified'] = $created;
+            // update
+            $electionModel->store($data);
+        } else {
+            // shape and save election data
+            $data['created'] = $created;
 
-        // new row to the top: make room
-        $electionModel->bumpOrdering();
+            // new row to the top: make room
+            $electionModel->bumpOrdering();
 
-        // capure the id as you s ave
-        $electionId = $electionModel->store($data);
-        $electionModel->squinchOrdering();
+            // capure the id as you s ave
+            $electionId = $electionModel->store($data);
+            $electionModel->squinchOrdering();
+        }
 
         // now that we have an electionId, we can get an eoIndex
         $electionofficesIndex = $electionofficeModel->getIdAssocByKeys($electionId);
@@ -311,7 +318,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
 
-            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId);
+            dd($arr, $candidatesIndex, $electionsIndex, $officesIndex, $partiesIndex, $votetypesIndex, $votesIndex, $votetypeId, $partyId, $electionId, $officeId, $office, $candidateId, $candidate, $electionofficeId, $electionofficesIndex[$electionId][$officeId]);
 
 
             // record the votes
