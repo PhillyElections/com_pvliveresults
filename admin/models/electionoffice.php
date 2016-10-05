@@ -70,7 +70,6 @@ class PvliveresultsModelElectionoffice extends PvliveresultsModel
         $data = $this->_getList($query);
 
         $tmp = array();
-d(count($data), $data);
         for ($i = 0; $i<count($data); $i++) {
             $row = $data[$i];
             $oId = (int)$row->office_id;
@@ -82,7 +81,7 @@ d(count($data), $data);
             }
         }
         array_push($t, microtime(true));
-        d($t[1]-$t[0]);
+        d($t[1]-$t[0], $row, $tmp, count($data), $data);
 
         return $tmp;
     }
