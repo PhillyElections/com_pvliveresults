@@ -206,7 +206,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $msg = ""; // make sure we start with an empty msg
         while (($line = fgets($inputFile)) !== false) {
-dd('1');
+
             // do we have a header row?
             if ($excludeHeader) {
                 //lets drop that first row
