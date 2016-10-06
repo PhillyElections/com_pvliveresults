@@ -211,10 +211,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $msg = ""; // make sure we start with an empty msg
         while (($line = fgets($inputFile)) !== false) {
-            d('in loop');
+
             // do we have a header row?
             if ($excludeHeader) {
-                d('exclude header was set');
                 $excludeHeader = false;
                 //lets drop that first row
                 $arr = str_getcsv($line, $delim);
@@ -223,7 +222,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
             if (!$delimChecked) {
-                d('checking delim');
                 $delimChecked = true;
                 if (count(str_getcsv($line, '@')) > 1) {
                     $delim = "@"; // option 2
@@ -240,7 +238,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
             $arr = str_getcsv($line, $delim);
             fputcsv($outputFile, $arr);
-            d('wrote to output file');
 
             // if the line is blank or unparsable, note it and skip to the next
             if (count($arr) === 1) {
@@ -261,7 +258,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $candidate = $arr[4];
             $party = $arr[5];
             $votes = (int)$arr[6];
-            dd('set a bunch of values', $ward, $division, $votetypeId, $office, $candidate, $party, $votes);
+
             // is the office new? write it, index it, an save the id
             if (isset($partiesIndex[$party])) {
                 $partyId = (int)$partiesIndex[$party];
