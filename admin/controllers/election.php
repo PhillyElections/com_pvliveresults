@@ -256,7 +256,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
             $office = $arr[3];
             $candidate = $arr[4];
-            $party = $arr[5];
+            $party = JString::strtoupper(JString::trim($arr[5]));
             $votes = (int)$arr[6];
 
             // is the office new? write it, index it, an save the id
