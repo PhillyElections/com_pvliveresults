@@ -368,8 +368,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     $insertRows = 0;
                 } else {
                     $insertValues .= ', ';
-                }*/
-            }
+                }
+            }*/
 
 
 //        dd('1', $msg, $candidatesIndex, $electionsIndex, $officesIndex, $electionofficesIndex, $partiesIndex, $votesIndex, $votetypesIndex);
