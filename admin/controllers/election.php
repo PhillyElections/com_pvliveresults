@@ -215,6 +215,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // do we have a header row?
             if ($excludeHeader) {
                 d('exclude header was set');
+                $excludeHeader = false;
                 //lets drop that first row
                 $arr = str_getcsv($line, $delim);
                 fputcsv($outputFile, $arr);
