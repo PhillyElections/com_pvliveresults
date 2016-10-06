@@ -171,7 +171,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $excludeHeader = isset($post['exclude_header']) ? true : false;
 
-        if (!($move = move_uploaded_file($src, $dest)) {
+        if (!($move = move_uploaded_file($src, $dest))) {
             dd($move, $src, $dest, $uploads, $oldFileName, $newFileName, $_FILES);
             // failed file.  No need to go on.  Warn the user
             return $this->setRedirect($editLink . $electionId, 'Failed file uploaded. You might want to delete this election and start over');
