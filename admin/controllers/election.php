@@ -74,6 +74,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
     public function save()
     {
+
+        ini_set('upload_max_filesize', '100M');
+        ini_set('post_max_size', '100M');
+
         $t=array();
         array_push($t, microtime(1));
         JRequest::checkToken() or jexit('Invalid Token');
