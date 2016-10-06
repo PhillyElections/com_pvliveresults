@@ -74,11 +74,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
     public function save()
     {
+        $t=array();
+        array_push($t, microtime(1));
         JRequest::checkToken() or jexit('Invalid Token');
         $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
         $baseLink = "index.php?option=com_pvliveresults";
         $insertFields = "INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES ";
-        $limit = 1000;
+        $insertValues = '';
+        $limit = 100;
 
         // Let's make sure they're all arrays upfront
         foreach (array('electionsIndex', 'candidatesIndex', 'electionofficesIndex', 'officesIndex', 'partiesIndex', 'votetypesIndex', 'votesIndex') as $index) {
@@ -87,15 +90,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
         }
-dd(
-$electionsIndex,
-$candidatesIndex,
-$electionofficesIndex,
-$officesIndex,
-$partiesIndex,
-$votetypesIndex,
-$votesIndex
-);
+
         // let's get our 'name' models
         $candidateModel  = $this->getModel('candidate');
         $candidatesIndex = $candidateModel->getIdAssocByName();
@@ -176,7 +171,8 @@ $votesIndex
 
         $excludeHeader = isset($post['exclude_header']) ? true : false;
 
-        if (!move_uploaded_file($src, $dest)) {
+        if (!($move = move_uploaded_file($src, $dest)) {
+            dd($move, $src, $dest, $uploads, $oldFileName, $newFileName, $_FILES);
             // failed file.  No need to go on.  Warn the user
             return $this->setRedirect($editLink . $electionId, 'Failed file uploaded. You might want to delete this election and start over');
         }
@@ -359,10 +355,11 @@ $votesIndex
                     )
                 );*/
                 // INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES 
+
                 $insertValues .= " ($votetypeId, $electionofficeId, $candidateId, $ward, $division, $votes, 1, '$created') ";
                 $insertRows++;
 
-                if ($insertRows === $limit) {
+                if ($insertRows >= $limit) {
                     dd($insertFields . $insertValues);
                     $this->_db->setQuery($insertFields . $insertValues);
                     $this->_db->query();
@@ -371,6 +368,7 @@ $votesIndex
                     $insertValues .= ', ';
                 }
             }
+
 
 //        dd('1', $msg, $candidatesIndex, $electionsIndex, $officesIndex, $electionofficesIndex, $partiesIndex, $votesIndex, $votetypesIndex);
 
