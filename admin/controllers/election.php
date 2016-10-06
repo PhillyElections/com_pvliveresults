@@ -173,7 +173,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $excludeHeader = isset($post['exclude_header']) ? true : false;
 
         if (!($move = move_uploaded_file($src, $dest))) {
-            dd($move, $src, $dest, $uploads, $oldFileName, $newFileName, $_FILES);
             // failed file.  No need to go on.  Warn the user
             return $this->setRedirect($editLink . $electionId, 'Failed file uploaded. You might want to delete this election and start over');
         }
@@ -199,9 +198,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $insertRows      = '';
         $counter     = 0;
         if (!$inputFile = fopen($dest, 'r')) {
-            dd($dest, $path_parts);
             return $this->setRedirect($baseLink, 'unable to open file!');
         }
+
         $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
         $outputFile  = fopen($path_site . $newFileName, 'w');
 
@@ -212,9 +211,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $msg = ""; // make sure we start with an empty msg
         while (($line = fgets($inputFile)) !== false) {
-
+            d('in loop');
             // do we have a header row?
             if ($excludeHeader) {
+                d('exclude header was set');
                 //lets drop that first row
                 $arr = str_getcsv($line, $delim);
                 fputcsv($outputFile, $arr);
@@ -222,6 +222,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
             if (!$delimChecked) {
+                d('checking delim');
                 $delimChecked = true;
                 if (count(str_getcsv($line, '@')) > 1) {
                     $delim = "@"; // option 2
@@ -229,7 +230,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     // Precinct_Name@Office/Prop Name@Tape_Text@Vote_Count@Last_Name@First_Name@Middle_Name@Party_Name@
                     // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
                 }
-
             }
 
             // is the office new? write it
@@ -239,11 +239,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
             $arr = str_getcsv($line, $delim);
             fputcsv($outputFile, $arr);
+            d('wrote to output file');
+
             // if the line is blank or unparsable, note it and skip to the next
             if (count($arr) === 1) {
                 $msg .= 'Note, the following line was not processed: ' . $line . "\n";
                 continue;
             }
+
             // get rid of any articulated quotes witing array elements
             foreach ($arr as $key => $value) {
                 $arr[$key] = str_replace('"', '', $value);
@@ -257,7 +260,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $candidate = $arr[4];
             $party = $arr[5];
             $votes = (int)$arr[6];
-
+            dd('set a bunch of values', $ward, $division, $votetypeId, $office, $candidate, $party, $votes);
             // is the office new? write it, index it, an save the id
             if (isset($partiesIndex[$party])) {
                 $partyId = (int)$partiesIndex[$party];
