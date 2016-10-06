@@ -329,7 +329,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // record the votes
             // is the vote entity new? write it, but don't index
             // if not, update
-            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division])) {
+/*            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division])) {
                 $voteId = $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['id'];
                 if ( (int)$votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['votes'] === (int)$votes ) {
                     // votes match, do nothing
@@ -342,6 +342,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         )
                     );
                 }
+                $updateQueries .= " UPDATE #__jos_live_votes"*/
                 /*d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));*/
             } else {
 /*                $voteModel->store(
@@ -358,17 +359,16 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 );*/
                 // INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES 
 
-                $insertValues .= " ($votetypeId, $electionofficeId, $candidateId, $ward, $division, $votes, 1, '$created') ";
+/*                $insertValues .= " ($votetypeId, $electionofficeId, $candidateId, $ward, $division, $votes, 1, '$created') ";
                 $insertRows++;
 
                 if ($insertRows >= $limit) {
-                    dd($insertFields . $insertValues);
                     $this->_db->setQuery($insertFields . $insertValues);
                     $this->_db->query();
                     $insertRows = 0;
                 } else {
                     $insertValues .= ', ';
-                }
+                }*/
             }
 
 
@@ -391,10 +391,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }*/
         }
 
-        if ($insertRows) {
+/*        if ($insertRows) {
             $this->_db->setQuery($insertFields . $insertValues);
             $this->_db->query();
-        }
+        }*/
         // catch the leftovers
 /*        if ($counter) {
             $insert            = rtrim($insert, ',');
