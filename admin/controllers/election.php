@@ -342,9 +342,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         )
                     );
                 }
-                $updateQueries .= " UPDATE #__jos_live_votes"*/
-                /*d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));*/
-            } else {
+                $updateQueries .= " UPDATE #__jos_live_votes"
+                d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));
+            } else {*/
 /*                $voteModel->store(
                     array(
                         'vote_type_id'=>$votetypeId,
