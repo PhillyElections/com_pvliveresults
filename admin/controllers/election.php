@@ -85,8 +85,17 @@ class PvliveresultsControllerElection extends PvliveresultsController
             if (!is_array($$index)) {
                 $$index = array();
             }
-        }
 
+        }
+dd(
+$electionsIndex,
+$candidatesIndex,
+$electionofficesIndex,
+$officesIndex,
+$partiesIndex,
+$votetypesIndex,
+$votesIndex
+);
         // let's get our 'name' models
         $candidateModel  = $this->getModel('candidate');
         $candidatesIndex = $candidateModel->getIdAssocByName();
@@ -249,8 +258,24 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
             $office = $arr[3];
             $candidate = $arr[4];
-            $partyId = (int)$partiesIndex[$arr[5]];
+            $party = $arr[5];
             $votes = (int)$arr[6];
+
+            // is the office new? write it, index it, an save the id
+            if (isset($partiesIndex[$party])) {
+                $partyId = (int)$partiesIndex[$party];
+            } else {
+                // wite new office, capturing id
+                $partyId = $partyModel->store(
+                    array(
+                        'name'=>$party,
+                        'published'=>1,
+                        'created'=>$created,
+                    )
+                );
+                // index new office
+                $partyIndex[$party] = $partyId;
+            }
 
             // is the office new? write it, index it, an save the id
             if (isset($officesIndex[$office])) {
