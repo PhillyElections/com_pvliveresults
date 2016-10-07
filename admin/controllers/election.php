@@ -142,7 +142,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
         switch ($delim) {
             case "@":
                 $fields = " (ward_division, office, tape_text, votes, lname, fname, mname, party) ";
-                $
             break;
             default: //,
             $fields = " (ward, division, type, office, candidate, party, votes) ";
