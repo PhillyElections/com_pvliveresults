@@ -378,7 +378,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         if (!($move = move_uploaded_file($src, $dest))) {
             // failed file.  No need to go on.  Warn the user
-            return $this->setRedirect($editLink . $electionId, 'Failed file uploaded. You might want to delete this election and start over.');
+            dd($pathinfo($src), $_FILES);
+            return $this->setRedirect($editLink . $electionId, 'Failed file transfer. You might want to delete this election and start over.');
         }
 
         // since the copy was completed, we need to make sure we have time to process the file
