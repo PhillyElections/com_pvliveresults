@@ -148,30 +148,29 @@ class PvliveresultsControllerElection extends PvliveresultsController
             break;
         }
 
-        $loadFile = <<<EOD
-ALTER TABLE `#__pv_live_import`
- ADD INDEX `ward_import` (`ward`),
- ADD INDEX `division_import` (`division`),
- ADD INDEX `ward_division_import` (`ward`,`division`),
- ADD INDEX `candidate_import` (`candidate`),
- ADD INDEX `office_import` (`candidate`),
- ADD INDEX `party_import` (`party`),
- ADD INDEX `votes_import` (`votes`)
-EOD;
-$this->_db->setQuery($loadFile);
-$this->_db->query();
-/*LOAD DATA INFILE '$dest'
-INTO TABLE #__pv_live_import
-FIELDS TERMINATED BY '$delim'
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-IGNORE 1 LINES 
-($fields)
-SET
-    $transform
-EOD;
-*/
-dd('1');
+        $loadFile = "ALTER TABLE `#__pv_live_import` \n"
+        $loadFile = "  ADD INDEX `ward_import` (`ward`), \n";
+        $loadFile = "  ADD INDEX `division_import` (`division`), \n";
+        $loadFile = "  ADD INDEX `ward_division_import` (`ward`,`division`), \n";
+        $loadFile = "  ADD INDEX `candidate_import` (`candidate`), \n";
+        $loadFile = "  ADD INDEX `office_import` (`candidate`), \n";
+        $loadFile = "  ADD INDEX `party_import` (`party`), \n";
+        $loadFile = "  ADD INDEX `votes_import` (`votes`) \n";
+
+        $this->_db->setQuery($loadFile);
+        $this->_db->query();
+        /*LOAD DATA INFILE '$dest'
+        INTO TABLE #__pv_live_import
+        FIELDS TERMINATED BY '$delim'
+        OPTIONALLY ENCLOSED BY '"'
+        LINES TERMINATED BY '\r\n'
+        IGNORE 1 LINES 
+        ($fields)
+        SET
+            $transform
+        EOD;
+        */
+        dd('1');
         $arr = str_getcsv($line, $delim);
 
 
@@ -256,87 +255,6 @@ dd('1');
                 }
                 $electionofficesIndex[$electionId][$officeId] = (int)$electionofficeId;
             }
-
-            // record the votes
-            // is the vote entity new? write it, but don't index
-            // if not, update
-/*            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division])) {
-                $voteId = $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['id'];
-                if ( (int)$votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['votes'] === (int)$votes ) {
-                    // votes match, do nothing
-                } else {
-                    $voteModel->store(
-                        array(
-                            'id'=>$voteId,
-                            'votes'=>$votes,
-                            'updated'=>$created,
-                        )
-                    );
-                }
-                $updateQueries .= " UPDATE #__jos_live_votes"
-                d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));
-            } else {*/
-/*                $voteModel->store(
-                    array(
-                        'vote_type_id'=>$votetypeId,
-                        'election_office_id'=>$electionofficeId,
-                        'candidate_id'=>$candidateId,
-                        'ward'=>$ward,
-                        'division'=>$division,
-                        'votes'=>$votes,
-                        'published'=>1,
-                        'created'=>$created,
-                    )
-                );*/
-                // INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES 
-
-/*                $insertValues .= " ($votetypeId, $electionofficeId, $candidateId, $ward, $division, $votes, 1, '$created') ";
-                $insertRows++;
-
-                if ($insertRows >= $limit) {
-                    $this->_db->setQuery($insertFields . $insertValues);
-                    $this->_db->query();
-                    $insertRows = 0;
-                } else {
-                    $insertValues .= ', ';
-                }
-            }*/
-
-
-//        dd('1', $msg, $candidatesIndex, $electionsIndex, $officesIndex, $electionofficesIndex, $partiesIndex, $votesIndex, $votetypesIndex);
-
-            // record the votes
-
-/*            $insert .= '("' . $arr[3] . '", ' . (int) $arr[0] . ', ' . (int) $arr[1] . ', "' . $arr[2] . '", "' . $arr[4] . '", "' . $arr[5] . '", ' . (int) $arr[6] . ', "' . $e_year . '", NOW()),';
-            ++$counter;
-            if ($counter > 1000) {
-                $insert            = rtrim($insert, ',');
-                $bulk_insert_array = $insertStart . $insert;
-                $insert            = '';
-                try {
-                    $model->bulk_insert($bulk_insert_array);
-                } catch (Exception $e) {
-                    sd($e, $insert);
-                }
-                $counter = 0;
-            }*/
-        }
-
-/*        if ($insertRows) {
-            $this->_db->setQuery($insertFields . $insertValues);
-            $this->_db->query();
-        }*/
-        // catch the leftovers
-/*        if ($counter) {
-            $insert            = rtrim($insert, ',');
-            $bulk_insert_array = $insertStart . $insert;
-            $insert            = '';
-            try {
-                $model->bulk_insert($bulk_insert_array);
-            } catch (Exception $e) {
-                sd($e, $insert);
-            }
-        }*/
 
         fclose($outputFile);
         fclose($inputFile);
