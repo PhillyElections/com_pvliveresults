@@ -144,7 +144,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $fields = " (ward_division, office, tape_text, votes, lname, fname, mname, party) ";
             break;
             default: //,
-            $fields = " (ward, division, type, office, candidate, party, votes) "
+            $fields = " (ward, division, type, office, candidate, party, votes) ";
             break;
         }
 
