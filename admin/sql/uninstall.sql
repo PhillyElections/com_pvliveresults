@@ -5,6 +5,7 @@ SELECT @@FOREIGN_KEY_CHECKS;
 DROP TABLE IF EXISTS `#__pv_live_candidates`;
 DROP TABLE IF EXISTS `#__pv_live_elections`;
 DROP TABLE IF EXISTS `#__pv_live_election_offices`;
+DROP TABLE IF EXISTS `#__pv_live_import:`;
 DROP TABLE IF EXISTS `#__pv_live_offices`;
 DROP TABLE IF EXISTS `#__pv_live_parties`;
 DROP TABLE IF EXISTS `#__pv_live_votes`;
