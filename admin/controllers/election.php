@@ -135,6 +135,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
         }
 
+        $ignore = "";
         if ($excludeHeader) {
             $ignore = "    IGNORE 1 LINES \n";
         }
@@ -143,7 +144,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             case "@":
                 $fields = " (ward_division, office, tape_text, votes, lname, fname, mname, party) ";
             break;
-            default: //,
+            default: 
             $fields = " (ward, division, type, office, candidate, party, votes) ";
             break;
         }
