@@ -149,22 +149,16 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
 
         $loadFile = <<<EOD
-DROP TABLE IF EXISTS `#__pv_live_import`;
-CREATE TABLE IF NOT EXISTS `#__pv_live_import` {
-  `ward` smallint(5) NOT NULL
-, `division` smallint(5) NOT NULL
-, `type` char(1) NOT NULL
-, `office` varchar(255) NOT NULL
-, `candidate` varchar(255) NOT NULL
-, `party` varchar(255) NOT NULL
-, `votes` int(11) NOT NULL
-, `ward_division` varchar(255) NOT NULL
-, `tape_text` varchar(255) NOT NULL
-, `lname` varchar(255) NOT NULL
-, `fname` varchar(255) NOT NULL
-, `mname` varchar(255) NOT NULL
-} ENGINE=MYISAM COLLATE='utf8_general_ci';
+ALTER TABLE `#__pv_live_import`
+ ADD INDEX `ward_import` (`ward`),
+ ADD INDEX `division_import` (`division`),
+ ADD INDEX `candidate_import` (`candidate`),
+ ADD INDEX `office_import` (`candidate`),
+ ADD INDEX `party_import` (`party`),
+ ADD INDEX `votes_import` (`votes`)
 EOD;
+$this->_db->setQuery($loadFile);
+$this->_db->query();
 /*LOAD DATA INFILE '$dest'
 INTO TABLE #__pv_live_import
 FIELDS TERMINATED BY '$delim'
