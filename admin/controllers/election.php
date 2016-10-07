@@ -149,13 +149,13 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
 
         $loadFile = "ALTER TABLE `#__pv_live_import` ";
-        $loadFile = "  ADD INDEX `ward_import` (`ward`), ";
-        $loadFile = "  ADD INDEX `division_import` (`division`), ";
-        $loadFile = "  ADD INDEX `ward_division_import` (`ward`,`division`), ";
-        $loadFile = "  ADD INDEX `candidate_import` (`candidate`), ";
-        $loadFile = "  ADD INDEX `office_import` (`candidate`), ";
-        $loadFile = "  ADD INDEX `party_import` (`party`), ";
-        $loadFile = "  ADD INDEX `votes_import` (`votes`) ";
+        $loadFile .= "  ADD INDEX `ward_import` (`ward`), ";
+        $loadFile .= "  ADD INDEX `division_import` (`division`), ";
+        $loadFile .= "  ADD INDEX `ward_division_import` (`ward`,`division`), ";
+        $loadFile .= "  ADD INDEX `candidate_import` (`candidate`), ";
+        $loadFile .= "  ADD INDEX `office_import` (`candidate`), ";
+        $loadFile .= "  ADD INDEX `party_import` (`party`), ";
+        $loadFile .= "  ADD INDEX `votes_import` (`votes`) ";
 
         $db = &JFactory::getDBO();
 
