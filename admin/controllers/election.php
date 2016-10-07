@@ -150,7 +150,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $db = &JFactory::getDBO();
 
-        $loadFile = "LOAD DATA INFILE '$dest' ";
+        $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
         $loadFile .= "INTO TABLE `#__pv_live_import` ";
         $loadFile .= "FIELDS TERMINATED BY '$delim' ";
         $loadFile .= "OPTIONALLY ENCLOSED BY '\"' ";
