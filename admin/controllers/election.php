@@ -148,19 +148,22 @@ class PvliveresultsControllerElection extends PvliveresultsController
             break;
         }
 
+        array_push($t, microtime(1));
+        d('before loadfile ',$t[count($t)-1]-$t[count($t)-2]);
         $db = &JFactory::getDBO();
 
         $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
         $loadFile .= "INTO TABLE `#__pv_live_import` ";
         $loadFile .= "FIELDS TERMINATED BY '$delim' ";
         $loadFile .= "OPTIONALLY ENCLOSED BY '\"' ";
-        $loadFile .= "LINES TERMINATED BY '\r\n' ";
+        $loadFile .= "LINES TERMINATED BY '\\r\\n' ";
         $loadFile .= "$ignore"; 
         $loadFile .= "$fields";
-        d($loadFile);
 
         $db->setQuery($loadFile);
         $db->query();
+
+        d('loadfile ',$t[count($t)-1]-$t[count($t)-2],$loadFile);
 
         $indexTable = "ALTER TABLE `#__pv_live_import` ";
         $indexTable .= "  ADD INDEX `ward_import` (`ward`), ";
@@ -170,12 +173,13 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $indexTable .= "  ADD INDEX `office_import` (`candidate`), ";
         $indexTable .= "  ADD INDEX `party_import` (`party`), ";
         $indexTable .= "  ADD INDEX `votes_import` (`votes`) ";
-        d($indexTable);
 
         $db->setQuery($indexTable);
         $db->query();
 
-        dd('1');
+        d('indexFile ',$t[count($t)-1]-$t[count($t)-2], $indexTable);
+
+        dd($t);
         $arr = str_getcsv($line, $delim);
 
 
