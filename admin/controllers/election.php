@@ -143,14 +143,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
         switch ($delim) {
             case "@":
                 $fields = " (ward_division, office, tape_text, votes, lname, fname, mname, party) ";
-            break;
-            default: 
-            $fields = " (ward, division, type, office, candidate, party, votes) ";
-            break;
+                break;
+            default:
+                $fields = " (ward, division, type, office, candidate, party, votes) ";
+                break;
         }
 
         array_push($t, microtime(1));
-        d('before loadfile ',$t[count($t)-1]-$t[count($t)-2]);
+        d('before loadfile ', $t[count($t)-1]-$t[count($t)-2]);
         $db = &JFactory::getDBO();
 
         $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
@@ -158,14 +158,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $loadFile .= "FIELDS TERMINATED BY '$delim' ";
         $loadFile .= "OPTIONALLY ENCLOSED BY '\"' ";
         $loadFile .= "LINES TERMINATED BY '\\r\\n' ";
-        $loadFile .= "$ignore"; 
+        $loadFile .= "$ignore";
         $loadFile .= "$fields";
 
         $db->setQuery($loadFile);
         $db->query();
 
         array_push($t, microtime(1));
-        d('loadfile ',$t[count($t)-1]-$t[count($t)-2],$loadFile);
+        d('loadfile ', $t[count($t)-1]-$t[count($t)-2], $loadFile);
 
         $indexTable = "ALTER TABLE `#__pv_live_import` ";
         $indexTable .= "  ADD INDEX `ward_import` (`ward`), ";
@@ -180,93 +180,91 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $db->query();
 
         array_push($t, microtime(1));
-        d('indexFile ',$t[count($t)-1]-$t[count($t)-2], $indexTable);
-
+        d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
+        fclose($outputFile);
+        fclose($inputFile);
         dd($t, $_FILES, system('date'));
         $arr = str_getcsv($line, $delim);
 
+        // get rid of any articulated quotes witing array elements
+        foreach ($arr as $key => $value) {
+            $arr[$key] = str_replace('"', '', $value);
+            $arr[$key] = trim($value);
+        }
 
+        $ward = (int)$arr[0];
+        $division = (int)$arr[1];
+        $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
+        $office = $arr[3];
+        $candidate = $arr[4];
+        $party = JString::strtoupper(JString::trim($arr[5]));
+        $votes = (int)$arr[6];
 
-            // get rid of any articulated quotes witing array elements
-            foreach ($arr as $key => $value) {
-                $arr[$key] = str_replace('"', '', $value);
-                $arr[$key] = trim($value);
+        $partyId = (int)$partiesIndex[$party];
+        // is the office new? write it, index it, an save the id
+        if ($partyId) {
+        } else {
+            // wite new office, capturing id
+            $partyId = $partyModel->store(
+                array(
+                    'name'=>$party,
+                    'published'=>1,
+                    'created'=>$created,
+                )
+            );
+            // index new office
+            $partyIndex[$party] = $partyId;
+        }
+
+        $officeId = (int)$officesIndex[$office];
+        // is the office new? write it, index it, an save the id
+        if ($officeId) {
+        } else {
+            // wite new office, capturing id
+            $officeId = $officeModel->store(
+                array(
+                    'name'=>$office,
+                    'published'=>1,
+                    'created'=>$created,
+                )
+            );
+            // index new office
+            $officesIndex[$office] = $officeId;
+        }
+
+        $candidateId = (int)$candidatesIndex[$candidate];
+        // is the candidate new? write it, index it, and save the id
+        if ($candidateId) {
+        } else {
+            $candidateId = $candidateModel->store(
+                array(
+                    'name'=>$candidate,
+                    'published'=>1,
+                    'party_id'=>$partyId,
+                    'created'=>$created,
+                )
+            );
+            $candidatesIndex[$candidate] = $candidateId;
+        }
+
+        $electionofficeId = $electionofficesIndex[$electionId][$officeId];
+        // record the election_office link and save the id
+        // is the candidate new? write it, index it, and save the id
+        if ($electionofficeId) {
+        } else {
+            $electionofficeId = $electionofficeModel->store(
+                array(
+                    'election_id'=>$electionId,
+                    'office_id'=>$officeId,
+                    'published'=>0,
+                    'created'=>$created,
+                )
+            );
+            if (!is_array($electionofficesIndex[$electionId])) {
+                $electionofficesIndex[$electionId] = array();
             }
-
-            $ward = (int)$arr[0];
-            $division = (int)$arr[1];
-            $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
-            $office = $arr[3];
-            $candidate = $arr[4];
-            $party = JString::strtoupper(JString::trim($arr[5]));
-            $votes = (int)$arr[6];
-
-            $partyId = (int)$partiesIndex[$party];
-            // is the office new? write it, index it, an save the id
-            if ($partyId) {
-            } else {
-                // wite new office, capturing id
-                $partyId = $partyModel->store(
-                    array(
-                        'name'=>$party,
-                        'published'=>1,
-                        'created'=>$created,
-                    )
-                );
-                // index new office
-                $partyIndex[$party] = $partyId;
-            }
-
-            $officeId = (int)$officesIndex[$office];
-            // is the office new? write it, index it, an save the id
-            if ($officeId) {
-            } else {
-                // wite new office, capturing id
-                $officeId = $officeModel->store(
-                    array(
-                        'name'=>$office,
-                        'published'=>1,
-                        'created'=>$created,
-                    )
-                );
-                // index new office
-                $officesIndex[$office] = $officeId;
-            }
-
-            $candidateId = (int)$candidatesIndex[$candidate];
-            // is the candidate new? write it, index it, and save the id
-            if ($candidateId) {
-            } else {
-                $candidateId = $candidateModel->store(
-                    array(
-                        'name'=>$candidate,
-                        'published'=>1,
-                        'party_id'=>$partyId,
-                        'created'=>$created,
-                    )
-                );
-
-                $candidatesIndex[$candidate] = $candidateId;
-            }
-
-            $electionofficeId = $electionofficesIndex[$electionId][$officeId];
-            // record the election_office link and save the id
-            // is the candidate new? write it, index it, and save the id
-            if ($electionofficeId) {
-            } else {
-                $electionofficeId = $electionofficeModel->store(
-                    array(
-                        'election_id'=>$electionId,
-                        'office_id'=>$officeId,
-                        'published'=>0,
-                        'created'=>$created,
-                    )
-                );
-                if (!is_array($electionofficesIndex[$electionId])) {
-                    $electionofficesIndex[$electionId] = array();
-                }
-                $electionofficesIndex[$electionId][$officeId] = (int)$electionofficeId;
-            }
+            $electionofficesIndex[$electionId][$officeId] = (int)$electionofficeId;
+        }
 
         fclose($outputFile);
         fclose($inputFile);
@@ -293,7 +291,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
             if (!is_array($$index)) {
                 $$index = array();
             }
-
         }
 
         // let's get our 'name' models
@@ -416,7 +413,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $msg = ""; // make sure we start with an empty msg
         while (($line = fgets($inputFile)) !== false) {
-
             // do we have a header row?
             if ($excludeHeader) {
                 $excludeHeader = false;
@@ -562,7 +558,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                         'created'=>$created,
                     )
                 );*/
-                // INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES 
+                // INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES
 
 /*                $insertValues .= " ($votetypeId, $electionofficeId, $candidateId, $ward, $division, $votes, 1, '$created') ";
                 $insertRows++;
