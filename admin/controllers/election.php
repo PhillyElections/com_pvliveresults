@@ -108,7 +108,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // when unzipping a 50MB text file, you take up a crapload of memory
             JArchive::extract($dest, $path_parts['dirname']);
             // drop the archive now
-            @unlink($dest);
+            //@unlink($dest);
             // reset the filename
             $dest = $uploads . DS . $path_parts['filename'] . ".txt";
         }
