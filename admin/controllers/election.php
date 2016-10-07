@@ -182,7 +182,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         array_push($t, microtime(1));
         d('indexFile ',$t[count($t)-1]-$t[count($t)-2], $indexTable);
 
-        dd($t);
+        dd($t, system('date'));
         $arr = str_getcsv($line, $delim);
 
 
