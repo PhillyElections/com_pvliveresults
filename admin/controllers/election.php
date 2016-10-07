@@ -148,7 +148,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             break;
         }
 
-        $loadFile = "ALTER TABLE `#__pv_live_import` \n"
+        $loadFile = "ALTER TABLE `#__pv_live_import` \n";
         $loadFile = "  ADD INDEX `ward_import` (`ward`), \n";
         $loadFile = "  ADD INDEX `division_import` (`division`), \n";
         $loadFile = "  ADD INDEX `ward_division_import` (`ward`,`division`), \n";
