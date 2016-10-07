@@ -164,6 +164,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $db->setQuery($loadFile);
         $db->query();
 
+        array_push($t, microtime(1));
         d('loadfile ',$t[count($t)-1]-$t[count($t)-2],$loadFile);
 
         $indexTable = "ALTER TABLE `#__pv_live_import` ";
@@ -178,6 +179,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $db->setQuery($indexTable);
         $db->query();
 
+        array_push($t, microtime(1));
         d('indexFile ',$t[count($t)-1]-$t[count($t)-2], $indexTable);
 
         dd($t);
