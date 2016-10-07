@@ -141,37 +141,38 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         switch ($delim) {
             case "@":
-            $fields = " (ward_division, office, tape_text, votes, lname, fname, mname, party) ";
+                $fields = " (ward_division, office, tape_text, votes, lname, fname, mname, party) ";
+                $
             break;
             default: //,
             $fields = " (ward, division, type, office, candidate, party, votes) ";
             break;
         }
 
-        $loadFile = "ALTER TABLE `#__pv_live_import` ";
-        $loadFile .= "  ADD INDEX `ward_import` (`ward`), ";
-        $loadFile .= "  ADD INDEX `division_import` (`division`), ";
-        $loadFile .= "  ADD INDEX `ward_division_import` (`ward`,`division`), ";
-        $loadFile .= "  ADD INDEX `candidate_import` (`candidate`), ";
-        $loadFile .= "  ADD INDEX `office_import` (`candidate`), ";
-        $loadFile .= "  ADD INDEX `party_import` (`party`), ";
-        $loadFile .= "  ADD INDEX `votes_import` (`votes`) ";
-
         $db = &JFactory::getDBO();
 
-        $db->setQuery($loadFile);
+        $db->setQuery($indexTable);
         $db->query();
-        /*LOAD DATA INFILE '$dest'
-        INTO TABLE #__pv_live_import
+        $loadFile = <<<EOD
+        LOAD DATA INFILE '$dest'
+        INTO TABLE `#__pv_live_import` 
         FIELDS TERMINATED BY '$delim'
         OPTIONALLY ENCLOSED BY '"'
         LINES TERMINATED BY '\r\n'
-        IGNORE 1 LINES 
-        ($fields)
-        SET
-            $transform
+        $ignore 
+        $fields
         EOD;
-        */
+
+        $indexTable = "ALTER TABLE `#__pv_live_import` ";
+        $indexTable .= "  ADD INDEX `ward_import` (`ward`), ";
+        $indexTable .= "  ADD INDEX `division_import` (`division`), ";
+        $indexTable .= "  ADD INDEX `ward_division_import` (`ward`,`division`), ";
+        $indexTable .= "  ADD INDEX `candidate_import` (`candidate`), ";
+        $indexTable .= "  ADD INDEX `office_import` (`candidate`), ";
+        $indexTable .= "  ADD INDEX `party_import` (`party`), ";
+        $indexTable .= "  ADD INDEX `votes_import` (`votes`) ";
+
+
         dd('1');
         $arr = str_getcsv($line, $delim);
 
