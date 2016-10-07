@@ -74,6 +74,285 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
     public function save()
     {
+        JRequest::checkToken() or jexit('Invalid Token');
+
+        $t=array();
+        array_push($t, microtime(1));
+        $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
+        $baseLink = "index.php?option=com_pvliveresults";
+
+        $oldFileName = $_FILES['results_file']['name'];
+        $newFileName = JString::str_ireplace(" ", "_", JString::strtolower(JFile::makeSafe($post['name']))) . ".csv";
+
+        $uploads = JPATH_COMPONENT . DS . 'uploads';
+        $src     = $_FILES['results_file']['tmp_name'];
+        $dest    = $uploads . DS . $oldFileName;
+
+        $excludeHeader = isset($post['exclude_header']) ? true : false;
+
+        if (!($move = move_uploaded_file($src, $dest))) {
+            // failed file.  No need to go on.  Warn the user
+            return $this->setRedirect($editLink . $electionId, 'Failed file uploaded. You might want to delete this election and start over');
+        }
+
+        // since the copy was completed, we need to make sure we have time to process the file
+        ini_set('memory_limit', '200M');
+        ini_set('max_execution_time', 360);
+
+        $path_parts = pathinfo($dest);
+        // if this is one of the extensions JArchive handles, lets extract it
+        if (in_array($path_parts['extension'], array('zip', 'tar', 'tgz', 'gz', 'gzip', 'bz2', 'bzip2', 'tbz2'))) {
+            // we have an archive.  pull in JArchive to handle it
+            jimport('joomla.filesystem.archive');
+
+            // when unzipping a 50MB text file, you take up a crapload of memory
+            JArchive::extract($dest, $path_parts['dirname']);
+            // drop the archive now
+            @unlink($dest);
+            // reset the filename
+            $dest = $uploads . DS . $path_parts['filename'] . ".txt";
+        }
+
+        if (!$inputFile = fopen($dest, 'r')) {
+            return $this->setRedirect($baseLink, 'unable to open file!');
+        }
+
+        $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
+        $outputFile  = fopen($path_site . $newFileName, 'w');
+
+        $delimChecked = false;
+        $delim = ','; // default
+        // 7 column import
+        // [0]ward    [1]division    [2]type    [3]office  [4]candidate   [5]party   [6]votes
+
+        $msg = ""; // make sure we start with an empty msg
+        $line = fgets($inputFile);
+
+        if (count(str_getcsv($line, '@')) > 1) {
+            $delim = "@"; // option 2
+            // 8 column import
+            // Precinct_Name@Office/Prop Name@Tape_Text@Vote_Count@Last_Name@First_Name@Middle_Name@Party_Name@
+            // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
+        }
+
+        if ($excludeHeader) {
+            $ignore = "    IGNORE 1 LINES \n";
+        }
+
+        switch ($delim) {
+            case "@":
+            $fields = " (ward_division, office, tape_text, votes, lname, fname, mname, party) ";
+            break;
+            default: //,
+            $fields = " (ward, division, type, office, candidate, party, votes) "
+            break;
+        }
+
+        $loadFile = <<<EOD
+DROP TABLE IF EXISTS `#__pv_live_import`;
+CREATE TABLE IF NOT EXISTS `#__pv_live_import` {
+  `ward` smallint(5) NOT NULL
+, `division` smallint(5) NOT NULL
+, `type` char(1) NOT NULL
+, `office` varchar(255) NOT NULL
+, `candidate` varchar(255) NOT NULL
+, `party` varchar(255) NOT NULL
+, `votes` int(11) NOT NULL
+, `ward_division` varchar(255) NOT NULL
+, `tape_text` varchar(255) NOT NULL
+, `lname` varchar(255) NOT NULL
+, `fname` varchar(255) NOT NULL
+, `mname` varchar(255) NOT NULL
+} ENGINE=MYISAM COLLATE='utf8_general_ci';
+EOD;
+/*LOAD DATA INFILE '$dest'
+INTO TABLE #__pv_live_import
+FIELDS TERMINATED BY '$delim'
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES 
+($fields)
+SET
+    $transform
+EOD;
+*/
+dd('1');
+        $arr = str_getcsv($line, $delim);
+
+
+
+            // get rid of any articulated quotes witing array elements
+            foreach ($arr as $key => $value) {
+                $arr[$key] = str_replace('"', '', $value);
+                $arr[$key] = trim($value);
+            }
+
+            $ward = (int)$arr[0];
+            $division = (int)$arr[1];
+            $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
+            $office = $arr[3];
+            $candidate = $arr[4];
+            $party = JString::strtoupper(JString::trim($arr[5]));
+            $votes = (int)$arr[6];
+
+            $partyId = (int)$partiesIndex[$party];
+            // is the office new? write it, index it, an save the id
+            if ($partyId) {
+            } else {
+                // wite new office, capturing id
+                $partyId = $partyModel->store(
+                    array(
+                        'name'=>$party,
+                        'published'=>1,
+                        'created'=>$created,
+                    )
+                );
+                // index new office
+                $partyIndex[$party] = $partyId;
+            }
+
+            $officeId = (int)$officesIndex[$office];
+            // is the office new? write it, index it, an save the id
+            if ($officeId) {
+            } else {
+                // wite new office, capturing id
+                $officeId = $officeModel->store(
+                    array(
+                        'name'=>$office,
+                        'published'=>1,
+                        'created'=>$created,
+                    )
+                );
+                // index new office
+                $officesIndex[$office] = $officeId;
+            }
+
+            $candidateId = (int)$candidatesIndex[$candidate];
+            // is the candidate new? write it, index it, and save the id
+            if ($candidateId) {
+            } else {
+                $candidateId = $candidateModel->store(
+                    array(
+                        'name'=>$candidate,
+                        'published'=>1,
+                        'party_id'=>$partyId,
+                        'created'=>$created,
+                    )
+                );
+
+                $candidatesIndex[$candidate] = $candidateId;
+            }
+
+            $electionofficeId = $electionofficesIndex[$electionId][$officeId];
+            // record the election_office link and save the id
+            // is the candidate new? write it, index it, and save the id
+            if ($electionofficeId) {
+            } else {
+                $electionofficeId = $electionofficeModel->store(
+                    array(
+                        'election_id'=>$electionId,
+                        'office_id'=>$officeId,
+                        'published'=>0,
+                        'created'=>$created,
+                    )
+                );
+                if (!is_array($electionofficesIndex[$electionId])) {
+                    $electionofficesIndex[$electionId] = array();
+                }
+                $electionofficesIndex[$electionId][$officeId] = (int)$electionofficeId;
+            }
+
+            // record the votes
+            // is the vote entity new? write it, but don't index
+            // if not, update
+/*            if (isset($votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division])) {
+                $voteId = $votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['id'];
+                if ( (int)$votesIndex[$votetypeId][$electionofficeId][$candidateId][$ward][$division]['votes'] === (int)$votes ) {
+                    // votes match, do nothing
+                } else {
+                    $voteModel->store(
+                        array(
+                            'id'=>$voteId,
+                            'votes'=>$votes,
+                            'updated'=>$created,
+                        )
+                    );
+                }
+                $updateQueries .= " UPDATE #__jos_live_votes"
+                d('update', $voteId, array('id'=>$voteId, 'votes'=>$votes, 'updated'=>$created,));
+            } else {*/
+/*                $voteModel->store(
+                    array(
+                        'vote_type_id'=>$votetypeId,
+                        'election_office_id'=>$electionofficeId,
+                        'candidate_id'=>$candidateId,
+                        'ward'=>$ward,
+                        'division'=>$division,
+                        'votes'=>$votes,
+                        'published'=>1,
+                        'created'=>$created,
+                    )
+                );*/
+                // INSERT INTO #__pv_live_votes (`vote_type_id`, `election_office_id`, `candidate_id`, `ward`, `division`, `votes`, `published`, `created`) VALUES 
+
+/*                $insertValues .= " ($votetypeId, $electionofficeId, $candidateId, $ward, $division, $votes, 1, '$created') ";
+                $insertRows++;
+
+                if ($insertRows >= $limit) {
+                    $this->_db->setQuery($insertFields . $insertValues);
+                    $this->_db->query();
+                    $insertRows = 0;
+                } else {
+                    $insertValues .= ', ';
+                }
+            }*/
+
+
+//        dd('1', $msg, $candidatesIndex, $electionsIndex, $officesIndex, $electionofficesIndex, $partiesIndex, $votesIndex, $votetypesIndex);
+
+            // record the votes
+
+/*            $insert .= '("' . $arr[3] . '", ' . (int) $arr[0] . ', ' . (int) $arr[1] . ', "' . $arr[2] . '", "' . $arr[4] . '", "' . $arr[5] . '", ' . (int) $arr[6] . ', "' . $e_year . '", NOW()),';
+            ++$counter;
+            if ($counter > 1000) {
+                $insert            = rtrim($insert, ',');
+                $bulk_insert_array = $insertStart . $insert;
+                $insert            = '';
+                try {
+                    $model->bulk_insert($bulk_insert_array);
+                } catch (Exception $e) {
+                    sd($e, $insert);
+                }
+                $counter = 0;
+            }*/
+        }
+
+/*        if ($insertRows) {
+            $this->_db->setQuery($insertFields . $insertValues);
+            $this->_db->query();
+        }*/
+        // catch the leftovers
+/*        if ($counter) {
+            $insert            = rtrim($insert, ',');
+            $bulk_insert_array = $insertStart . $insert;
+            $insert            = '';
+            try {
+                $model->bulk_insert($bulk_insert_array);
+            } catch (Exception $e) {
+                sd($e, $insert);
+            }
+        }*/
+
+        fclose($outputFile);
+        fclose($inputFile);
+
+        @unlink($dest);
+        $msg .= JText::_('Data Saved');
+        return $this->setRedirect($editLink . $electionId, $msg);
+    }
+
+    public function save2()
+    {
 
         $t=array();
         array_push($t, microtime(1));
@@ -259,9 +538,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $party = JString::strtoupper(JString::trim($arr[5]));
             $votes = (int)$arr[6];
 
+            $partyId = (int)$partiesIndex[$party];
             // is the office new? write it, index it, an save the id
-            if (isset($partiesIndex[$party])) {
-                $partyId = (int)$partiesIndex[$party];
+            if ($partyId) {
             } else {
                 // wite new office, capturing id
                 $partyId = $partyModel->store(
@@ -275,9 +554,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $partyIndex[$party] = $partyId;
             }
 
+            $officeId = (int)$officesIndex[$office];
             // is the office new? write it, index it, an save the id
-            if (isset($officesIndex[$office])) {
-                $officeId = $officesIndex[$office];
+            if ($officeId) {
             } else {
                 // wite new office, capturing id
                 $officeId = $officeModel->store(
@@ -291,9 +570,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $officesIndex[$office] = $officeId;
             }
 
+            $candidateId = (int)$candidatesIndex[$candidate];
             // is the candidate new? write it, index it, and save the id
-            if (isset($candidatesIndex[$candidate])) {
-                $candidateId = $candidatesIndex[$candidate];
+            if ($candidateId) {
             } else {
                 $candidateId = $candidateModel->store(
                     array(
@@ -306,10 +585,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
                 $candidatesIndex[$candidate] = $candidateId;
             }
+
+            $electionofficeId = $electionofficesIndex[$electionId][$officeId];
             // record the election_office link and save the id
             // is the candidate new? write it, index it, and save the id
-            if (isset($electionofficesIndex[$electionId][$officeId])) {
-                $electionofficeId = $electionofficesIndex[$electionId][$officeId];
+            if ($electionofficeId) {
             } else {
                 $electionofficeId = $electionofficeModel->store(
                     array(
@@ -320,7 +600,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
                     )
                 );
                 if (!is_array($electionofficesIndex[$electionId])) {
-                    d('$electionofficesIndex[$electionId] not set', $electionofficesIndex[$electionId]);
                     $electionofficesIndex[$electionId] = array();
                 }
                 $electionofficesIndex[$electionId][$officeId] = (int)$electionofficeId;
