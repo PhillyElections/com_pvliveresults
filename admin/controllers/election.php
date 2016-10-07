@@ -137,12 +137,13 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $ignore = "";
         if ($excludeHeader) {
-            $ignore = "    IGNORE 1 LINES \n";
+            $ignore = 1;
+//            $ignore = "    IGNORE 1 LINES \n";
         }
 
         switch ($delim) {
             case "@":
-                $fields = " (ward_division, office, tape_text, votes, lname, fname, mname, party) ";
+                $fields = " (ward_division, office, candidate, votes, lname, fname, mname, party) ";
                 break;
             default:
                 $fields = " (ward, division, type, office, candidate, party, votes) ";
@@ -176,14 +177,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $indexTable .= "  ADD INDEX `party_import` (`party`), ";
         $indexTable .= "  ADD INDEX `votes_import` (`votes`) ";
 
-        $db->setQuery($indexTable);
-        $db->query();
-
+//        $db->setQuery($indexTable);
+//        $db->query();
+d("~/bin/import-live-results.comma.sh $dest $ignore", system("~/bin/import-live-results.comma.sh $dest $ignore"));
         array_push($t, microtime(1));
         d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
         fclose($outputFile);
         fclose($inputFile);
-        dd($t, $_FILES, system('date'));
+        dd($t, $_FILES);
         $arr = str_getcsv($line, $delim);
 
         // get rid of any articulated quotes witing array elements
