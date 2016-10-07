@@ -34,6 +34,21 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 , PRIMARY KEY (`id`)
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
+CREATE TABLE IF NOT EXISTS `#__pv_live_import` {
+  `ward` smallint(5) NOT NULL
+, `division` smallint(5) NOT NULL
+, `type` char(1) NOT NULL
+, `office` varchar(255) NOT NULL
+, `candidate` varchar(255) NOT NULL
+, `party` varchar(255) NOT NULL
+, `votes` int(11) NOT NULL
+, `ward_division` varchar(255) NOT NULL
+, `tape_text` varchar(255) NOT NULL
+, `lname` varchar(255) NOT NULL
+, `fname` varchar(255) NOT NULL
+, `mname` varchar(255) NOT NULL
+} ENGINE=MYISAM COLLATE='utf8_general_ci';
+
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `party_id` int(11) unsigned NOT NULL DEFAULT 1
