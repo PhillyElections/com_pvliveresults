@@ -157,8 +157,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $loadFile = "  ADD INDEX `party_import` (`party`), \n";
         $loadFile = "  ADD INDEX `votes_import` (`votes`) \n";
 
-        $this->_db->setQuery($loadFile);
-        $this->_db->query();
+        $db = &JFactory::getDBO();
+
+        $db->setQuery($loadFile);
+        $db->query();
         /*LOAD DATA INFILE '$dest'
         INTO TABLE #__pv_live_import
         FIELDS TERMINATED BY '$delim'
