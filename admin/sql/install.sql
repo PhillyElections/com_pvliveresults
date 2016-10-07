@@ -34,8 +34,9 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 , PRIMARY KEY (`id`)
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
-CREATE TABLE IF NOT EXISTS `#__pv_live_import` {
-  `ward` smallint(5) NOT NULL
+CREATE TABLE IF NOT EXISTS `#__pv_live_import` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT
+, `ward` smallint(5) NOT NULL
 , `division` smallint(5) NOT NULL
 , `type` char(1) NOT NULL
 , `office` varchar(255) NOT NULL
@@ -47,7 +48,8 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_import` {
 , `lname` varchar(255) NOT NULL
 , `fname` varchar(255) NOT NULL
 , `mname` varchar(255) NOT NULL
-} ENGINE=MYISAM COLLATE='utf8_general_ci';
+, PRIMARY KEY (`id`)
+) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
@@ -102,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_votes` (
 , INDEX `candidate_id_votes` (`candidate_id`)
 , INDEX `ward_votes` (`ward`)
 , INDEX `division_votes` (`division`)
+, INDEX `ward_division_votes` (`ward`, `division`)
 , PRIMARY KEY (`id`)
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
