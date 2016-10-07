@@ -150,17 +150,17 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $db = &JFactory::getDBO();
 
-        $db->setQuery($indexTable);
+        $loadFile = "LOAD DATA INFILE '$dest' ";
+        $loadFile .= "INTO TABLE `#__pv_live_import` ";
+        $loadFile .= "FIELDS TERMINATED BY '$delim' ";
+        $loadFile .= "OPTIONALLY ENCLOSED BY '\"' ";
+        $loadFile .= "LINES TERMINATED BY '\r\n' ";
+        $loadFile .= "$ignore"; 
+        $loadFile .= "$fields";
+        d($loadFile);
+
+        $db->setQuery($loadFile);
         $db->query();
-        $loadFile = <<<EOD
-        LOAD DATA INFILE '$dest'
-        INTO TABLE `#__pv_live_import` 
-        FIELDS TERMINATED BY '$delim'
-        OPTIONALLY ENCLOSED BY '"'
-        LINES TERMINATED BY '\r\n'
-        $ignore 
-        $fields
-        EOD;
 
         $indexTable = "ALTER TABLE `#__pv_live_import` ";
         $indexTable .= "  ADD INDEX `ward_import` (`ward`), ";
@@ -170,7 +170,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $indexTable .= "  ADD INDEX `office_import` (`candidate`), ";
         $indexTable .= "  ADD INDEX `party_import` (`party`), ";
         $indexTable .= "  ADD INDEX `votes_import` (`votes`) ";
+        d($indexTable);
 
+        $db->setQuery($indexTable);
+        $db->query();
 
         dd('1');
         $arr = str_getcsv($line, $delim);
