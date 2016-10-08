@@ -44,11 +44,17 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_import` (
 , `party` varchar(255) NOT NULL
 , `votes` int(11) NOT NULL
 , `ward_division` varchar(255) NOT NULL
-, `tape_text` varchar(255) NOT NULL
 , `lname` varchar(255) NOT NULL
 , `fname` varchar(255) NOT NULL
 , `mname` varchar(255) NOT NULL
 , PRIMARY KEY (`id`)
+, INDEX `ward_import` (`ward`)
+, INDEX `division_import` (`division`)
+, INDEX `ward_division_import` (`ward`,`division`)
+, INDEX `candidate_import` (`candidate`)
+, INDEX `office_import` (`candidate`)
+, INDEX `party_import` (`party`)
+, INDEX `votes_import` (`votes`)
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
@@ -151,14 +157,6 @@ ALTER TABLE `#__pv_live_votes`
   FOREIGN KEY (`candidate_id`) REFERENCES `#__pv_live_candidates`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
-ALTER TABLE `#__pv_live_import` 
-, ADD INDEX `ward_import` (`ward`)
-, ADD INDEX `division_import` (`division`)
-, ADD INDEX `ward_division_import` (`ward`,`division`)
-, ADD INDEX `candidate_import` (`candidate`)
-, ADD INDEX `office_import` (`candidate`)
-, ADD INDEX `party_import` (`party`)
-, ADD INDEX `votes_import` (`votes`);
 
 SET FOREIGN_KEY_CHECKS = 1;
 
