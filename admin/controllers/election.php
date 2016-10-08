@@ -157,7 +157,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $fields = " (ward_division, office, candidate, votes, lname, fname, mname, party) ";
                 break;
             default:
-                $sFields = "ward,division,type,office,candidate,party,votes";
+                $saveFields = "ward,division,type,office,candidate,party,votes";
                 $fields = " (ward, division, type, office, candidate, party, votes) ";
                 break;
         }
@@ -169,30 +169,20 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS");
         $db->query();
 
-        $config =JFactory::getConfig();
+        // Let's pull our creds from the site config
+        $config = JFactory::getConfig();
         $host = $config->getValue('config.host');
         $user = $config->getValue('config.user');
         $pass = $config->getValue('config.password');
         $dbName = $config->getValue('config.db');
 
-/*        $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
-        $loadFile .= "INTO TABLE `#__pv_live_import` ";
-        $loadFile .= "FIELDS TERMINATED BY '$delim' ";
-        $loadFile .= "OPTIONALLY ENCLOSED BY '\"' ";
-        $loadFile .= "LINES TERMINATED BY '\\r\\n' ";
-        $loadFile .= "$ignore ";
-        $loadFile .= "$fields ";*/
-
         $command = "mysqlimport --local --compress --user=$user --password=$pass --host=$host --fields-terminated-by=',' --fields-optionally-enclosed-by='\"' --columns='$sFields' $dbName $dest";
 
         $return = system($command);
 
-        $lastInsertId = $db->insertid();
-
-        $db->setQuery($loadFile);
-        $db->query();
-
         // transform data if needed here
+
+        // export download file here
 
         $db->setQuery("ALTER TABLE #_pv_live_import ENABLE KEYS");
         $db->query();
