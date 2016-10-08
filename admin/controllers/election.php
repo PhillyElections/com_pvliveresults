@@ -111,6 +111,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
             //@unlink($dest);
             // reset the filename
             $dest = $uploads . DS . $path_parts['filename'] . ".txt";
+            jimport('joomla.filesystem.file');
+
+            if (JFile::exists($uploads.DS.strtolower($path_parts['filename']).".txt")) {
+                $dest = $uploads.DS.strtolower($path_parts['filename']).".txt";
+            }
         }
 
         if (!$inputFile = fopen($dest, 'r')) {
@@ -177,9 +182,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $indexTable .= "  ADD INDEX `party_import` (`party`), ";
         $indexTable .= "  ADD INDEX `votes_import` (`votes`) ";
 
-//        $db->setQuery($indexTable);
-//        $db->query();
-d("~/bin/import-live-results.comma.sh $dest $ignore", system("~/bin/import-live-results.comma.sh $dest $ignore"));
+        $db->setQuery($indexTable);
+        $db->query();
+//d("~/bin/import-live-results.comma.sh $dest $ignore", system("~/bin/import-live-results.comma.sh $dest $ignore"));
         array_push($t, microtime(1));
         d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
         fclose($outputFile);
