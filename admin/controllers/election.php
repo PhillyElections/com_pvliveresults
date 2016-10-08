@@ -106,7 +106,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             jimport('joomla.filesystem.archive');
 
             // when unzipping a 50MB text file, you take up a crapload of memory
-            dd($dest, $path_parts['dirname'], JArchive::extract($dest, $path_parts['dirname']));
+            $extracted = JArchive::extract($dest, $path_parts['dirname']);
             // drop the archive now
             //@unlink($dest);
             // reset the filename
@@ -189,7 +189,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
         fclose($outputFile);
         fclose($inputFile);
-        dd($t, $_FILES);
+        dd($t, $_FILES, $extracted);
         $arr = str_getcsv($line, $delim);
 
         // get rid of any articulated quotes witing array elements
