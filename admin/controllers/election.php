@@ -160,6 +160,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
         d('before loadfile ', $t[count($t)-1]-$t[count($t)-2]);
         $db = &JFactory::getDBO();
 
+        $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS")
+        $db->query();
+
         $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
         $loadFile .= "INTO TABLE `#__pv_live_import` ";
         $loadFile .= "FIELDS TERMINATED BY '$delim' ";
@@ -171,21 +174,12 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $db->setQuery($loadFile);
         $db->query();
 
+        $db->setQuery("ALTER TABLE #_pv_live_import ENABLE KEYS")
+        $db->query();
+
         array_push($t, microtime(1));
         d('loadfile ', $t[count($t)-1]-$t[count($t)-2], $loadFile);
 
-        $indexTable = "ALTER TABLE `#__pv_live_import` ";
-        $indexTable .= "  ADD INDEX `ward_import` (`ward`), ";
-        $indexTable .= "  ADD INDEX `division_import` (`division`), ";
-        $indexTable .= "  ADD INDEX `ward_division_import` (`ward`,`division`), ";
-        $indexTable .= "  ADD INDEX `candidate_import` (`candidate`), ";
-        $indexTable .= "  ADD INDEX `office_import` (`candidate`), ";
-        $indexTable .= "  ADD INDEX `party_import` (`party`), ";
-        $indexTable .= "  ADD INDEX `votes_import` (`votes`) ";
-
-        //$db->setQuery($indexTable);
-        //$db->query();
-//d("~/bin/import-live-results.comma.sh $dest $ignore", system("~/bin/import-live-results.comma.sh $dest $ignore"));
         array_push($t, microtime(1));
         //d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
         dd($path_parts, $t, $_FILES, $extracted);
