@@ -149,9 +149,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         switch ($delim) {
             case "@":
+                $sFields = "ward_division,office,candidate,votes,lname,fname,mname,party";
                 $fields = " (ward_division, office, candidate, votes, lname, fname, mname, party) ";
                 break;
             default:
+                $sFields = "ward,division,type,office,candidate,party,votes";
                 $fields = " (ward, division, type, office, candidate, party, votes) ";
                 break;
         }
@@ -187,7 +189,7 @@ mysqlimport \
   --host=$host \ 
   --fields-terminated-by=',' \
   --fields-optionally-enclosed-by='"' \
-  --columns='$columns' \  
+  --columns='$sFields' \  
   '$file'
 EOD;
 
