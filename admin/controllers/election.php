@@ -113,7 +113,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             $dest = $uploads . DS . $path_parts['filename'] . ".txt";
             jimport('joomla.filesystem.file');
 
-            if (JFile::exists($uploads.DS.strtolower($path_parts['filename']).".txt")) {
+            if (file_exists($uploads.DS.strtolower($path_parts['filename']).".txt")) {
                 $dest = $uploads.DS.strtolower($path_parts['filename']).".txt";
             }
         }
