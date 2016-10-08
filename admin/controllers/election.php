@@ -110,13 +110,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // drop the archive now
             //@unlink($dest);
             // reset the filename
+            $dest = $uploads . DS . strtolower($path_parts['filename']);
             
             if ($path_parts['extension'] === 'zip') {
                 $dest = $uploads . DS . $path_parts['filename'] . ".txt";
-            } else {
-                $dest = $uploads.DS.strtolower($path_parts['filename']);
             }
-            jimport('joomla.filesystem.file');
         }
 
         if (!$inputFile = fopen($dest, 'r')) {
@@ -124,15 +122,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
             return $this->setRedirect($baseLink, 'unable to open file!');
         }
 
-        $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data' . DS;
-        $outputFile  = fopen($path_site . $newFileName, 'w');
+        $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data';
+        $outputFile  = fopen($storagePath . DS . $newFileName, 'w');
 
         $delimChecked = false;
         $delim = ','; // default
         // 7 column import
         // [0]ward    [1]division    [2]type    [3]office  [4]candidate   [5]party   [6]votes
 
-        $msg = ""; // make sure we start with an empty msg
         $line = fgets($inputFile);
 
         if (count(str_getcsv($line, '@')) > 1) {
@@ -141,11 +138,13 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // Precinct_Name@Office/Prop Name@Tape_Text@Vote_Count@Last_Name@First_Name@Middle_Name@Party_Name@
             // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
         }
+        fclose($outputFile);
+        fclose($inputFile);
 
         $ignore = "";
         if ($excludeHeader) {
-            $ignore = 1;
-//            $ignore = "    IGNORE 1 LINES \n";
+//            $ignore = 1;
+            $ignore = "    IGNORE 1 LINES \n";
         }
 
         switch ($delim) {
@@ -184,13 +183,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $indexTable .= "  ADD INDEX `party_import` (`party`), ";
         $indexTable .= "  ADD INDEX `votes_import` (`votes`) ";
 
-        $db->setQuery($indexTable);
-        $db->query();
+        //$db->setQuery($indexTable);
+        //$db->query();
 //d("~/bin/import-live-results.comma.sh $dest $ignore", system("~/bin/import-live-results.comma.sh $dest $ignore"));
         array_push($t, microtime(1));
-        d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
-        fclose($outputFile);
-        fclose($inputFile);
+        //d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
         dd($path_parts, $t, $_FILES, $extracted);
         $arr = str_getcsv($line, $delim);
 
