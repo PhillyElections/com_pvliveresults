@@ -119,6 +119,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
 
         if (!$inputFile = fopen($dest, 'r')) {
+            dd($pathinfo, $extracted, $dest);
             return $this->setRedirect($baseLink, 'unable to open file!');
         }
 
