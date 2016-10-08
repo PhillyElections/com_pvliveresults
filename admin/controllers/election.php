@@ -182,18 +182,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $loadFile .= "$ignore ";
         $loadFile .= "$fields ";*/
 
-        $command = <<<EOD
-mysqlimport \
-  --local \ 
-  --compress \ 
-  --user=$user \ 
-  --password=$pass \ 
-  --host=$host \ 
-  --fields-terminated-by=',' \
-  --fields-optionally-enclosed-by='"' \
-  --columns='$sFields' \  
-  $dest
-EOD;
+        $command = "mysqlimport --local --compress --user=$user --password=$pass --host=$host --fields-terminated-by=',' --fields-optionally-enclosed-by='\"' --columns='$sFields' $dest";
 
         $return = system($command);
 
