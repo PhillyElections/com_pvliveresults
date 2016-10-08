@@ -162,15 +162,22 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS");
         $db->query();
-
-        $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
+$config =JFactory::getConfig();
+dd($config);
+/*        $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
         $loadFile .= "INTO TABLE `#__pv_live_import` ";
         $loadFile .= "FIELDS TERMINATED BY '$delim' ";
         $loadFile .= "OPTIONALLY ENCLOSED BY '\"' ";
         $loadFile .= "LINES TERMINATED BY '\\r\\n' ";
         $loadFile .= "$ignore ";
-        $loadFile .= "$fields ";
+        $loadFile .= "$fields ";*/
 
+$query =<<<EOD
+mysqlimport --local \ 
+            --compress \ 
+            --user= \ 
+            --password=pvotes0-P0-P0-P0-P --host=localhost --fields-terminated-by=',' --fields-optionally-enclosed-by='\"' --columns='ward,division,type,office,candidate,party,votes'  $dest
+EOD;
         $lastInsertId = $db->insertid();
 
         $db->setQuery($loadFile);
