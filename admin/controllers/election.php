@@ -173,6 +173,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $host = $config->getValue('config.host');
         $user = $config->getValue('config.user');
         $pass = $config->getValue('config.password');
+        $dbName = $config->getValue('config.db');
 
 /*        $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
         $loadFile .= "INTO TABLE `#__pv_live_import` ";
@@ -182,7 +183,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $loadFile .= "$ignore ";
         $loadFile .= "$fields ";*/
 
-        $command = "mysqlimport --local --compress --user=$user --password=$pass --host=$host --fields-terminated-by=',' --fields-optionally-enclosed-by='\"' --columns='$sFields' $dest";
+        $command = "mysqlimport --local --compress --user=$user --password=$pass --host=$host --fields-terminated-by=',' --fields-optionally-enclosed-by='\"' --columns='$sFields' $dbName $dest";
 
         $return = system($command);
 
