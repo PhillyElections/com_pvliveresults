@@ -192,7 +192,7 @@ mysqlimport \
   --fields-terminated-by=',' \
   --fields-optionally-enclosed-by='"' \
   --columns='$sFields' \  
-  '$dest'
+  $dest
 EOD;
 
         $return = system($command);
