@@ -151,6 +151,14 @@ ALTER TABLE `#__pv_live_votes`
   FOREIGN KEY (`candidate_id`) REFERENCES `#__pv_live_candidates`(`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
+ALTER TABLE `#__pv_live_import` 
+, ADD INDEX `ward_import` (`ward`)
+, ADD INDEX `division_import` (`division`)
+, ADD INDEX `ward_division_import` (`ward`,`division`)
+, ADD INDEX `candidate_import` (`candidate`)
+, ADD INDEX `office_import` (`candidate`)
+, ADD INDEX `party_import` (`party`)
+, ADD INDEX `votes_import` (`votes`) 
 
 SET FOREIGN_KEY_CHECKS = 1;
 
