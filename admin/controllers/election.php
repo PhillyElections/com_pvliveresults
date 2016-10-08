@@ -188,7 +188,7 @@ mysqlimport \
   --fields-terminated-by=',' \
   --fields-optionally-enclosed-by='"' \
   --columns='$columns' \  
-  $file
+  '$file'
 EOD;
 
         $return = system($command);
