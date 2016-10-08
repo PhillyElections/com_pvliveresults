@@ -166,9 +166,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $file = $uploads . DS . "jos_pv_live_import.txt";
 
         $config =JFactory::getConfig();
-        $host = $config->get('host');
-        $user = $config->get('user');
-        $pass = $config->get('password');
+        $host = $config->getValue('config.host');
+        $user = $config->getValue('config.user');
+        $pass = $config->getValue('config.password');
 
 /*        $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
         $loadFile .= "INTO TABLE `#__pv_live_import` ";
