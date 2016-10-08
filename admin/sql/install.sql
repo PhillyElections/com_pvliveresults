@@ -158,7 +158,7 @@ ALTER TABLE `#__pv_live_import`
 , ADD INDEX `candidate_import` (`candidate`)
 , ADD INDEX `office_import` (`candidate`)
 , ADD INDEX `party_import` (`party`)
-, ADD INDEX `votes_import` (`votes`) 
+, ADD INDEX `votes_import` (`votes`);
 
 SET FOREIGN_KEY_CHECKS = 1;
 
