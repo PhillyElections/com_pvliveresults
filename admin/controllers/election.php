@@ -162,8 +162,14 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS");
         $db->query();
-$config =JFactory::getConfig();
-dd($config);
+        move_uploaded_file($dest, $uploads . DS . "jos_pv_live_import.txt");
+        $file = $uploads . DS . "jos_pv_live_import.txt";
+
+        $config =JFactory::getConfig();
+        $host = $config->get('host');
+        $user = $config->get('user');
+        $pass = $config->get('password');
+
 /*        $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
         $loadFile .= "INTO TABLE `#__pv_live_import` ";
         $loadFile .= "FIELDS TERMINATED BY '$delim' ";
@@ -172,12 +178,21 @@ dd($config);
         $loadFile .= "$ignore ";
         $loadFile .= "$fields ";*/
 
-$query =<<<EOD
-mysqlimport --local \ 
-            --compress \ 
-            --user= \ 
-            --password=pvotes0-P0-P0-P0-P --host=localhost --fields-terminated-by=',' --fields-optionally-enclosed-by='\"' --columns='ward,division,type,office,candidate,party,votes'  $dest
+        $command = <<<EOD
+mysqlimport \
+  --local \ 
+  --compress \ 
+  --user=$user \ 
+  --password=$pass \ 
+  --host=$host \ 
+  --fields-terminated-by=',' \
+  --fields-optionally-enclosed-by='"' \
+  --columns='$columns' \  
+  $file
 EOD;
+
+        $return = system($command);
+
         $lastInsertId = $db->insertid();
 
         $db->setQuery($loadFile);
@@ -193,7 +208,7 @@ EOD;
 
         array_push($t, microtime(1));
         //d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
-        dd($lastInsertId, $path_parts, $t, $_FILES, $extracted);
+        dd($return, $lastInsertId, $path_parts, $t, $_FILES, $extracted);
         $arr = str_getcsv($line, $delim);
 
         // get rid of any articulated quotes witing array elements
