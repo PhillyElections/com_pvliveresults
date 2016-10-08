@@ -160,7 +160,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         d('before loadfile ', $t[count($t)-1]-$t[count($t)-2]);
         $db = &JFactory::getDBO();
 
-        $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS")
+        $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS");
         $db->query();
 
         $loadFile = "LOAD DATA LOCAL INFILE '$dest' ";
@@ -178,7 +178,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         // transform data if needed here
 
-        $db->setQuery("ALTER TABLE #_pv_live_import ENABLE KEYS")
+        $db->setQuery("ALTER TABLE #_pv_live_import ENABLE KEYS");
         $db->query();
 
         array_push($t, microtime(1));
