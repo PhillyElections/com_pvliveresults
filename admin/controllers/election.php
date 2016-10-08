@@ -208,7 +208,7 @@ EOD;
 
         array_push($t, microtime(1));
         //d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
-        dd($user, $command, $return, $lastInsertId, $path_parts, $t, $_FILES, $extracted);
+        dd($config, $user, $command, $return, $lastInsertId, $path_parts, $t, $_FILES, $extracted);
         $arr = str_getcsv($line, $delim);
 
         // get rid of any articulated quotes witing array elements
