@@ -112,7 +112,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // reset the filename
             
             if ($path_parts['extension'] === 'zip') {
-                $dest = $uploads . DS . $path_parts['filename'] . ".txt";                
+                $dest = $uploads . DS . $path_parts['filename'] . ".txt";
             } else {
                 $dest = $uploads.DS.strtolower($path_parts['filename']);
             }
@@ -191,7 +191,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
         fclose($outputFile);
         fclose($inputFile);
-        dd($t, $_FILES, $extracted);
+        dd($path_parts, $t, $_FILES, $extracted);
         $arr = str_getcsv($line, $delim);
 
         // get rid of any articulated quotes witing array elements
