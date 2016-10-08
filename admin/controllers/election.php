@@ -168,11 +168,15 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $loadFile .= "FIELDS TERMINATED BY '$delim' ";
         $loadFile .= "OPTIONALLY ENCLOSED BY '\"' ";
         $loadFile .= "LINES TERMINATED BY '\\r\\n' ";
-        $loadFile .= "$ignore";
-        $loadFile .= "$fields";
+        $loadFile .= "$ignore ";
+        $loadFile .= "$fields ";
+
+        $lastInsertId = $db->insertid();
 
         $db->setQuery($loadFile);
         $db->query();
+
+        // transform data if needed here
 
         $db->setQuery("ALTER TABLE #_pv_live_import ENABLE KEYS")
         $db->query();
@@ -182,7 +186,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         array_push($t, microtime(1));
         //d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
-        dd($path_parts, $t, $_FILES, $extracted);
+        dd($lastInsertId, $path_parts, $t, $_FILES, $extracted);
         $arr = str_getcsv($line, $delim);
 
         // get rid of any articulated quotes witing array elements
