@@ -115,6 +115,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
             if ($path_parts['extension'] === 'zip') {
                 $dest = $uploads . DS . $path_parts['filename'] . ".txt";
             }
+
+            jimport('joomla.fiesystem.file');
+            JFile::move($dest, $uploads . DS . "jos_pv_live_import.txt");
+            $dest = $uploads . DS . "jos_pv_live_import.txt";
         }
 
         if (!$inputFile = fopen($dest, 'r')) {
@@ -164,11 +168,6 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS");
         $db->query();
-        jimport('joomla.filesystem.file');
-
-        JFile::move($dest, $uploads . DS . "jos_pv_live_import.txt");
-
-        $file = $uploads . DS . "jos_pv_live_import.txt";
 
         $config =JFactory::getConfig();
         $host = $config->getValue('config.host');
@@ -184,10 +183,17 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $loadFile .= "$fields ";*/
 
         $command = <<<EOD
-mysqlimport  --local --compress --user=$user --password=$pass --host=$host --fields-terminated-by=',' --fields-optionally-enclosed-by='"' --columns='$sFields' '$file'
+mysqlimport \
+  --local \ 
+  --compress \ 
+  --user=$user \ 
+  --password=$pass \ 
+  --host=$host \ 
+  --fields-terminated-by=',' \
+  --fields-optionally-enclosed-by='"' \
+  --columns='$sFields' \  
+  '$dest'
 EOD;
-mysqlimport --local --compress  --user=pvotes2  --password=pvotes0-P0-P0-P0-P  --host=localhost  --fields-terminated-by=',' --fields-optionally-enclosed-by='"' --columns='ward,division,type,office,candidate,party,votes' '/home/pvotes/public_html/administrator/components/com_pvliveresults/uploads/jos_pv_live_import.txt'
-
 
         $return = system($command);
 
