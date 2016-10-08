@@ -110,16 +110,17 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // drop the archive now
             //@unlink($dest);
             // reset the filename
-            $dest = $uploads . DS . $path_parts['filename'] . ".txt";
-            jimport('joomla.filesystem.file');
-
-            if (file_exists($uploads.DS.strtolower($path_parts['filename']).".txt")) {
-                $dest = $uploads.DS.strtolower($path_parts['filename']).".txt";
+            
+            if ($path_parts['extension'] === 'zip') {
+                $dest = $uploads . DS . $path_parts['filename'] . ".txt";                
+            } else {
+                $dest = $uploads.DS.strtolower($path_parts['filename']);
             }
+            jimport('joomla.filesystem.file');
         }
 
         if (!$inputFile = fopen($dest, 'r')) {
-            dd($pathinfo, $extracted, $dest);
+            dd($path_parts, $extracted, $dest);
             return $this->setRedirect($baseLink, 'unable to open file!');
         }
 
