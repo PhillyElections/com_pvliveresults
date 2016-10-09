@@ -77,7 +77,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
         JRequest::checkToken() or jexit('Invalid Token');
 
         $t=array();
+        // START = 0
         array_push($t, microtime(1));
+
         $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
         $baseLink = "index.php?option=com_pvliveresults";
 
@@ -123,6 +125,8 @@ class PvliveresultsControllerElection extends PvliveresultsController
             JFile::move($dest, $uploads . DS . "jos_pv_live_import.txt");
             $dest = $uploads . DS . "jos_pv_live_import.txt";
         }
+        // file-handling complete 1
+        array_push($t, microtime(1));
 
         if (!$inputFile = fopen($dest, 'r')) {
             dd($path_parts, $extracted, $dest);
@@ -130,7 +134,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
         }
 
         $storagePath = JPATH_SITE . DS . 'files' . DS . 'raw-data';
-        $outputFile  = fopen($storagePath . DS . $newFileName, 'w');
+        $outputFile  = $storagePath . DS . $newFileName;
 
         $delimChecked = false;
         $delim = ','; // default
@@ -145,14 +149,17 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // Precinct_Name@Office/Prop Name@Tape_Text@Vote_Count@Last_Name@First_Name@Middle_Name@Party_Name@
             // [0]Precinct_Name   [1]Office/Prop Name   [2]Tape_Text   [3]Vote_Count   [4]Last_Name   [5]First_Name   [6]Middle_Name   [7]Party_Name
         }
-        fclose($outputFile);
         fclose($inputFile);
 
+        // first-line-check complete 2
+        array_push($t, microtime(1));
         $ignore = "0";
         if ($excludeHeader) {
             $ignore = "1";
             //$ignore = "    IGNORE 1 LINES \n";
         }
+
+        $outputFields = " `ward`, `division`, `type`, `office`, `candidate`, `party`, `votes` ";
 
         switch ($delim) {
             case "@":
@@ -160,13 +167,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
                 $fields = " (ward_division, office, candidate, votes, lname, fname, mname, party) ";
                 break;
             default:
-                $saveFields = "ward,division,type,office,candidate,party,votes";
+                $sFields = "ward,division,type,office,candidate,party,votes";
                 $fields = " (ward, division, type, office, candidate, party, votes) ";
                 break;
         }
 
-        array_push($t, microtime(1));
-        d('before loadfile ', $t[count($t)-1]-$t[count($t)-2]);
         $db = &JFactory::getDBO();
 
         $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS");
@@ -197,35 +202,31 @@ EOD;
 
         // transform data if needed here
         if ($delim === "@") {
-            // write useful wards/divs
+            // missing fields: ward, division, type
             $db->setQuery("UPDATE `#__pv_live_import` SET `type` = 'M', `ward` = LEFT(`ward_division`, 2), `division` = RIGHT(`ward_division`, 2)");
             $db->query();
             // improve our candidates where possible
             $db->setQuery("UPDATE `#__pv_live_import` SET `candidate` = REPLACE(CONCAT_WS(' ', `fname`, `mname`, `lname`), '  ', ' ') WHERE `lname` IS NOT NULL AND `lname` != '' ");
             $db->query();
-            // eventually, purge all those nulls:
-            // $db->setQuery("UPDATE `#__pv_live_import` set `office` `candidate` ``")
         }
-
-
-        // export download file here
 
         $db->setQuery("ALTER TABLE #_pv_live_import ENABLE KEYS");
         $db->query();
 
+        // import and transform complete 3
         array_push($t, microtime(1));
-        d('loadfile ', $t[count($t)-1]-$t[count($t)-2], $loadFile);
+        $db->setQuery(<<<EOD
+SELECT $outputFields
+FROM #__pv_live_import
+INTO OUTFILE '$outputFile'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+EOD;
+        // export download file here
 
+        // export complete 4
         array_push($t, microtime(1));
-        //d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
-        dd($post, $files, $config, $user, $command, $return, $lastInsertId, $path_parts, $t, $_FILES, $extracted);
-        $arr = str_getcsv($line, $delim);
-
-        // get rid of any articulated quotes witing array elements
-        foreach ($arr as $key => $value) {
-            $arr[$key] = str_replace('"', '', $value);
-            $arr[$key] = trim($value);
-        }
 
         $ward = (int)$arr[0];
         $division = (int)$arr[1];
