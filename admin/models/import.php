@@ -96,7 +96,7 @@ class PvliveresultsModelImport extends PvliveresultsModel
         $table = "#__pv_live_parties";
         $field = 'party';
         $query = " SELECT DISTINCT " . $this->_db->nameQuote($field) . " as `name`, 1 as `published`, '" . $this->getNow() . "' as `created` ' from " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($field) . " NOT IN (SELECT `name` FROM " . $this->_db->nameQuote($table) . " )";
-
+        d($query);
         return $this->_getList($query);
     }
 }
