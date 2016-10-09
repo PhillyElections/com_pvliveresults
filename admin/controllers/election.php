@@ -228,10 +228,10 @@ EOD);
 
         // export complete 4
         array_push($t, microtime(1));
-
+dd($t);
         $ward = (int)$arr[0];
         $division = (int)$arr[1];
-        $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
+//        $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
         $office = $arr[3];
         $candidate = $arr[4];
         $party = JString::strtoupper(JString::trim($arr[5]));
