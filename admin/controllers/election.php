@@ -176,11 +176,33 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $pass = $config->getValue('config.password');
         $dbName = $config->getValue('config.db');
 
-        $command = "mysqlimport --local --compress --user=$user --password=$pass --host=$host --fields-terminated-by=',' --fields-optionally-enclosed-by='\"' --columns='$sFields' $dbName $dest";
-
+        $command =<<<EOD
+mysqlimport \
+--local \
+--compress \
+--user=$user \
+--password=$pass \
+--host=$host \
+--fields-terminated-by='$delim' \
+--fields-optionally-enclosed-by='"' \
+--columns='$sFields' \
+$dbName \
+$dest
+EOD;
         $return = system($command);
 
         // transform data if needed here
+        if ($delim === "@") {
+            // write useful wards/divs
+            $db->setQuery("UPDATE `#__pv_live_import` SET `ward` = LEFT(`ward_division`, 2), `division` = RIGHT(`ward_division`, 2)");
+            //$db->query();
+            // improve our candidates where possible
+            $db->setQuery("UPDATE `#__pv_live_import` SET `candidate` = REPLACE(CONCAT_WS(' ', REPLACE(`fname`, 'NULL', ''), REPLACE(`mname`, 'NULL', ''), REPLACE(`lname`, 'NULL', '')), '  ', ' ') WHERE `lname` != 'NULL'");
+            //$db->query();
+            // eventually, purge all those nulls:
+            // $db->setQuery("UPDATE `#__pv_live_import` set `office` `candidate` ``")
+        }
+
 
         // export download file here
 
