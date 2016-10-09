@@ -83,15 +83,15 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $editLink = "index.php?option=com_pvliveresults&controller=election&task=edit&cid[]=";
         $baseLink = "index.php?option=com_pvliveresults";
 
+        $post  = JRequest::get('post');
+        $files = JRequest::get('files');
+
         $oldFileName = $_FILES['results_file']['name'];
         $newFileName = JString::str_ireplace(" ", "_", JString::strtolower(JFile::makeSafe($post['name']))) . ".csv";
 
         $uploads = JPATH_COMPONENT . DS . 'uploads';
         $src     = $_FILES['results_file']['tmp_name'];
         $dest    = $uploads . DS . $oldFileName;
-
-        $post  = JRequest::get('post');
-        $files = JRequest::get('files');
 
         $excludeHeader = isset($post['exclude_header']) ? true : false;
 
@@ -222,7 +222,7 @@ EOD;
 
         // export complete 4
         array_push($t, microtime(1));
-        dd($t, $db, "SELECT $outputFields FROM `#__pv_live_import` INTO OUTFILE '$outputFile' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n'");
+        dd($post, $files, $t, $db, "   SELECT $outputFields FROM `#__pv_live_import` INTO OUTFILE '$outputFile' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n'");
         $ward     = (int) $arr[0];
         $division = (int) $arr[1];
 
