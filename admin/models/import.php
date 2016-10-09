@@ -95,8 +95,8 @@ class PvliveresultsModelImport extends PvliveresultsModel
     {
         $table = "#__pv_live_parties";
         $field = 'party';
-        $this->_db->setQuery(" INSERT INTO " . $this->_db->nameQuote($table) . " SELECT DISTINCT " . $this->_db->nameQuote($field) . " as `name`, 1 as `published`, '" . $this->getNow() . "' as `created` from " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($field) . " NOT IN (SELECT `name` FROM " . $this->_db->nameQuote($table) . " )");
-        d(" INSERT INTO " . $this->_db->nameQuote($table) . " SELECT DISTINCT " . $this->_db->nameQuote($field) . " as `name`, 1 as `published`, '" . $this->getNow() . "' as `created` from " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($field) . " NOT IN (SELECT `name` FROM " . $this->_db->nameQuote($table) . " )");
+        $this->_db->setQuery(" INSERT INTO " . $this->_db->nameQuote($table) . " (`name`, `published`, `created`) SELECT DISTINCT " . $this->_db->nameQuote($field) . " as `name`, 1 as `published`, '" . $this->getNow() . "' as `created` from " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($field) . " NOT IN (SELECT `name` FROM " . $this->_db->nameQuote($table) . " ) ");
+        d(" INSERT INTO " . $this->_db->nameQuote($table) . " (`name`, `published`, `created`) SELECT DISTINCT " . $this->_db->nameQuote($field) . " as `name`, 1 as `published`, '" . $this->getNow() . "' as `created` from " . $this->_db->nameQuote($this->_table) . " WHERE " . $this->_db->nameQuote($field) . " NOT IN (SELECT `name` FROM " . $this->_db->nameQuote($table) . " ) ");
         $this->_db->query();
     }
 }
