@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_elections` (
 , PRIMARY KEY (`id`)
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
-CREATE TABLE IF NOT EXISTS `#__pv_live_import` (
+CREATE TABLE IF NOT EXISTS `#__pv_live_imports` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT
 , `ward` smallint(5) NOT NULL
 , `division` smallint(5) NOT NULL
@@ -48,13 +48,13 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_import` (
 , `fname` varchar(255) NOT NULL
 , `mname` varchar(255) NOT NULL
 , PRIMARY KEY (`id`)
-, INDEX `ward_import` (`ward`)
-, INDEX `division_import` (`division`)
-, INDEX `ward_division_import` (`ward`,`division`)
-, INDEX `candidate_import` (`candidate`)
-, INDEX `office_import` (`candidate`)
-, INDEX `party_import` (`party`)
-, INDEX `votes_import` (`votes`)
+, INDEX `ward_imports` (`ward`)
+, INDEX `division_imports` (`division`)
+, INDEX `ward_division_imports` (`ward`,`division`)
+, INDEX `candidate_imports` (`candidate`)
+, INDEX `office_imports` (`candidate`)
+, INDEX `party_imports` (`party`)
+, INDEX `votes_imports` (`votes`)
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
 
 CREATE TABLE IF NOT EXISTS `#__pv_live_offices` (
