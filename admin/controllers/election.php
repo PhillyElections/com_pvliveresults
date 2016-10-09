@@ -201,7 +201,7 @@ EOD;
             $db->setQuery("UPDATE `#__pv_live_import` SET `ward` = LEFT(`ward_division`, 2), `division` = RIGHT(`ward_division`, 2)");
             $db->query();
             // improve our candidates where possible
-            $db->setQuery("UPDATE `#__pv_live_import` SET `candidate` = REPLACE(CONCAT_WS(' ', `fname`, `mname`, `lname`), '  ', ' ') WHERE `lname` != 'NULL'");
+            $db->setQuery("UPDATE `#__pv_live_import` SET `candidate` = REPLACE(CONCAT_WS(' ', `fname`, `mname`, `lname`), '  ', ' ') WHERE `lname` IS NOT NULL AND `lname` != '' ");
             $db->query();
             // eventually, purge all those nulls:
             // $db->setQuery("UPDATE `#__pv_live_import` set `office` `candidate` ``")
