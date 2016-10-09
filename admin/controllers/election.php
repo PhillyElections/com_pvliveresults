@@ -86,11 +86,11 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $post  = JRequest::get('post');
         $files = JRequest::get('files');
 
-        $oldFileName = $_FILES['results_file']['name'];
+        $oldFileName = $files['results_file']['name'];
         $newFileName = JString::str_ireplace(" ", "_", JString::strtolower(JFile::makeSafe($post['name']))) . ".csv";
 
         $uploads = JPATH_COMPONENT . DS . 'uploads';
-        $src     = $_FILES['results_file']['tmp_name'];
+        $src     = $files['results_file']['tmp_name'];
         $dest    = $uploads . DS . $oldFileName;
 
         $excludeHeader = isset($post['exclude_header']) ? true : false;
@@ -122,9 +122,10 @@ class PvliveresultsControllerElection extends PvliveresultsController
             }
 
             jimport('joomla.fiesystem.file');
-            JFile::move($dest, $uploads . DS . "jos_pv_live_import.txt");
-            $dest = $uploads . DS . "jos_pv_live_import.txt";
+            JFile::move($dest, $uploads . DS . "jos_pv_live_imports.txt");
+            $dest = $uploads . DS . "jos_pv_live_imports.txt";
         }
+
         // file-handling complete 1
         array_push($t, microtime(1));
 
@@ -174,7 +175,7 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $db = &JFactory::getDBO();
 
-        $db->setQuery("ALTER TABLE #__pv_live_import DISABLE KEYS");
+        $db->setQuery("ALTER TABLE #__pv_live_imports DISABLE KEYS");
         $db->query();
 
         // Let's pull our creds from the site config
@@ -203,26 +204,22 @@ EOD;
         // transform data if needed here
         if ($delim === "@") {
             // missing fields: ward, division, type
-            $db->setQuery("UPDATE `#__pv_live_import` SET `type` = 'M', `ward` = LEFT(`ward_division`, 2), `division` = RIGHT(`ward_division`, 2)");
+            $db->setQuery("UPDATE `#__pv_live_imports` SET `type` = 'M', `ward` = LEFT(`ward_division`, 2), `division` = RIGHT(`ward_division`, 2)");
             $db->query();
             // improve our candidates where possible
-            $db->setQuery("UPDATE `#__pv_live_import` SET `candidate` = REPLACE(CONCAT_WS(' ', `fname`, `mname`, `lname`), '  ', ' ') WHERE `lname` IS NOT NULL AND `lname` != '' ");
+            $db->setQuery("UPDATE `#__pv_live_imports` SET `candidate` = REPLACE(CONCAT_WS(' ', `fname`, `mname`, `lname`), '  ', ' ') WHERE `lname` IS NOT NULL AND `lname` != '' ");
             $db->query();
         }
 
-        $db->setQuery("ALTER TABLE #_pv_live_import ENABLE KEYS");
+        $db->setQuery("ALTER TABLE #_pv_live_imports ENABLE KEYS");
         $db->query();
 
         // import and transform complete 3
         array_push($t, microtime(1));
-        $db->setQuery(" SELECT $outputFields FROM `#__pv_live_import` INTO OUTFILE '$outputFile' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ");
-        $db->query();
 
-        // export download file here
+        $importModel = $this->getModel('import');
 
-        // export complete 4
-        array_push($t, microtime(1));
-        dd($post, $files, $t, $db, "   SELECT $outputFields FROM `#__pv_live_import` INTO OUTFILE '$outputFile' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n'");
+        dd($importModel->addNewParties());
         $ward     = (int) $arr[0];
         $division = (int) $arr[1];
 
@@ -350,6 +347,7 @@ EOD;
         $created = $electionModel->getNow();
 
         $post         = JRequest::get('post');
+        $files        = JRequest::get('files');
         $data         = array();
         $data['name'] = $post['name'];
         $data['date'] = $post['date'];
@@ -389,25 +387,25 @@ EOD;
         }
 
         // verify we have an upload
-        if (!$_FILES['results_file']) {
+        if (!$files['results_file']) {
             // no file.  No need to go on.  Warn the user
             return $this->setRedirect($editLink . $electionId, 'No file uploaded. You might want to delete this election and start over');
         }
 
         // since we have an upload, we need to make sure JFile is available
         jimport('joomla.fiesystem.file');
-        $oldFileName = $_FILES['results_file']['name'];
+        $oldFileName = $files['results_file']['name'];
         $newFileName = JString::str_ireplace(" ", "_", JString::strtolower(JFile::makeSafe($post['name']))) . ".csv";
 
         $uploads = JPATH_COMPONENT . DS . 'uploads';
-        $src     = $_FILES['results_file']['tmp_name'];
+        $src     = $files['results_file']['tmp_name'];
         $dest    = $uploads . DS . $oldFileName;
 
         $excludeHeader = $post['exclude_header'] ? true : false;
 
         if (!($move = move_uploaded_file($src, $dest))) {
             // failed file.  No need to go on.  Warn the user
-            dd($pathinfo($src), $_FILES);
+            dd($pathinfo($src), $files);
             return $this->setRedirect($editLink . $electionId, 'Failed file transfer. You might want to delete this election and start over.');
         }
 
@@ -663,8 +661,8 @@ $model = $this->getModel('ballotboxapp');
 $insertStart = 'INSERT into #__rt_cold_data (`office`,`ward`,`division`,`vote_type`,`name`,`party`,`votes`,`e_year`,`date_created`) VALUES ';
 
 $path = JPATH_COMPONENT.DS.'uploads'.DS;
-$fileName = $_FILES['fileToUpload']['name'];
-$fileTmpLoc = $_FILES['fileToUpload']['tmp_name'];
+$fileName = $files['fileToUpload']['name'];
+$fileTmpLoc = $files['fileToUpload']['tmp_name'];
 
 // Path and file name
 $pathAndName = $path.$fileName;
