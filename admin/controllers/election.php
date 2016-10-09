@@ -222,7 +222,8 @@ INTO OUTFILE '$outputFile'
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
-EOD;
+EOD);
+        $db->query();
         // export download file here
 
         // export complete 4
