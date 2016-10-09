@@ -222,15 +222,15 @@ EOD;
 
         // export complete 4
         array_push($t, microtime(1));
-        dd($t, $db->getErrors());
+        dd($t, $db, "SELECT $outputFields FROM `#__pv_live_import` INTO OUTFILE '$outputFile' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n'");
         $ward     = (int) $arr[0];
         $division = (int) $arr[1];
 
-//        $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
-        $office    = $arr[3];
-        $candidate = $arr[4];
-        $party     = JString::strtoupper(JString::trim($arr[5]));
-        $votes     = (int) $arr[6];
+        $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
+        $office     = $arr[3];
+        $candidate  = $arr[4];
+        $party      = JString::strtoupper(JString::trim($arr[5]));
+        $votes      = (int) $arr[6];
 
         $partyId = (int) $partiesIndex[$party];
         // is the office new? write it, index it, an save the id
