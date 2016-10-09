@@ -406,7 +406,7 @@ EOD;
         $src     = $_FILES['results_file']['tmp_name'];
         $dest    = $uploads . DS . $oldFileName;
 
-        $excludeHeader = $post['exclude_header']) ? true : false;
+        $excludeHeader = $post['exclude_header'] ? true : false;
 
         if (!($move = move_uploaded_file($src, $dest))) {
             // failed file.  No need to go on.  Warn the user
