@@ -231,6 +231,7 @@ EOD);
 dd($t);
         $ward = (int)$arr[0];
         $division = (int)$arr[1];
+
 //        $votetypeId = ($votetypesIndex[$votetypes[$arr[2]]]) ? $votetypesIndex[$votetypes[$arr[2]]] : $votetypesIndex['MACHINE'];
         $office = $arr[3];
         $candidate = $arr[4];
