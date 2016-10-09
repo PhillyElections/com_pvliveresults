@@ -215,14 +215,7 @@ EOD;
 
         // import and transform complete 3
         array_push($t, microtime(1));
-        $db->setQuery(<<<EOD
-SELECT $outputFields
-FROM #__pv_live_import
-INTO OUTFILE '$outputFile'
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-EOD);
+        $db->setQuery(" SELECT $outputFields FROM `#__pv_live_import` INTO OUTFILE '$outputFile' FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' ");
         $db->query();
         // export download file here
 
