@@ -88,6 +88,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
         $src     = $_FILES['results_file']['tmp_name'];
         $dest    = $uploads . DS . $oldFileName;
 
+        $post = JRequest::get('post');
+        $files = JRequest::get('files');
+
         $excludeHeader = isset($post['exclude_header']) ? true : false;
 
         if (!($move = move_uploaded_file($src, $dest))) {
@@ -215,7 +218,7 @@ EOD;
 
         array_push($t, microtime(1));
         //d('indexFile ', $t[count($t)-1]-$t[count($t)-2], $indexTable, $inputFile, $outputFile);
-        dd($config, $user, $command, $return, $lastInsertId, $path_parts, $t, $_FILES, $extracted);
+        dd($post, $files, $config, $user, $command, $return, $lastInsertId, $path_parts, $t, $_FILES, $extracted);
         $arr = str_getcsv($line, $delim);
 
         // get rid of any articulated quotes witing array elements
@@ -403,7 +406,7 @@ EOD;
         $src     = $_FILES['results_file']['tmp_name'];
         $dest    = $uploads . DS . $oldFileName;
 
-        $excludeHeader = isset($post['exclude_header']) ? true : false;
+        $excludeHeader = $post['exclude_header']) ? true : false;
 
         if (!($move = move_uploaded_file($src, $dest))) {
             // failed file.  No need to go on.  Warn the user
