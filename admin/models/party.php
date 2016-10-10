@@ -53,8 +53,24 @@ class PvliveresultsModelParty extends PvliveresultsModel
 
     /*
      * public key field for FK deletes
-     * 
+     *
      * @var string
      */
     //public $_fk = '';
+
+    /**
+     * pull distinct new parties from the import
+     *
+     * @return array()
+     */
+    public function populate()
+    {
+        $table = "#__pv_live_imports";
+        $field = 'party';
+        $query = " INSERT INTO " . $this->_db->nameQuote($this->_table) . " (`name`, `published`, `created`) SELECT DISTINCT " . $this->_db->nameQuote($field) . " as `name`, 1 as `published`, '" . $this->getNow() . "' as `created` from " . $this->_db->nameQuote($table) . " WHERE " . $this->_db->nameQuote($field) . " NOT IN (SELECT `name` FROM " . $this->_db->nameQuote($this->_table) . " ) ";
+
+        $this->_db->setQuery($query);
+        $this->_db->query();
+        return true;
+    }
 }
