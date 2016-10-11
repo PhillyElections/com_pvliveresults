@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `#__pv_live_imports` (
 , INDEX `division_imports` (`division`)
 , INDEX `ward_division_imports` (`ward`,`division`)
 , INDEX `candidate_imports` (`candidate`)
-, INDEX `office_imports` (`candidate`)
+, INDEX `office_imports` (`office`)
 , INDEX `party_imports` (`party`)
 , INDEX `votes_imports` (`votes`)
 ) ENGINE=ARIA COLLATE='utf8_general_ci';
