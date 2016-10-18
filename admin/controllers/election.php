@@ -197,7 +197,7 @@ mysqlimport \
 --fields-optionally-enclosed-by='"' \
 --columns='$sFields' \
 $dbName \
-$dest
+'$dest'
 EOD;
         $return = system($command);
 
