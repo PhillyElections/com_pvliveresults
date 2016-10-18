@@ -175,6 +175,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
 
         $db = &JFactory::getDBO();
 
+        $db->setQuery("TRUNCATE TABLE #__pv_live_imports");
+        $db->query();
+
         $db->setQuery("ALTER TABLE #__pv_live_imports DISABLE KEYS");
         $db->query();
 
