@@ -110,10 +110,9 @@ class PvliveresultsControllerElection extends PvliveresultsController
             // we have an archive.  pull in JArchive to handle it
             jimport('joomla.filesystem.archive');
 
-            // when unzipping a 50MB text file, you take up a crapload of memory
-            $extracted = JArchive::extract($dest, $path_parts['dirname']);
+            JArchive::extract($dest, $path_parts['dirname']);
             // drop the archive now
-            //@unlink($dest);
+            @unlink($dest);
             // reset the filename
             $dest = $uploads . DS . strtolower($path_parts['filename']);
 
